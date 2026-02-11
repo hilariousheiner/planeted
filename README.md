@@ -1,2 +1,2 @@
 # planeted
-a small tool for prcedurally creating and editing models of asteroids, moons and small planets
+A small tool for procedurally creating and editing models of asteroids, moons and small planets.
