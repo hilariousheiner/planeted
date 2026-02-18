@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <unistd.h>
 #include <getopt.h>
 #include <cstdlib>
@@ -22,14 +23,20 @@ int main(int argc, char **argv)
         return EXIT_FAILURE; //error;
     }
 
-    /*
+    std::cout << "Generating mesh..." << std::endl;
     Mesh mesh;
-    Vector3* test = new Vector3(3.141, 0.0, 0.0);
 
-    std::cout << POVR::Vector3ToPOV(test) << std::endl;
-    std::cout << POVR::MeshToPOVMesh2(&mesh) << std::endl;
-    std::cout << POVR::POVSceneFile(filename) << std::endl;
-    */
+    std::cout << "Writing mesh to \"" << filename << "\"..." << std::endl;
+    std::ofstream meshfile(filename);
+    meshfile << POVR::MeshToPOVMesh2(&mesh);
+    meshfile.close();
+
+    std::cout << "Writing scene file..." << std::endl;
+    std::ofstream scenefile("scene.pov");
+    scenefile << POVR::POVSceneFile(filename);
+    scenefile.clear();
+
+    std::cout << "done." << std::endl;
 
     return EXIT_SUCCESS;
 }
