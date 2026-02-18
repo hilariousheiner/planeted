@@ -1,0 +1,7 @@
+# Build output
+planeted/bin
+planeted/obj
+
+#IDE
+planeted/planeted.depend
+planeted/planeted.layout
