@@ -4,6 +4,7 @@
 #include <getopt.h>
 #include <cstdlib>
 
+#include "Icosahedron.h"
 #include "Vector3.h"
 #include "Mesh.h"
 #include "POV.h"
@@ -24,11 +25,12 @@ int main(int argc, char **argv)
     }
 
     std::cout << "Generating mesh..." << std::endl;
-    Mesh mesh;
+
+    Mesh *mesh = makeIcosahedron();
 
     std::cout << "Writing mesh to \"" << filename << "\"..." << std::endl;
     std::ofstream meshfile(filename);
-    meshfile << POVR::MeshToPOVMesh2(&mesh);
+    meshfile << POVR::MeshToPOVMesh2(mesh);
     meshfile.close();
 
     std::cout << "Writing scene file..." << std::endl;
@@ -37,6 +39,8 @@ int main(int argc, char **argv)
     scenefile.clear();
 
     std::cout << "done." << std::endl;
+
+    delete mesh;
 
     return EXIT_SUCCESS;
 }
