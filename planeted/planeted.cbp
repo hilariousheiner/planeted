@@ -34,8 +34,8 @@
 		</Compiler>
 		<Unit filename="Mesh.cpp" />
 		<Unit filename="Mesh.h" />
-		<Unit filename="POVR.cpp" />
-		<Unit filename="POVR.h" />
+		<Unit filename="POV.cpp" />
+		<Unit filename="POV.h" />
 		<Unit filename="Vector3.cpp" />
 		<Unit filename="Vector3.h" />
 		<Unit filename="main.cpp" />
