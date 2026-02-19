@@ -16,6 +16,10 @@ namespace Planeted
             float GetX();
             float GetY();
             float GetZ();
+
+            float Magnitude();
+            float sqrMagnitude();
+            void Normalize();
     };
 }
 #endif
