@@ -48,6 +48,8 @@ namespace Planeted
 
         VertexIterator Vertices() const { return  {this->vertices.begin(), this->vertices.end()}; }
         TriangleIterator Triangles() const { return  {this->triangles.begin(), this->triangles.end()}; }
+
+        void ProjectToUnitSphere();
     };
 }
 #endif

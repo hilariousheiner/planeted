@@ -32,4 +32,12 @@ namespace Planeted
     {
         return this->triangles.size();
     }
+
+    void Mesh::ProjectToUnitSphere()
+    {
+        for(Vector3& v : this->vertices)
+        {
+            v.Normalize();
+        }
+    }
 }
