@@ -12,7 +12,7 @@ namespace Planeted
     class PlOb
     {
     public:
-        virtual Mesh GenerateMesh() = 0;
+        virtual Mesh *GenerateMesh() = 0;
     };
 }
 #endif // PLANETED_PLOB_H
