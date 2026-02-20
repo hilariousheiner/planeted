@@ -13,7 +13,7 @@ namespace Planeted
             std::stringstream stream;
 
             stream << std::fixed << std::setprecision(4);
-            stream << "<" << vector3->GetX() << "," << vector3->GetY() << "," << vector3->GetZ() << ">";
+            stream << "<" << vector3->X() << "," << vector3->Y() << "," << vector3->Z() << ">";
 
             return stream.str();
         }

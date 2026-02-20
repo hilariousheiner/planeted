@@ -13,25 +13,25 @@ namespace Planeted
         this->z = z;
     }
 
-    float Vector3::GetX()
+    float Vector3::X()
     {
         return this->x;
     }
-    float Vector3::GetY()
+    float Vector3::Y()
     {
         return this->y;
     }
-    float Vector3::GetZ()
+    float Vector3::Z()
     {
         return this->z;
     }
 
     float Vector3::Magnitude()
     {
-        return sqrt(this->sqrMagnitude());
+        return sqrt(this->SquareMagnitude());
     }
 
-    float Vector3::sqrMagnitude()
+    float Vector3::SquareMagnitude()
     {
         return square(this->x) + square(this->y) + square(this->z);
     }

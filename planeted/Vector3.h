@@ -13,12 +13,12 @@ namespace Planeted
         public:
             Vector3(float x, float y, float z);
 
-            float GetX();
-            float GetY();
-            float GetZ();
+            float X();
+            float Y();
+            float Z();
 
             float Magnitude();
-            float sqrMagnitude();
+            float SquareMagnitude();
             void Normalize();
     };
 }
