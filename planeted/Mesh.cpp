@@ -33,6 +33,15 @@ namespace Planeted
         return this->triangles.size();
     }
 
+    VertexIterator Mesh::Vertices() const
+    {
+        return {this->vertices.begin(), this->vertices.end()};
+    }
+    TriangleIterator Mesh::Triangles() const
+    {
+        return {this->triangles.begin(), this->triangles.end()};
+    }
+
     void Mesh::ProjectToUnitSphere()
     {
         for(Vector3& v : this->vertices)

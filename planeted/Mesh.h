@@ -46,8 +46,8 @@ namespace Planeted
         int VertexCount();
         int TriangleCount();
 
-        VertexIterator Vertices() const { return  {this->vertices.begin(), this->vertices.end()}; }
-        TriangleIterator Triangles() const { return  {this->triangles.begin(), this->triangles.end()}; }
+        VertexIterator Vertices() const;
+        TriangleIterator Triangles() const;
 
         void ProjectToUnitSphere();
     };
