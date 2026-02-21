@@ -37,6 +37,7 @@
 		<Unit filename="Icosahedron.h" />
 		<Unit filename="Mesh.cpp" />
 		<Unit filename="Mesh.h" />
+		<Unit filename="MeshSubdivider.cpp" />
 		<Unit filename="MeshSubdivider.h" />
 		<Unit filename="POV.cpp" />
 		<Unit filename="POV.h" />
