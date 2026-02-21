@@ -4,6 +4,7 @@
 #include "PlOb.h"
 #include "Mesh.h"
 #include "Icosahedron.h"
+#include "MeshSubdivider.h"
 
 namespace Planeted
 {
@@ -15,6 +16,9 @@ namespace Planeted
         IcoSphere()
         {
             this->mesh = makeIcosahedron();
+            MeshSubdivider subdivider(this->mesh);
+
+            subdivider.Subdivide();
         }
         ~IcoSphere()
         {

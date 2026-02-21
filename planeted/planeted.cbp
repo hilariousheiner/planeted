@@ -32,13 +32,15 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="IcoSphere.h" />
 		<Unit filename="Icosahedron.cpp" />
 		<Unit filename="Icosahedron.h" />
 		<Unit filename="Mesh.cpp" />
 		<Unit filename="Mesh.h" />
+		<Unit filename="MeshSubdivider.h" />
 		<Unit filename="POV.cpp" />
 		<Unit filename="POV.h" />
-		<Unit filename="Plob.h" />
+		<Unit filename="PlOb.h" />
 		<Unit filename="Vector3.cpp" />
 		<Unit filename="Vector3.h" />
 		<Unit filename="main.cpp" />
