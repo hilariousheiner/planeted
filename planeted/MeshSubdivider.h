@@ -1,6 +1,8 @@
 #ifndef PLANETED_MESHSUBDIVIDER_H
 #define PLANETED_MESHSUBDIVIDER_H
 
+#include<memory>
+
 #include "Mesh.h"
 
 namespace Planeted
@@ -8,9 +10,11 @@ namespace Planeted
     class MeshSubdivider
     {
     private:
-        Mesh *mesh;
+        struct Impl;
+        std::unique_ptr<Impl> pImpl;
     public:
         MeshSubdivider(Mesh *mesh);
+        ~MeshSubdivider();
         void Subdivide();
     };
 }

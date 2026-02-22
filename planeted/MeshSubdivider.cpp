@@ -2,10 +2,18 @@
 
 namespace Planeted
 {
-    MeshSubdivider::MeshSubdivider(Mesh *mesh)
+    struct MeshSubdivider::Impl
     {
-        this->mesh = mesh;
+        Mesh *mesh;
+    };
+
+    MeshSubdivider::MeshSubdivider(Mesh *mesh)
+        : pImpl(new MeshSubdivider::Impl())
+    {
+        this->pImpl->mesh = mesh;
     }
+
+    MeshSubdivider::~MeshSubdivider() = default;
 
     void MeshSubdivider::Subdivide()
     {
