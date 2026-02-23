@@ -19,6 +19,15 @@ namespace Planeted
         return result;
     }
 
+    Vector3 *Mesh::GetVertex(int id)
+    {
+        if(id >= 0 && id < this->vertices.size())
+        {
+            return &this->vertices[id];
+        }
+        return nullptr;
+    }
+
     void Mesh::AddTriangle(int a, int b, int c)
     {
         this->triangles.push_back(TriangleIndices {a, b, c});

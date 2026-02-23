@@ -41,6 +41,8 @@ namespace Planeted
         ~Mesh();
 
         int AddVertex(float x, float y, float z);
+        Vector3 *GetVertex(int id);
+
         void AddTriangle(int a, int b, int c);
 
         int VertexCount();
