@@ -2,7 +2,6 @@
 #define PLANETED_MESH_H
 
 #include <vector>
-#include <string>
 #include "Vector3.h"
 
 namespace Planeted
