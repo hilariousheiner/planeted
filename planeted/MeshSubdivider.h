@@ -1,7 +1,7 @@
 #ifndef PLANETED_MESHSUBDIVIDER_H
 #define PLANETED_MESHSUBDIVIDER_H
 
-#include<memory>
+#include <memory>
 
 #include "Mesh.h"
 
