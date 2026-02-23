@@ -15,7 +15,7 @@ namespace Planeted
     public:
         IcoSphere()
         {
-            this->mesh = makeIcosahedron();
+            this->mesh = MakeIcosahedron();
             MeshSubdivider subdivider(this->mesh);
 
             subdivider.Subdivide();

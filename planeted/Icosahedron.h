@@ -5,6 +5,6 @@
 
 namespace Planeted
 {
-    Mesh *makeIcosahedron();
+    Mesh *MakeIcosahedron();
 }
 #endif // PLANETED_ICOSAHEDRON_H

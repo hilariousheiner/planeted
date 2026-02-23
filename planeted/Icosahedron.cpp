@@ -4,7 +4,7 @@
 
 namespace Planeted
 {
-    Mesh *makeIcosahedron()
+    Mesh *MakeIcosahedron()
     {
         static const float t = (1.0 + sqrt(5.0)) / 2.0;
 
