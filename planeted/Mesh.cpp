@@ -33,6 +33,15 @@ namespace Planeted
         this->triangles.push_back(TriangleIndices {a, b, c});
     }
 
+    void Mesh::SetTriangles(std::vector<TriangleIndices> tris)
+    {
+        this->triangles.clear();
+        for(TriangleIndices tri : tris)
+        {
+            this->AddTriangle(tri.a, tri.b, tri.c);
+        }
+    }
+
     int Mesh::VertexCount()
     {
         return this->vertices.size();

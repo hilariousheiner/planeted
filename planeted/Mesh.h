@@ -43,6 +43,7 @@ namespace Planeted
         Vector3 *GetVertex(int id);
 
         void AddTriangle(int a, int b, int c);
+        void SetTriangles(std::vector<TriangleIndices> tris);
 
         int VertexCount();
         int TriangleCount();
