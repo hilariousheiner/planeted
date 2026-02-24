@@ -9,10 +9,10 @@ namespace Planeted
     {
         Mesh *mesh;
 
-        std::vector<Vector3> newTris;
+        std::vector<TriangleIndices> newTris;
         std::map<std::pair<int, int>, int> middlePointIndexCache;
 
-        int getMiddlePoint(int p1, int p2)
+        int GetMiddlePoint(int p1, int p2)
         {
             if(this->middlePointIndexCache.find({p1, p2}) == this->middlePointIndexCache.end())
             {
@@ -44,9 +44,17 @@ namespace Planeted
         this->pImpl->newTris.clear();
         this->pImpl->middlePointIndexCache.clear();
 
-        for(TriangleIndices i : this->pImpl->mesh->Triangles())
+        for(TriangleIndices tri : this->pImpl->mesh->Triangles())
         {
+            int a = this->pImpl->GetMiddlePoint(tri.a, tri.b);
+            int b = this->pImpl->GetMiddlePoint(tri.b, tri.c);
+            int c = this->pImpl->GetMiddlePoint(tri.c, tri.a);
 
+            this->pImpl->newTris.push_back({tri.a, a, c});
+            this->pImpl->newTris.push_back({tri.b, b, a});
+            this->pImpl->newTris.push_back({tri.c, c, b});
+            this->pImpl->newTris.push_back({a, b, c});
         }
+        this->pImpl->mesh->SetTriangles(this->pImpl->newTris);
     }
 }
