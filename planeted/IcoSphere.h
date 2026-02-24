@@ -19,6 +19,8 @@ namespace Planeted
             MeshSubdivider subdivider(this->mesh);
 
             subdivider.Subdivide();
+
+            this->mesh->ProjectToUnitSphere();
         }
         ~IcoSphere()
         {
