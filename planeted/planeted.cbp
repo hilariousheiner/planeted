@@ -42,6 +42,7 @@
 		<Unit filename="POV.cpp" />
 		<Unit filename="POV.h" />
 		<Unit filename="PlOb.h" />
+		<Unit filename="Random.h" />
 		<Unit filename="Vector3.cpp" />
 		<Unit filename="Vector3.h" />
 		<Unit filename="main.cpp" />
