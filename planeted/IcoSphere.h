@@ -8,6 +8,19 @@
 
 namespace Planeted
 {
+    Mesh *MakeIcosphere()
+    {
+        Mesh *result = MakeIcosahedron();
+        MeshSubdivider subdivider(result);
+
+        subdivider.Subdivide();
+        subdivider.Subdivide();
+
+        result->ProjectToUnitSphere();
+
+        return result;
+    }
+
     class IcoSphere : public PlOb
     {
     private:
@@ -15,12 +28,16 @@ namespace Planeted
     public:
         IcoSphere()
         {
+            this->mesh = MakeIcosphere();
+            /*
             this->mesh = MakeIcosahedron();
             MeshSubdivider subdivider(this->mesh);
 
             subdivider.Subdivide();
+            subdivider.Subdivide();
 
             this->mesh->ProjectToUnitSphere();
+            */
         }
         ~IcoSphere()
         {
