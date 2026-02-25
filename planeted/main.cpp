@@ -4,6 +4,7 @@
 #include <getopt.h>
 #include <cstdlib>
 
+#include "Asteroid.h"
 #include "Icosahedron.h"
 #include "Vector3.h"
 #include "Mesh.h"
@@ -27,11 +28,11 @@ int main(int argc, char **argv)
 
     std::cout << "Generating mesh..." << std::endl;
 
-    IcoSphere *sphere = new IcoSphere();
+    Asteroid *plob = new Asteroid();
 
     std::cout << "Writing mesh to \"" << filename << "\"..." << std::endl;
     std::ofstream meshfile(filename);
-    meshfile << POVR::MeshToPOVMesh2(sphere->GenerateMesh());
+    meshfile << POVR::MeshToPOVMesh2(plob->GenerateMesh());
     meshfile.close();
 
     std::cout << "Writing scene file..." << std::endl;
@@ -41,7 +42,7 @@ int main(int argc, char **argv)
 
     std::cout << "done." << std::endl;
 
-    delete sphere;
+    delete plob;
 
     return EXIT_SUCCESS;
 }
