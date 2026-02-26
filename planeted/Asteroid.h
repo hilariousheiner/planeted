@@ -18,12 +18,10 @@ namespace Planeted
         {
             this->mesh = MakeIcosphere();
 
-            Random random;
-
             for(int id = 0; id < this->mesh->VertexCount(); ++id)
             {
                 Vector3 *vertex = this->mesh->GetVertex(id);
-                float scalar = 1.0f + (random.GetValue() * 0.1f);
+                float scalar = 1.0f + (Random::Range(0.0f, 1.0f) * 0.1f);
                 vertex->Scale(scalar);
             }
         }
