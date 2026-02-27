@@ -6,28 +6,28 @@
 
 namespace Planeted
 {
-    typedef struct
+    struct TriangleIndices
     {
         int a, b, c;
-    }TriangleIndices;
+    };
 
-    typedef struct
+    struct VertexIterator
     {
         std::vector<Vector3>::const_iterator _begin;
         std::vector<Vector3>::const_iterator _end;
 
         std::vector<Vector3>::const_iterator begin() const { return _begin; }
         std::vector<Vector3>::const_iterator end() const { return _end; }
-    }VertexIterator;
+    };
 
-    typedef struct
+    struct TriangleIterator
     {
         std::vector<TriangleIndices>::const_iterator _begin;
         std::vector<TriangleIndices>::const_iterator _end;
 
         std::vector<TriangleIndices>::const_iterator begin() const { return _begin; }
         std::vector<TriangleIndices>::const_iterator end() const { return _end; }
-    }TriangleIterator;
+    };
 
     class Mesh
     {
