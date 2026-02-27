@@ -12,6 +12,7 @@ namespace Planeted
     class PlOb
     {
     public:
+        virtual ~PlOb() = default;
         virtual Mesh *GenerateMesh() = 0;
     };
 }

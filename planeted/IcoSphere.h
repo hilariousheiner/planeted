@@ -39,7 +39,7 @@ namespace Planeted
             this->mesh->ProjectToUnitSphere();
             */
         }
-        ~IcoSphere()
+        ~IcoSphere() override
         {
             delete this->mesh;
         }

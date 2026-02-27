@@ -25,7 +25,7 @@ namespace Planeted
                 vertex->Scale(scalar);
             }
         }
-        ~Asteroid()
+        ~Asteroid() override
         {
             delete this->mesh;
         }
