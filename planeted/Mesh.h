@@ -31,10 +31,6 @@ namespace Planeted
 
     class Mesh
     {
-    private:
-        std::vector<Vector3> vertices;
-        std::vector<TriangleIndices> triangles;
-
     public:
         int AddVertex(float x, float y, float z);
         Vector3 *GetVertex(int id);
@@ -49,6 +45,10 @@ namespace Planeted
         TriangleIterator Triangles() const;
 
         void ProjectToUnitSphere();
+
+    private:
+        std::vector<Vector3> vertices;
+        std::vector<TriangleIndices> triangles;
     };
 }
 #endif
