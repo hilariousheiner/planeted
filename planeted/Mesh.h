@@ -36,9 +36,6 @@ namespace Planeted
         std::vector<TriangleIndices> triangles;
 
     public:
-        Mesh();
-        ~Mesh();
-
         int AddVertex(float x, float y, float z);
         Vector3 *GetVertex(int id);
 

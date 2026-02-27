@@ -2,14 +2,6 @@
 
 namespace Planeted
 {
-    Mesh::Mesh()
-    {
-    }
-
-    Mesh::~Mesh()
-    {
-    }
-
     int Mesh::AddVertex(float x, float y, float z)
     {
         int result = this->vertices.size();
