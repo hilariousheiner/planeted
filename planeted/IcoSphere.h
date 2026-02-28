@@ -29,15 +29,6 @@ namespace Planeted
         IcoSphere()
         {
             this->mesh = MakeIcosphere();
-            /*
-            this->mesh = MakeIcosahedron();
-            MeshSubdivider subdivider(this->mesh);
-
-            subdivider.Subdivide();
-            subdivider.Subdivide();
-
-            this->mesh->ProjectToUnitSphere();
-            */
         }
         ~IcoSphere() override
         {
