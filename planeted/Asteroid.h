@@ -22,7 +22,7 @@ namespace Planeted
             {
                 Vector3 *vertex = this->mesh->GetVertex(id);
                 float scalar = 1.0f + (Random::Range(0.0f, 1.0f) * 0.1f);
-                vertex->Scale(scalar);
+                *vertex *= scalar;
             }
         }
         ~Asteroid() override

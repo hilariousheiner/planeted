@@ -17,7 +17,7 @@ namespace Planeted
             float Y();
             float Z();
 
-            void Scale(float scalar);
+            Vector3& operator*=(float scalar);
 
             float Magnitude();
             float SquareMagnitude();
