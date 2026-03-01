@@ -26,11 +26,12 @@ namespace Planeted
         return this->z;
     }
 
-    void Vector3::Scale(float scalar)
+    Vector3& Vector3::operator*=(float scalar)
     {
-        this->x = this->x * scalar;
-        this->y = this->y * scalar;
-        this->z = this->z * scalar;
+        this->x *= scalar;
+        this->y *= scalar;
+        this->z *= scalar;
+        return *this;
     }
 
     float Vector3::Magnitude()
