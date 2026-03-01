@@ -1,4 +1,5 @@
 #include "Mesh.h"
+#include <stdexcept>
 
 namespace Planeted
 {
@@ -11,13 +12,13 @@ namespace Planeted
         return result;
     }
 
-    Vector3 *Mesh::GetVertex(int id)
+    Vector3 *Mesh::GetVertex(size_t id)
     {
-        if(id >= 0 && id < this->vertices.size())
+        if(id >= this->vertices.size())
         {
-            return &this->vertices[id];
+            throw std::out_of_range("Index out of bounds");
         }
-        return nullptr;
+        return &this->vertices[id];
     }
 
     void Mesh::AddTriangle(int a, int b, int c)

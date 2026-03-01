@@ -33,7 +33,7 @@ namespace Planeted
     {
     public:
         int AddVertex(float x, float y, float z);
-        Vector3 *GetVertex(int id);
+        Vector3 *GetVertex(size_t id);
 
         void AddTriangle(int a, int b, int c);
         void SetTriangles(std::vector<TriangleIndices> tris);
