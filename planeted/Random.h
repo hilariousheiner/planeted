@@ -8,23 +8,10 @@ namespace Planeted
     class Random
     {
     public:
-        static void Seed(uint32_t seed)
-        {
-            Random::engine() = std::mt19937(seed);
-        }
-
-        static float Range(float min, float max)
-        {
-            std::uniform_real_distribution<float> distribution(min, max);
-            return distribution(Random::engine());
-        }
-
+        static void Seed(uint32_t seed);
+        static float Range(float min, float max);
     private:
-        static std::mt19937& engine()
-        {
-            static std::mt19937 en(std::random_device{}());
-            return en;
-        }
+        static std::mt19937& engine();
     };
 }
 #endif // PLANETED_RANDOM_H
