@@ -40,9 +40,12 @@
 		<Unit filename="Mesh.h" />
 		<Unit filename="MeshSubdivider.cpp" />
 		<Unit filename="MeshSubdivider.h" />
+		<Unit filename="OBJ.cpp" />
+		<Unit filename="OBJ.h" />
 		<Unit filename="POV.cpp" />
 		<Unit filename="POV.h" />
 		<Unit filename="PlOb.h" />
+		<Unit filename="Random.cpp" />
 		<Unit filename="Random.h" />
 		<Unit filename="Vector3.cpp" />
 		<Unit filename="Vector3.h" />

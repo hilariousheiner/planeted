@@ -9,6 +9,8 @@
 #include "Vector3.h"
 #include "Mesh.h"
 #include "POV.h"
+#include "OBJ.h"
+
 #include "IcoSphere.h"
 
 using namespace Planeted;
@@ -30,6 +32,12 @@ int main(int argc, char **argv)
 
     Asteroid *plob = new Asteroid();
 
+    std::cout << "Writing mesh to \"" << filename << "\"...\n";
+    std::ofstream meshfile(filename);
+    meshfile << OBJ::MeshToOBJ(plob->GenerateMesh());
+    meshfile.close();
+
+    /*
     std::cout << "Writing mesh to \"" << filename << "\"..." << std::endl;
     std::ofstream meshfile(filename);
     meshfile << POVR::MeshToPOVMesh2(plob->GenerateMesh());
@@ -39,7 +47,7 @@ int main(int argc, char **argv)
     std::ofstream scenefile("scene.pov");
     scenefile << POVR::POVSceneFile(filename);
     scenefile.clear();
-
+    */
     std::cout << "done." << std::endl;
 
     delete plob;
