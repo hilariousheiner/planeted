@@ -16,6 +16,8 @@
 using namespace Planeted;
 
 char *filename = nullptr;
+bool objOutput = false;
+
 bool readargs(int argc, char** argv);
 
 void usage();
@@ -34,20 +36,22 @@ int main(int argc, char **argv)
 
     std::cout << "Writing mesh to \"" << filename << "\"...\n";
     std::ofstream meshfile(filename);
-    meshfile << OBJ::MeshToOBJ(plob->GenerateMesh());
+
+    if(objOutput == true)
+    {
+        meshfile << OBJ::MeshToOBJ(plob->GenerateMesh());
+    }
+    else
+    {
+        meshfile << POVR::MeshToPOVMesh2(plob->GenerateMesh());
+
+        std::cout << "Writing scene file...\n";
+        std::ofstream scenefile("scene.pov");
+        scenefile << POVR::POVSceneFile(filename);
+        scenefile.close();
+    }
     meshfile.close();
 
-    /*
-    std::cout << "Writing mesh to \"" << filename << "\"..." << std::endl;
-    std::ofstream meshfile(filename);
-    meshfile << POVR::MeshToPOVMesh2(plob->GenerateMesh());
-    meshfile.close();
-
-    std::cout << "Writing scene file..." << std::endl;
-    std::ofstream scenefile("scene.pov");
-    scenefile << POVR::POVSceneFile(filename);
-    scenefile.clear();
-    */
     std::cout << "done." << std::endl;
 
     delete plob;
@@ -64,16 +68,25 @@ bool readargs(int argc, char **argv)
     struct option longopts[] =
     {
         {"filename", required_argument, NULL, 'f'},
+        {"output", required_argument, NULL, 'o'},
         {NULL, 0, NULL, 0}
     };
 
-    while((c = getopt_long(argc, argv, "f:", longopts, &longindex)) != -1)
+    while((c = getopt_long(argc, argv, "f:o:", longopts, &longindex)) != -1)
     {
         switch(c)
         {
         case 'f':
             filename = optarg;
             result = true;
+            break;
+        case 'o':
+            if(std::string(optarg) == "obj")
+            {
+                objOutput = true;
+            }
+            break;
+        default:
             break;
         }
     }
