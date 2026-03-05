@@ -35,6 +35,8 @@ int main(int argc, char **argv)
     Asteroid *plob = new Asteroid();
     Mesh& mesh = plob->GenerateMesh();
 
+    std::cout << "done (" << mesh.VertexCount() << " vertices and " << mesh.TriangleCount() << " triangles).\n";
+
     std::cout << "Writing mesh to \"" << filename << "\"...\n";
     std::ofstream meshfile(filename);
 
