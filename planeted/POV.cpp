@@ -27,7 +27,7 @@ namespace Planeted
             return stream.str();
         }
 
-        std::string MeshToPOVMesh2(Mesh *mesh)
+        std::string MeshToPOVMesh2(Mesh& mesh)
         {
             std::stringstream stream;
 
@@ -35,9 +35,9 @@ namespace Planeted
             stream << "{\n";
             stream << "\tvertex_vectors\n";
             stream << "\t{\n";
-            stream << "\t\t" << mesh->VertexCount();
+            stream << "\t\t" << mesh.VertexCount();
 
-            for(Vector3 v : mesh->Vertices())
+            for(Vector3 v : mesh.Vertices())
             {
                 stream << ",\n\t\t" << Vector3ToPOV(&v);
             }
@@ -45,9 +45,9 @@ namespace Planeted
 
             stream << "\tface_indices\n";
             stream << "\t{\n";
-            stream << "\t\t" << mesh->TriangleCount();
+            stream << "\t\t" << mesh.TriangleCount();
 
-            for(TriangleIndices i : mesh->Triangles())
+            for(TriangleIndices i : mesh.Triangles())
             {
                 stream << ",\n\t\t" << TriangleIndicesToPOV(&i);
             }

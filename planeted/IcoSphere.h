@@ -35,9 +35,9 @@ namespace Planeted
             delete this->mesh;
         }
 
-        Mesh *GenerateMesh() override
+        Mesh& GenerateMesh() override
         {
-            return this->mesh;
+            return *(this->mesh);
         }
     };
 }

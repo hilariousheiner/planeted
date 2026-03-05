@@ -13,7 +13,7 @@ namespace Planeted
         std::string Vector3ToPOV(Vector3 *vector3);
         std::string TriangleIndicesToPOV(TriangleIndices *indices);
 
-        std::string MeshToPOVMesh2(Mesh *mesh);
+        std::string MeshToPOVMesh2(Mesh& mesh);
 
         std::string POVSceneFile(const char *modelFilename);
     }

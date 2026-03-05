@@ -33,20 +33,22 @@ int main(int argc, char **argv)
     std::cout << "Generating mesh..." << std::endl;
 
     Asteroid *plob = new Asteroid();
+    Mesh& mesh = plob->GenerateMesh();
 
     std::cout << "Writing mesh to \"" << filename << "\"...\n";
     std::ofstream meshfile(filename);
 
     if(objOutput == true)
     {
-        meshfile << OBJ::MeshToOBJ(plob->GenerateMesh());
+        meshfile << OBJ::MeshToOBJ(mesh);
     }
     else
     {
-        meshfile << POVR::MeshToPOVMesh2(plob->GenerateMesh());
+        meshfile << POVR::MeshToPOVMesh2(mesh);
 
         std::cout << "Writing scene file...\n";
         std::ofstream scenefile("scene.pov");
+
         scenefile << POVR::POVSceneFile(filename);
         scenefile.close();
     }

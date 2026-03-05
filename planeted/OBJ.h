@@ -13,7 +13,7 @@ namespace Planeted
         std::string Vector3ToOBJ(Vector3 *vector3);
         std::string TriangleIndicesToOBJ(TriangleIndices *indices);
 
-        std::string MeshToOBJ(Mesh *mesh);
+        std::string MeshToOBJ(Mesh& mesh);
     }
 }
 #endif // PLANETED_OBJ_H

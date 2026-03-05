@@ -27,17 +27,17 @@ namespace Planeted
             return stream.str();
         }
 
-        std::string MeshToOBJ(Mesh *mesh)
+        std::string MeshToOBJ(Mesh& mesh)
         {
             std::stringstream stream;
 
-            for(Vector3 v : mesh->Vertices())
+            for(Vector3 v : mesh.Vertices())
             {
                 stream << Vector3ToOBJ(&v) << "\n";
             }
             stream << "\n";
 
-            for(TriangleIndices i : mesh->Triangles())
+            for(TriangleIndices i : mesh.Triangles())
             {
                 stream << TriangleIndicesToOBJ(&i) << "\n";
             }
