@@ -14,7 +14,17 @@ namespace Planeted
 
         int GetMiddlePoint(int p1, int p2)
         {
-            if(this->middlePointIndexCache.find({p1, p2}) == this->middlePointIndexCache.end())
+            std::pair<int, int> entry;
+            if(p1 <= p2)
+            {
+                entry = {p1, p2};
+            }
+            else
+            {
+                entry = {p2, p1};
+            }
+
+            if(this->middlePointIndexCache.find(entry) == this->middlePointIndexCache.end())
             {
                 Vector3 *point1 = this->mesh->GetVertex(p1);
                 Vector3 *point2 = this->mesh->GetVertex(p2);
@@ -25,9 +35,9 @@ namespace Planeted
 
                 int i = this->mesh->AddVertex(middleX, middleY, middleZ);
 
-                this->middlePointIndexCache[{p1, p2}] = i;
+                this->middlePointIndexCache[entry] = i;
             }
-            return this->middlePointIndexCache[{p1, p2}];
+            return this->middlePointIndexCache[entry];
         }
     };
 
