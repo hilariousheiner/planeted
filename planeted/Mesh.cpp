@@ -48,6 +48,12 @@ namespace Planeted
     {
         return {this->vertices.begin(), this->vertices.end()};
     }
+
+    VertexIterator Mesh::Normals() const
+    {
+        return {this->normals.begin(), this->normals.end()};
+    }
+
     TriangleIterator Mesh::Triangles() const
     {
         return {this->triangles.begin(), this->triangles.end()};
@@ -59,5 +65,42 @@ namespace Planeted
         {
             v.Normalize();
         }
+    }
+
+    int addNormal(Vector3 n, std::vector<Vector3>& normals);
+    inline Vector3 calculateNormal(TriangleIndices i, std::vector<Vector3>& vertices);
+
+    void Mesh::CalculateNormals()
+    {
+        for(TriangleIndices& i : this->triangles)
+        {
+            Vector3 normal = calculateNormal(i, this->vertices);
+            i.n = addNormal(normal, this->normals);
+        }
+    }
+
+    inline Vector3 calculateNormal(TriangleIndices i, std::vector<Vector3>& vertices)
+    {
+        const Vector3& v0 = vertices[i.a];
+        const Vector3& v1 = vertices[i.b];
+        const Vector3& v2 = vertices[i.c];
+
+        Vector3 edge1 = v1 - v0;
+        Vector3 edge2 = v2 - v0;
+
+        Vector3 normal = edge1.Cross(edge2);
+
+        normal.Normalize();
+
+        return normal;
+    }
+
+    int addNormal(Vector3 n, std::vector<Vector3>& normals)
+    {
+        int result = normals.size();
+
+        normals.push_back(n);
+
+        return result;
     }
 }

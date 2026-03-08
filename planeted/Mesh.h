@@ -8,7 +8,7 @@ namespace Planeted
 {
     struct TriangleIndices
     {
-        int a, b, c;
+        int a, b, c, n;
     };
 
     struct VertexIterator
@@ -42,12 +42,15 @@ namespace Planeted
         int TriangleCount();
 
         VertexIterator Vertices() const;
+        VertexIterator Normals() const;
         TriangleIterator Triangles() const;
 
         void ProjectToUnitSphere();
+        void CalculateNormals();
 
     private:
         std::vector<Vector3> vertices;
+        std::vector<Vector3> normals;
         std::vector<TriangleIndices> triangles;
     };
 }
