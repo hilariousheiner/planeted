@@ -26,6 +26,21 @@ namespace Planeted
         return this->z;
     }
 
+    Vector3 Vector3::operator-(const Vector3& other) const
+    {
+        return {this->x - other.x, this->y - other.y, this->z - other.z};
+    }
+
+    Vector3 Vector3::Cross(const Vector3& other) const
+    {
+        return
+        {
+            this->y * other.z - this->z * other.y,
+            this->z * other.x - this->x * other.z,
+            this->x * other.y - this->y * other.x
+        };
+    }
+
     Vector3& Vector3::operator*=(float scalar)
     {
         this->x *= scalar;

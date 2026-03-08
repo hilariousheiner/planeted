@@ -17,7 +17,10 @@ namespace Planeted
             float Y();
             float Z();
 
+            Vector3 operator-(const Vector3& other) const;
             Vector3& operator*=(float scalar);
+
+            Vector3 Cross(const Vector3& other) const;
 
             float Magnitude();
             float SquareMagnitude();
