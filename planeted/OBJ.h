@@ -10,10 +10,6 @@ namespace Planeted
 {
     namespace OBJ
     {
-        std::string Vector3ToOBJ(Vector3 *vector3);
-        std::string NormalToOBJ(Vector3 *normal);
-        std::string TriangleIndicesToOBJ(TriangleIndices *indices);
-
         std::string MeshToOBJ(Mesh& mesh);
     }
 }
