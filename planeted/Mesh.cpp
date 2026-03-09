@@ -44,12 +44,12 @@ namespace Planeted
         return this->triangles.size();
     }
 
-    VertexIterator Mesh::Vertices() const
+    VectorIterator Mesh::Vertices() const
     {
         return {this->vertices.begin(), this->vertices.end()};
     }
 
-    VertexIterator Mesh::Normals() const
+    VectorIterator Mesh::Normals() const
     {
         return {this->normals.begin(), this->normals.end()};
     }

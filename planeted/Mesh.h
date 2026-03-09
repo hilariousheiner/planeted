@@ -14,7 +14,7 @@ namespace Planeted
         int n;
     };
 
-    struct VertexIterator
+    struct VectorIterator
     {
         std::vector<Vector3>::const_iterator _begin;
         std::vector<Vector3>::const_iterator _end;
@@ -44,8 +44,8 @@ namespace Planeted
         int VertexCount();
         int TriangleCount();
 
-        VertexIterator Vertices() const;
-        VertexIterator Normals() const;
+        VectorIterator Vertices() const;
+        VectorIterator Normals() const;
         TriangleIterator Triangles() const;
 
         void ProjectToUnitSphere();
