@@ -8,7 +8,10 @@ namespace Planeted
 {
     struct TriangleIndices
     {
-        int a, b, c, n;
+        int v0;
+        int v1;
+        int v2;
+        int n;
     };
 
     struct VertexIterator

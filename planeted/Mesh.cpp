@@ -31,7 +31,7 @@ namespace Planeted
         this->triangles.clear();
         for(TriangleIndices tri : tris)
         {
-            this->AddTriangle(tri.a, tri.b, tri.c);
+            this->AddTriangle(tri.v0, tri.v1, tri.v2);
         }
     }
 
@@ -81,9 +81,9 @@ namespace Planeted
 
     inline Vector3 calculateNormal(TriangleIndices i, std::vector<Vector3>& vertices)
     {
-        const Vector3& v0 = vertices[i.a];
-        const Vector3& v1 = vertices[i.b];
-        const Vector3& v2 = vertices[i.c];
+        const Vector3& v0 = vertices[i.v0];
+        const Vector3& v1 = vertices[i.v1];
+        const Vector3& v2 = vertices[i.v2];
 
         Vector3 edge1 = v1 - v0;
         Vector3 edge2 = v2 - v0;

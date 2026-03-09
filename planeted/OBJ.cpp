@@ -33,9 +33,9 @@ namespace Planeted
             std::stringstream stream;
 
             stream << "f ";
-            stream << indices->a + 1 << "//" << indices->n + 1 << " ";
-            stream << indices->b + 1 << "//" << indices->n + 1<< " ";
-            stream << indices->c + 1 << "//" << indices->n + 1;
+            stream << indices->v0 + 1 << "//" << indices->n + 1 << " ";
+            stream << indices->v1 + 1 << "//" << indices->n + 1<< " ";
+            stream << indices->v2 + 1 << "//" << indices->n + 1;
 
             return stream.str();
         }

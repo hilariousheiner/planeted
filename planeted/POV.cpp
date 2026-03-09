@@ -22,7 +22,7 @@ namespace Planeted
         {
             std::stringstream stream;
 
-            stream << "<" << indices->a << "," << indices->b << "," << indices->c << ">";
+            stream << "<" << indices->v0 << "," << indices->v1 << "," << indices->v2 << ">";
 
             return stream.str();
         }
