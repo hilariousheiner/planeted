@@ -20,6 +20,7 @@ namespace Planeted
 
             Vector3 operator-(const Vector3& other) const;
             Vector3& operator*=(float scalar);
+            Vector3& operator+=(const Vector3& other);
 
             Vector3 Cross(const Vector3& other) const;
 
