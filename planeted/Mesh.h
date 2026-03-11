@@ -32,9 +32,17 @@ namespace Planeted
         std::vector<TriangleIndices>::const_iterator end() const { return _end; }
     };
 
+    enum class NormalTypeEnum
+    {
+        None,
+        PerFace,
+        PerVertex
+    };
+
     class Mesh
     {
     public:
+        Mesh();
         int AddVertex(float x, float y, float z);
         Vector3 *GetVertex(size_t id);
 
@@ -49,9 +57,10 @@ namespace Planeted
         TriangleIterator Triangles() const;
 
         void ProjectToUnitSphere();
-        void CalculateNormals();
+        void CalculateNormals(NormalTypeEnum normalType);
 
     private:
+        NormalTypeEnum normalType;
         std::vector<Vector3> vertices;
         std::vector<Vector3> normals;
         std::vector<TriangleIndices> triangles;

@@ -24,7 +24,7 @@ namespace Planeted
                 float scalar = 1.0f + (Random::Range(0.0f, 1.0f) * 0.25f);
                 *vertex *= scalar;
             }
-            this->mesh->CalculateNormals();
+            this->mesh->CalculateNormals(NormalTypeEnum::PerFace);
         }
         ~Asteroid() override
         {
