@@ -59,6 +59,8 @@ namespace Planeted
         void ProjectToUnitSphere();
         void CalculateNormals(NormalTypeEnum normalType);
 
+        NormalTypeEnum GetNormalType();
+
     private:
         NormalTypeEnum normalType;
         std::vector<Vector3> vertices;

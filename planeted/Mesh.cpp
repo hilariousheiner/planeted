@@ -71,6 +71,13 @@ namespace Planeted
         }
     }
 
+
+    NormalTypeEnum Mesh::GetNormalType()
+    {
+        return this->normalType;
+    }
+
+
     int addNormal(Vector3 n, std::vector<Vector3>& normals);
     inline Vector3 calculateNormal(TriangleIndices i, std::vector<Vector3>& vertices);
 
@@ -102,6 +109,7 @@ namespace Planeted
                     this->normals[i.v1] += normal;
                     this->normals[i.v2] += normal;
                 }
+
                 break;
             case NormalTypeEnum::None:
             default:
