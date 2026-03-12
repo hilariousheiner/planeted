@@ -61,6 +61,7 @@ namespace Planeted
         this->x += other.x;
         this->y += other.y;
         this->z += other.z;
+        return *this;
     }
 
     float Vector3::Magnitude()
