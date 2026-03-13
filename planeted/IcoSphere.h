@@ -8,37 +8,17 @@
 
 namespace Planeted
 {
-    Mesh *MakeIcosphere()
-    {
-        Mesh *result = MakeIcosahedron();
-        MeshSubdivider subdivider(result);
-
-        subdivider.Subdivide();
-        subdivider.Subdivide();
-
-        result->ProjectToUnitSphere();
-
-        return result;
-    }
+    Mesh *MakeIcosphere();
 
     class IcoSphere : public PlOb
     {
+    public:
+        IcoSphere();
+        ~IcoSphere() override;
+
+        Mesh& GenerateMesh() override;
     private:
         Mesh *mesh;
-    public:
-        IcoSphere()
-        {
-            this->mesh = MakeIcosphere();
-        }
-        ~IcoSphere() override
-        {
-            delete this->mesh;
-        }
-
-        Mesh& GenerateMesh() override
-        {
-            return *(this->mesh);
-        }
     };
 }
 #endif // PLANETED_ICOSPHERE_H

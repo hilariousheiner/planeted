@@ -33,6 +33,7 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="Asteroid.h" />
+		<Unit filename="IcoSphere.cpp" />
 		<Unit filename="IcoSphere.h" />
 		<Unit filename="Icosahedron.cpp" />
 		<Unit filename="Icosahedron.h" />
