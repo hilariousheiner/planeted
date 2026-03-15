@@ -8,7 +8,8 @@
 
 namespace Planeted
 {
-    Mesh *MakeIcosphere();
+    // d is number of subdivisions
+    Mesh *MakeIcosphere(int d);
 
     class IcoSphere : public PlOb
     {

@@ -16,7 +16,7 @@ namespace Planeted
     public:
         Asteroid()
         {
-            this->mesh = MakeIcosphere();
+            this->mesh = MakeIcosphere(4);
 
             for(int id = 0; id < this->mesh->VertexCount(); ++id)
             {

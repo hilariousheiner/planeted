@@ -2,13 +2,17 @@
 
 namespace Planeted
 {
-    Mesh *MakeIcosphere()
+    Mesh *MakeIcosphere(int d)
     {
         Mesh *result = MakeIcosahedron();
         MeshSubdivider subdivider(result);
 
-        subdivider.Subdivide();
-        subdivider.Subdivide();
+        int i = 0;
+        while(i < d)
+        {
+            subdivider.Subdivide();
+            ++i;
+        }
 
         result->ProjectToUnitSphere();
 
@@ -17,7 +21,7 @@ namespace Planeted
 
     IcoSphere::IcoSphere()
     {
-        this->mesh = MakeIcosphere();
+        this->mesh = MakeIcosphere(2);
     }
 
     IcoSphere::~IcoSphere()
