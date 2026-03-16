@@ -10,31 +10,13 @@ namespace Planeted
 {
     class Asteroid : public PlOb
     {
+    public:
+        Asteroid();
+        ~Asteroid() override;
+
+        Mesh& GenerateMesh() override;
     private:
         Mesh *mesh;
-
-    public:
-        Asteroid()
-        {
-            this->mesh = MakeIcosphere(4);
-
-            for(int id = 0; id < this->mesh->VertexCount(); ++id)
-            {
-                Vector3 *vertex = this->mesh->GetVertex(id);
-                float scalar = 1.0f + (Random::Range(0.0f, 1.0f) * 0.25f);
-                *vertex *= scalar;
-            }
-            this->mesh->CalculateNormals(NormalTypeEnum::PerVertex);
-        }
-        ~Asteroid() override
-        {
-            delete this->mesh;
-        }
-
-        Mesh& GenerateMesh() override
-        {
-            return *(this->mesh);
-        }
     };
 }
 #endif // PLANETED_ASTEROID_H
