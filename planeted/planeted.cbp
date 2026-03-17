@@ -34,6 +34,7 @@
 		</Compiler>
 		<Unit filename="Asteroid.cpp" />
 		<Unit filename="Asteroid.h" />
+		<Unit filename="Color.h" />
 		<Unit filename="IcoSphere.cpp" />
 		<Unit filename="IcoSphere.h" />
 		<Unit filename="Icosahedron.cpp" />
@@ -46,6 +47,8 @@
 		<Unit filename="OBJ.h" />
 		<Unit filename="POV.cpp" />
 		<Unit filename="POV.h" />
+		<Unit filename="PPM.h" />
+		<Unit filename="PixelMap.h" />
 		<Unit filename="PlOb.h" />
 		<Unit filename="Random.cpp" />
 		<Unit filename="Random.h" />
