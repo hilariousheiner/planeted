@@ -10,7 +10,8 @@
 #include "Mesh.h"
 #include "POV.h"
 #include "OBJ.h"
-
+#include "Color.h"
+#include "PixelMap.h"
 #include "IcoSphere.h"
 
 using namespace Planeted;
@@ -57,6 +58,9 @@ int main(int argc, char **argv)
     meshfile.close();
 
     std::cout << "done." << std::endl;
+
+    PixelMap pixMap = PixelMap(64, 64);
+    pixMap.FillRect(0, 0, 64, 64, Colors::Green);
 
     delete plob;
 
