@@ -23,13 +23,11 @@ namespace Planeted
             stream << width << " " << height << "\n";
             stream << "255\n";
 
-            for (int i = 0; i < width * height; ++i)
+            for (const Color& pixel : data)
             {
-                const Color& c = data[i];
-
-                stream << static_cast<int>(c.R) << " ";
-                stream << static_cast<int>(c.G) << " "
-                stream << static_cast<int>(c.B) << "\n";
+                stream << static_cast<int>(pixel.R) << " ";
+                stream << static_cast<int>(pixel.G) << " ";
+                stream << static_cast<int>(pixel.B) << "\n";
             }
             return stream.str();
         }
