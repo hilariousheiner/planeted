@@ -9,6 +9,7 @@
 #include "Vector3.h"
 #include "Mesh.h"
 #include "POV.h"
+#include "PPM.h"
 #include "OBJ.h"
 #include "Color.h"
 #include "PixelMap.h"
@@ -59,11 +60,19 @@ int main(int argc, char **argv)
 
     std::cout << "done." << std::endl;
 
+    delete plob;
+
+    //ppm test:
+    std::cout << "running ppm test" << std::endl;
+
     PixelMap pixMap = PixelMap(64, 64);
     pixMap.FillRect(0, 0, 64, 64, Colors::Green);
 
-    delete plob;
+    std::ofstream ppmfile("test.ppm");
 
+    ppmfile << PPM::PixelMapToPPM(pixMap);
+
+    std::cout << "done." << std::endl;
     return EXIT_SUCCESS;
 }
 
