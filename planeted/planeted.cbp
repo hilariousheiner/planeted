@@ -47,6 +47,7 @@
 		<Unit filename="OBJ.h" />
 		<Unit filename="POV.cpp" />
 		<Unit filename="POV.h" />
+		<Unit filename="PPM.cpp" />
 		<Unit filename="PPM.h" />
 		<Unit filename="PixelMap.h" />
 		<Unit filename="PlOb.h" />
