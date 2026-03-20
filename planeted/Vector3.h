@@ -1,32 +1,26 @@
 #ifndef PLANETED_VECTOR3_H
 #define PLANETED_VECTOR3_H
 
-#include <string>
-
 namespace Planeted
 {
-    class Vector3
+    struct Vector3
     {
-        private:
-            float x, y, z;
+        float X;
+        float Y;
+        float Z;
 
-        public:
-            Vector3();
-            Vector3(float x, float y, float z);
+        Vector3();
+        Vector3(float x, float y, float z);
 
-            float X();
-            float Y();
-            float Z();
+        Vector3 operator-(const Vector3& other) const;
+        Vector3& operator*=(float scalar);
+        Vector3& operator+=(const Vector3& other);
 
-            Vector3 operator-(const Vector3& other) const;
-            Vector3& operator*=(float scalar);
-            Vector3& operator+=(const Vector3& other);
+        Vector3 Cross(const Vector3& other) const;
 
-            Vector3 Cross(const Vector3& other) const;
-
-            float Magnitude();
-            float SquareMagnitude();
-            void Normalize();
+        float Magnitude();
+        float SquareMagnitude();
+        void Normalize();
     };
 }
 #endif

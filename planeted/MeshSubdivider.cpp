@@ -29,9 +29,9 @@ namespace Planeted
                 Vector3 *point1 = this->mesh->GetVertex(p1);
                 Vector3 *point2 = this->mesh->GetVertex(p2);
 
-                float middleX = (point1->X() + point2->X()) / 2.0;
-                float middleY = (point1->Y() + point2->Y()) / 2.0;
-                float middleZ = (point1->Z() + point2->Z()) / 2.0;
+                float middleX = (point1->X + point2->X) / 2.0;
+                float middleY = (point1->Y + point2->Y) / 2.0;
+                float middleZ = (point1->Z + point2->Z) / 2.0;
 
                 int i = this->mesh->AddVertex(middleX, middleY, middleZ);
 

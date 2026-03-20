@@ -8,59 +8,51 @@ namespace Planeted
 {
     Vector3::Vector3()
     {
-        this->x = 0.0f;
-        this->y = 0.0f;
-        this->z = 0.0f;
+        this->X = 0.0f;
+        this->Y = 0.0f;
+        this->Z = 0.0f;
     }
 
     Vector3::Vector3(float x, float y, float z)
     {
-        this->x = x;
-        this->y = y;
-        this->z = z;
-    }
-
-    float Vector3::X()
-    {
-        return this->x;
-    }
-    float Vector3::Y()
-    {
-        return this->y;
-    }
-    float Vector3::Z()
-    {
-        return this->z;
+        this->X = x;
+        this->Y = y;
+        this->Z = z;
     }
 
     Vector3 Vector3::operator-(const Vector3& other) const
     {
-        return {this->x - other.x, this->y - other.y, this->z - other.z};
+        return
+        {
+            this->X - other.X,
+            this->Y - other.Y,
+            this->Z - other.Z
+        };
     }
 
     Vector3 Vector3::Cross(const Vector3& other) const
     {
         return
         {
-            this->y * other.z - this->z * other.y,
-            this->z * other.x - this->x * other.z,
-            this->x * other.y - this->y * other.x
+            this->Y * other.Z - this->Z * other.Y,
+            this->Z * other.X - this->X * other.Z,
+            this->X * other.Y - this->Y * other.X
         };
     }
 
     Vector3& Vector3::operator*=(float scalar)
     {
-        this->x *= scalar;
-        this->y *= scalar;
-        this->z *= scalar;
+        this->X *= scalar;
+        this->Y *= scalar;
+        this->Z *= scalar;
         return *this;
     }
 
     Vector3& Vector3::operator+=(const Vector3& other)
     {
-        this->x += other.x;
-        this->y += other.y;
-        this->z += other.z;
+        this->X += other.X;
+        this->Y += other.Y;
+        this->Z += other.Z;
         return *this;
     }
 
@@ -71,15 +63,15 @@ namespace Planeted
 
     float Vector3::SquareMagnitude()
     {
-        return square(this->x) + square(this->y) + square(this->z);
+        return square(this->X) + square(this->Y) + square(this->Z);
     }
 
     void Vector3::Normalize()
     {
         float m = this->Magnitude();
 
-        this->x = this->x / m;
-        this->y = this->y / m;
-        this->z = this->z / m;
+        this->X = this->X / m;
+        this->Y = this->Y / m;
+        this->Z = this->Z / m;
     }
 }
