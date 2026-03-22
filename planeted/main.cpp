@@ -63,11 +63,21 @@ int main(int argc, char **argv)
 
     delete plob;
 
-    //ppm test:
-    std::cout << "running ppm test" << std::endl;
+    //noise test:
+    std::cout << "running noise test" << std::endl;
 
-    PixelMap pixMap = PixelMap(64, 64);
-    pixMap.FillRect(0, 0, 64, 64, Colors::Green);
+    PixelMap pixMap = PixelMap(512, 512);
+    for(int x = 0; x < 512; ++x)
+    {
+        for(int y = 0; y < 512; ++y)
+        {
+            std::uint8_t n = ToUint8(ValueNoise::GetValue(x * 0.05f));
+
+            Color c {n, n, n};
+
+            pixMap.PutPixel(x, y, c);
+        }
+    }
 
     std::ofstream ppmfile("test.ppm");
 
