@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
+#include <iostream>
 #include <random>
 
 namespace Planeted
@@ -33,7 +34,7 @@ namespace Planeted
     }
 
     template <typename T, typename U>
-    inline SmoothStep(const T &a, const T &b, const U &t)
+    inline T SmoothStep(const T &a, const T &b, const U &t)
     {
         U x = Clamp01(t);
         x = x * x * (static_cast<U>(3) - static_cast<U>(2) * x);
@@ -41,9 +42,9 @@ namespace Planeted
     }
 
     template <typename T, typename U>
-    inline SmoothStepUnclamped(const T &a, const T &b, const U &t)
+    inline T SmoothStepUnclamped(const T &a, const T &b, const U &t)
     {
-        U x = t * t * (static_cast<U>(3) - static_cast<U>(2) * x);
+        U x = t * t * (static_cast<U>(3) - static_cast<U>(2) * t);
         return LerpUnclamped(a, b, x);
     }
 
@@ -69,8 +70,8 @@ namespace Planeted
             int p0 = pi & (ValueNoise::tableSize - 1);
             int p1 = (p0 + 1) & (ValueNoise::tableSize - 1);
 
-            const float &c0 = ValueNoise::valueTable()[ValueNoise::permute(p0)];
-            const float &c1 = ValueNoise::valueTable()[ValueNoise::permute(p1)];
+            const float &c0 = ValueNoise::valueTable()[p0];
+            const float &c1 = ValueNoise::valueTable()[p1];
 
             return SmoothStepUnclamped(c0, c1, p - pi);
         }
