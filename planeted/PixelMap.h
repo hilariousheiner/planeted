@@ -14,7 +14,7 @@ namespace Planeted
     public:
 
         PixelMap(int width, int height)
-            : width(width), height(height), pixels(width * height, Colors::Black)
+            : width(width), height(height), pixels(width * height, Colors::Green)
         { }
 
         void PutPixel(int x, int y, const Color& color)
