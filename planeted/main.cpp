@@ -7,6 +7,7 @@
 #include "Asteroid.h"
 #include "Icosahedron.h"
 #include "Vector3.h"
+#include "Math.h"
 #include "Mesh.h"
 #include "POV.h"
 #include "PPM.h"
@@ -71,11 +72,8 @@ int main(int argc, char **argv)
     {
         for(int y = 0; y < 512; ++y)
         {
-            std::uint8_t n = ToUint8(ValueNoise::GetValue(x * 0.05f));
-
-            Color c {n, n, n};
-
-            pixMap.PutPixel(x, y, c);
+            std::uint8_t n = ToUint8(ValueNoise::GetValue({x * 0.05f, y * 0.05f}));
+            pixMap.PutPixel(x, y, {n, n, n});
         }
     }
 
