@@ -21,8 +21,8 @@ namespace Planeted
             int p0 = pi & (ValueNoise::tableSize - 1);
             int p1 = (p0 + 1) & (ValueNoise::tableSize - 1);
 
-            const float &c0 = ValueNoise::valueTable()[p0];
-            const float &c1 = ValueNoise::valueTable()[p1];
+            const float &c0 = ValueNoise::valueTable()[ValueNoise::permute(p0)];
+            const float &c1 = ValueNoise::valueTable()[ValueNoise::permute(p1)];
 
             return SmoothStepUnclamped(c0, c1, p - pi);
         }
@@ -86,15 +86,13 @@ namespace Planeted
             {
                 std::array<unsigned int, ValueNoise::tableSize *2> tmp;
 
-                unsigned int i = 0;
-                for(unsigned int &entry : tmp)
+                for(unsigned int i = 0; i < ValueNoise::tableSize; ++i)
                 {
-                    entry = i;
-                    ++i;
+                    tmp[i] = i;
+                    tmp[i + ValueNoise::tableSize] = i;
                 }
 
                 std::mt19937 engine(std::random_device{}());
-
                 std::shuffle(tmp.begin(), tmp.end(), engine);
 
                 return tmp;
