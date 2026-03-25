@@ -18,13 +18,13 @@ namespace Planeted
     template <typename T, typename U>
     inline T Lerp(const T &a, const T &b, const U &t)
     {
-        return a + (b - 1) * Clamp01(t);
+        return a + (b - a) * Clamp01(t);
     }
 
     template <typename T, typename U>
     inline T LerpUnclamped(const T &a, const T &b, const U &t)
     {
-        return a + (b - 1) * t;
+        return a + (b - a) * t;
     }
 
     template <typename T, typename U>
