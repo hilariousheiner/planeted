@@ -8,6 +8,7 @@
 #include <random>
 
 #include "Math.h"
+#include "Vector2.h"
 
 namespace Planeted
 {

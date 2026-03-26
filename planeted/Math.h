@@ -47,11 +47,5 @@ namespace Planeted
         int i = static_cast<int>(value);
         return (value < 0 && value != i) ? i - 1 : i;
     }
-
-    struct Vector2
-    {
-        float X;
-        float Y;
-    };
 }
 #endif // PLANETED_MATH_H
