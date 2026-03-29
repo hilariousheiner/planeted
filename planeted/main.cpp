@@ -72,8 +72,9 @@ int main(int argc, char **argv)
     {
         for(int y = 0; y < 512; ++y)
         {
-            std::uint8_t n = ToUint8(ValueNoise::GetValue({x * 0.05f, y * 0.05f}));
+            //std::uint8_t n = ToUint8(ValueNoise::GetValue({x * 0.05f, y * 0.05f}));
             //std::uint8_t n = ToUint8(ValueNoise::GetValue(x * 0.05f));
+            std::uint8_t n = ToUint8(ValueNoise::GetValue({x * 0.05f, y * 0.05f, 1}));
             pixMap.PutPixel(x, y, {n, n, n});
         }
     }
