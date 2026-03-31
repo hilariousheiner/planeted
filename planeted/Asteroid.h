@@ -1,6 +1,7 @@
 #ifndef PLANETED_ASTEROID_H
 #define PLANETED_ASTEROID_H
 
+#include "FBM.h"
 #include "PlOb.h"
 #include "Mesh.h"
 #include "IcoSphere.h"
