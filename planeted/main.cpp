@@ -5,6 +5,7 @@
 #include <cstdlib>
 
 #include "Asteroid.h"
+#include "FBM.h"
 #include "Icosahedron.h"
 #include "Vector3.h"
 #include "Math.h"
@@ -74,7 +75,10 @@ int main(int argc, char **argv)
         {
             //std::uint8_t n = ToUint8(ValueNoise::GetValue({x * 0.05f, y * 0.05f}));
             //std::uint8_t n = ToUint8(ValueNoise::GetValue(x * 0.05f));
-            std::uint8_t n = ToUint8(ValueNoise::GetValue({x * 0.05f, y * 0.05f, 1}));
+            //std::uint8_t n = ToUint8(ValueNoise::GetValue({x * 0.05f, y * 0.05f, 1}));
+
+            std::uint8_t n = ToUint8(fbm({x * 0.05f, y * 0.05f, 1}));
+
             pixMap.PutPixel(x, y, {n, n, n});
         }
     }
