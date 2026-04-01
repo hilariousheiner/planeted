@@ -9,7 +9,6 @@ namespace Planeted
         for(int id = 0; id < this->mesh->VertexCount(); ++id)
         {
             Vector3 *vertex = this->mesh->GetVertex(id);
-            //float scalar = ValueNoise::GetValue(*vertex) + Random::Range(0.0f, 0.1f);
             float scalar = fbm(*vertex);
             *vertex *= scalar;
         }

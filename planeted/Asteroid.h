@@ -2,9 +2,9 @@
 #define PLANETED_ASTEROID_H
 
 #include "FBM.h"
-#include "PlOb.h"
-#include "Mesh.h"
 #include "IcoSphere.h"
+#include "Mesh.h"
+#include "PlOb.h"
 #include "Random.h"
 #include "ValueNoise.h"
 
