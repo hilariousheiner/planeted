@@ -65,7 +65,8 @@ int main(int argc, char **argv)
 
     delete plob;
 
-    //noise test:
+
+/*    //noise test:
     std::cout << "running noise test" << std::endl;
 
     PixelMap pixMap = PixelMap(512, 512);
@@ -86,7 +87,7 @@ int main(int argc, char **argv)
     std::ofstream ppmfile("test.ppm");
 
     ppmfile << PPM::PixelMapToPPM(pixMap);
-
+*/
     std::cout << "done." << std::endl;
     return EXIT_SUCCESS;
 }
