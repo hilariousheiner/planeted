@@ -47,10 +47,11 @@ namespace Planeted
         Vector3 *GetVertex(size_t id);
 
         void AddTriangle(int a, int b, int c);
+
         void SetTriangles(std::vector<TriangleIndices> tris);
 
-        int VertexCount();
-        int TriangleCount();
+        int VertexCount() const;
+        int TriangleCount() const;
 
         VectorIterator Vertices() const;
         VectorIterator Normals() const;
@@ -59,7 +60,7 @@ namespace Planeted
         void ProjectToUnitSphere();
         void CalculateNormals(NormalTypeEnum normalType);
 
-        NormalTypeEnum GetNormalType();
+        NormalTypeEnum GetNormalType() const;
 
     private:
         NormalTypeEnum normalType;

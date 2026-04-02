@@ -39,11 +39,11 @@ namespace Planeted
         }
     }
 
-    int Mesh::VertexCount()
+    int Mesh::VertexCount() const
     {
         return this->vertices.size();
     }
-    int Mesh::TriangleCount()
+    int Mesh::TriangleCount() const
     {
         return this->triangles.size();
     }
@@ -72,7 +72,7 @@ namespace Planeted
     }
 
 
-    NormalTypeEnum Mesh::GetNormalType()
+    NormalTypeEnum Mesh::GetNormalType() const
     {
         return this->normalType;
     }
