@@ -87,8 +87,8 @@ int main(int argc, char **argv)
     std::ofstream ppmfile("test.ppm");
 
     ppmfile << PPM::PixelMapToPPM(pixMap);
-*/
     std::cout << "done." << std::endl;
+    */
     return EXIT_SUCCESS;
 }
 
