@@ -66,12 +66,12 @@ namespace Planeted
         return *this;
     }
 
-    float Vector3::Magnitude()
+    float Vector3::Magnitude() const
     {
         return sqrt(this->SquareMagnitude());
     }
 
-    float Vector3::SquareMagnitude()
+    float Vector3::SquareMagnitude() const
     {
         return square(this->X) + square(this->Y) + square(this->Z);
     }

@@ -19,8 +19,8 @@ namespace Planeted
 
         Vector3 Cross(const Vector3& other) const;
 
-        float Magnitude();
-        float SquareMagnitude();
+        float Magnitude() const;
+        float SquareMagnitude() const;
         void Normalize();
     };
 }
