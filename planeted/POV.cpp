@@ -6,7 +6,7 @@
 
 namespace Planeted
 {
-    namespace POVR
+    namespace POV
     {
         std::string Vector3ToPOV(Vector3 *vector3)
         {

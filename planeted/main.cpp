@@ -51,12 +51,12 @@ int main(int argc, char **argv)
     }
     else
     {
-        meshfile << POVR::MeshToPOVMesh2(mesh);
+        meshfile << POV::MeshToPOVMesh2(mesh);
 
         std::cout << "Writing scene file...\n";
         std::ofstream scenefile("scene.pov");
 
-        scenefile << POVR::POVSceneFile(filename);
+        scenefile << POV::POVSceneFile(filename);
         scenefile.close();
     }
     meshfile.close();
