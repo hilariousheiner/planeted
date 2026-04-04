@@ -4,7 +4,7 @@
 #include <cmath> // for std::round
 #include <cstdint>
 
-#include "ValueNoise.h" // for Clamp01
+#include "Math.h" // for Clamp01
 
 namespace Planeted
 {
