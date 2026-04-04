@@ -14,24 +14,6 @@ namespace Planeted
         int n;
     };
 
-    struct VectorIterator
-    {
-        std::vector<Vector3>::const_iterator _begin;
-        std::vector<Vector3>::const_iterator _end;
-
-        std::vector<Vector3>::const_iterator begin() const { return _begin; }
-        std::vector<Vector3>::const_iterator end() const { return _end; }
-    };
-
-    struct TriangleIterator
-    {
-        std::vector<TriangleIndices>::const_iterator _begin;
-        std::vector<TriangleIndices>::const_iterator _end;
-
-        std::vector<TriangleIndices>::const_iterator begin() const { return _begin; }
-        std::vector<TriangleIndices>::const_iterator end() const { return _end; }
-    };
-
     enum class NormalTypeEnum
     {
         None,
@@ -53,9 +35,9 @@ namespace Planeted
         int VertexCount() const;
         int TriangleCount() const;
 
-        VectorIterator Vertices() const;
-        VectorIterator Normals() const;
-        TriangleIterator Triangles() const;
+        std::vector<Vector3> Vertices() const;
+        std::vector<Vector3> Normals() const;
+        std::vector<TriangleIndices> Triangles() const;
 
         void ProjectToUnitSphere();
         void CalculateNormals(NormalTypeEnum normalType);

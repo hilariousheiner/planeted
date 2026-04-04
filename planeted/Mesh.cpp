@@ -48,19 +48,19 @@ namespace Planeted
         return this->triangles.size();
     }
 
-    VectorIterator Mesh::Vertices() const
+    std::vector<Vector3> Mesh::Vertices() const
     {
-        return {this->vertices.begin(), this->vertices.end()};
+        return this->vertices; //{this->vertices.begin(), this->vertices.end()};
     }
 
-    VectorIterator Mesh::Normals() const
+    std::vector<Vector3> Mesh::Normals() const
     {
-        return {this->normals.begin(), this->normals.end()};
+        return this->normals; //{this->normals.begin(), this->normals.end()};
     }
 
-    TriangleIterator Mesh::Triangles() const
+    std::vector<TriangleIndices> Mesh::Triangles() const
     {
-        return {this->triangles.begin(), this->triangles.end()};
+        return this->triangles; //{this->triangles.begin(), this->triangles.end()};
     }
 
     void Mesh::ProjectToUnitSphere()
