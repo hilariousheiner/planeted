@@ -8,7 +8,7 @@ namespace Planeted
 {
     namespace OBJ
     {
-        std::string Vertex3ToOBJ(Vector3& vector3)
+        std::string Vertex3ToOBJ(Vector3 &vector3)
         {
             std::stringstream stream;
 
@@ -18,7 +18,7 @@ namespace Planeted
             return stream.str();
         }
 
-        std::string NormalToOBJ(Vector3& normal)
+        std::string NormalToOBJ(Vector3 &normal)
         {
             std::stringstream stream;
 
@@ -56,7 +56,7 @@ namespace Planeted
             return stream.str();
         }
 
-        std::string MeshToOBJ(Mesh& mesh)
+        std::string MeshToOBJ(Mesh &mesh)
         {
             std::stringstream stream;
 
