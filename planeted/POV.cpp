@@ -8,26 +8,26 @@ namespace Planeted
 {
     namespace POV
     {
-        std::string Vector3ToPOV(Vector3 *vector3)
+        std::string Vector3ToPOV(Vector3 &vector3)
         {
             std::stringstream stream;
 
             stream << std::fixed << std::setprecision(4);
-            stream << "<" << vector3->X << "," << vector3->Y << "," << vector3->Z << ">";
+            stream << "<" << vector3.X << "," << vector3.Y << "," << vector3.Z << ">";
 
             return stream.str();
         }
 
-        std::string TriangleIndicesToPOV(TriangleIndices *indices)
+        std::string TriangleIndicesToPOV(TriangleIndices &indices)
         {
             std::stringstream stream;
 
-            stream << "<" << indices->v0 << "," << indices->v1 << "," << indices->v2 << ">";
+            stream << "<" << indices.v0 << "," << indices.v1 << "," << indices.v2 << ">";
 
             return stream.str();
         }
 
-        std::string MeshToPOVMesh2(Mesh& mesh)
+        std::string MeshToPOVMesh2(Mesh &mesh)
         {
             std::stringstream stream;
 
@@ -39,7 +39,7 @@ namespace Planeted
 
             for(Vector3 v : mesh.Vertices())
             {
-                stream << ",\n\t\t" << Vector3ToPOV(&v);
+                stream << ",\n\t\t" << Vector3ToPOV(v);
             }
             stream << "\n\t}\n";
 
@@ -49,7 +49,7 @@ namespace Planeted
 
             for(TriangleIndices i : mesh.Triangles())
             {
-                stream << ",\n\t\t" << TriangleIndicesToPOV(&i);
+                stream << ",\n\t\t" << TriangleIndicesToPOV(i);
             }
             stream << "\n\t}\n";
 
