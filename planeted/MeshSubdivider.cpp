@@ -56,13 +56,13 @@ namespace Planeted
 
         for(TriangleIndices tri : this->pImpl->mesh->Triangles())
         {
-            int v0 = this->pImpl->GetMiddlePoint(tri.v0, tri.v1);
-            int v1 = this->pImpl->GetMiddlePoint(tri.v1, tri.v2);
-            int v2 = this->pImpl->GetMiddlePoint(tri.v2, tri.v0);
+            int v0 = this->pImpl->GetMiddlePoint(tri.V0, tri.V1);
+            int v1 = this->pImpl->GetMiddlePoint(tri.V1, tri.V2);
+            int v2 = this->pImpl->GetMiddlePoint(tri.V2, tri.V0);
 
-            this->pImpl->newTris.push_back({tri.v0, v0, v2});
-            this->pImpl->newTris.push_back({tri.v1, v1, v0});
-            this->pImpl->newTris.push_back({tri.v2, v2, v1});
+            this->pImpl->newTris.push_back({tri.V0, v0, v2});
+            this->pImpl->newTris.push_back({tri.V1, v1, v0});
+            this->pImpl->newTris.push_back({tri.V2, v2, v1});
             this->pImpl->newTris.push_back({v0, v1, v2});
         }
         this->pImpl->mesh->SetTriangles(this->pImpl->newTris);

@@ -28,7 +28,7 @@ namespace Planeted
             return stream.str();
         }
 
-        std::string TriangleIndicesToOBJ(TriangleIndices& indices, NormalTypeEnum normalType)
+        std::string TriangleIndicesToOBJ(TriangleIndices &indices, NormalTypeEnum normalType)
         {
             std::stringstream stream;
 
@@ -37,20 +37,20 @@ namespace Planeted
             switch(normalType)
             {
                 case NormalTypeEnum::PerFace:
-                    stream << indices.v0 + 1 << "//" << indices.n + 1 << " ";
-                    stream << indices.v1 + 1 << "//" << indices.n + 1<< " ";
-                    stream << indices.v2 + 1 << "//" << indices.n + 1;
+                    stream << indices.V0 + 1 << "//" << indices.N + 1 << " ";
+                    stream << indices.V1 + 1 << "//" << indices.N + 1<< " ";
+                    stream << indices.V2 + 1 << "//" << indices.N + 1;
                     break;
                 case NormalTypeEnum::PerVertex:
-                    stream << indices.v0 + 1 << "//" << indices.v0 + 1 << " ";
-                    stream << indices.v1 + 1 << "//" << indices.v1 + 1<< " ";
-                    stream << indices.v2 + 1 << "//" << indices.v2 + 1;
+                    stream << indices.V0 + 1 << "//" << indices.V0 + 1 << " ";
+                    stream << indices.V1 + 1 << "//" << indices.V1 + 1<< " ";
+                    stream << indices.V2 + 1 << "//" << indices.V2 + 1;
                     break;
                 case NormalTypeEnum::None:
                 default:
-                    stream << indices.v0 + 1 << " ";
-                    stream << indices.v1 + 1 << " ";
-                    stream << indices.v2 + 1;
+                    stream << indices.V0 + 1 << " ";
+                    stream << indices.V1 + 1 << " ";
+                    stream << indices.V2 + 1;
                     break;
             }
             return stream.str();

@@ -35,7 +35,7 @@ namespace Planeted
         this->triangles.clear();
         for(TriangleIndices tri : tris)
         {
-            this->AddTriangle(tri.v0, tri.v1, tri.v2);
+            this->AddTriangle(tri.V0, tri.V1, tri.V2);
         }
     }
 
@@ -71,15 +71,13 @@ namespace Planeted
         }
     }
 
-
     NormalTypeEnum Mesh::GetNormalType() const
     {
         return this->normalType;
     }
 
-
-    int addNormal(Vector3 n, std::vector<Vector3>& normals);
-    inline Vector3 calculateNormal(TriangleIndices i, std::vector<Vector3>& vertices);
+    int addNormal(Vector3 n, std::vector<Vector3> &normals);
+    inline Vector3 calculateNormal(TriangleIndices i, std::vector<Vector3> &vertices);
 
     void Mesh::CalculateNormals(NormalTypeEnum normalType)
     {
@@ -94,7 +92,7 @@ namespace Planeted
                 for(TriangleIndices& i : this->triangles)
                 {
                     Vector3 normal = calculateNormal(i, this->vertices);
-                    i.n = addNormal(normal, this->normals);
+                    i.N = addNormal(normal, this->normals);
                 }
                 break;
             case NormalTypeEnum::PerVertex:
@@ -105,9 +103,9 @@ namespace Planeted
                 {
                     Vector3 normal = calculateNormal(i, this->vertices);
 
-                    this->normals[i.v0] += normal;
-                    this->normals[i.v1] += normal;
-                    this->normals[i.v2] += normal;
+                    this->normals[i.V0] += normal;
+                    this->normals[i.V1] += normal;
+                    this->normals[i.V2] += normal;
                 }
 
                 break;
@@ -123,11 +121,11 @@ namespace Planeted
         }
     }
 
-    inline Vector3 calculateNormal(TriangleIndices i, std::vector<Vector3>& vertices)
+    inline Vector3 calculateNormal(TriangleIndices i, std::vector<Vector3> &vertices)
     {
-        const Vector3& v0 = vertices[i.v0];
-        const Vector3& v1 = vertices[i.v1];
-        const Vector3& v2 = vertices[i.v2];
+        const Vector3 &v0 = vertices[i.V0];
+        const Vector3 &v1 = vertices[i.V1];
+        const Vector3 &v2 = vertices[i.V2];
 
         Vector3 edge1 = v1 - v0;
         Vector3 edge2 = v2 - v0;
@@ -137,7 +135,7 @@ namespace Planeted
         return normal;
     }
 
-    int addNormal(Vector3 n, std::vector<Vector3>& normals)
+    int addNormal(Vector3 n, std::vector<Vector3> &normals)
     {
         int result = normals.size();
 

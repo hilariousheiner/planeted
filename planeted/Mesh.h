@@ -8,10 +8,10 @@ namespace Planeted
 {
     struct TriangleIndices
     {
-        int v0;
-        int v1;
-        int v2;
-        int n;
+        int V0;
+        int V1;
+        int V2;
+        int N;
     };
 
     enum class NormalTypeEnum
