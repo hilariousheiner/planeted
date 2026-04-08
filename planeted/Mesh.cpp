@@ -48,24 +48,24 @@ namespace Planeted
         return this->triangles.size();
     }
 
-    std::vector<Vector3> Mesh::Vertices() const
+    const std::vector<Vector3> &Mesh::Vertices() const
     {
-        return this->vertices; //{this->vertices.begin(), this->vertices.end()};
+        return this->vertices;
     }
 
-    std::vector<Vector3> Mesh::Normals() const
+    const std::vector<Vector3> &Mesh::Normals() const
     {
-        return this->normals; //{this->normals.begin(), this->normals.end()};
+        return this->normals;
     }
 
-    std::vector<TriangleIndices> Mesh::Triangles() const
+    const std::vector<TriangleIndices> &Mesh::Triangles() const
     {
-        return this->triangles; //{this->triangles.begin(), this->triangles.end()};
+        return this->triangles;
     }
 
     void Mesh::ProjectToUnitSphere()
     {
-        for(Vector3& v : this->vertices)
+        for(Vector3 &v : this->vertices)
         {
             v.Normalize();
         }
@@ -89,7 +89,7 @@ namespace Planeted
 
                 this->normals.resize(this->triangles.size());
 
-                for(TriangleIndices& i : this->triangles)
+                for(TriangleIndices &i : this->triangles)
                 {
                     Vector3 normal = calculateNormal(i, this->vertices);
                     i.N = addNormal(normal, this->normals);
@@ -99,7 +99,7 @@ namespace Planeted
 
                 this->normals.resize(this->vertices.size());
 
-                for(TriangleIndices& i : this->triangles)
+                for(TriangleIndices &i : this->triangles)
                 {
                     Vector3 normal = calculateNormal(i, this->vertices);
 
@@ -115,7 +115,7 @@ namespace Planeted
                 break;
         }
 
-        for(Vector3& normal : this->normals)
+        for(Vector3 &normal : this->normals)
         {
             normal.Normalize();
         }

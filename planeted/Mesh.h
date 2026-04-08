@@ -35,9 +35,9 @@ namespace Planeted
         int VertexCount() const;
         int TriangleCount() const;
 
-        std::vector<Vector3> Vertices() const;
-        std::vector<Vector3> Normals() const;
-        std::vector<TriangleIndices> Triangles() const;
+        const std::vector<Vector3> &Vertices() const;
+        const std::vector<Vector3> &Normals() const;
+        const std::vector<TriangleIndices> &Triangles() const;
 
         void ProjectToUnitSphere();
         void CalculateNormals(NormalTypeEnum normalType);
