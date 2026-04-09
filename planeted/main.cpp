@@ -15,6 +15,7 @@
 #include "OBJ.h"
 #include "Color.h"
 #include "PixelMap.h"
+#include "STL.h"
 #include "IcoSphere.h"
 #include "ValueNoise.h"
 
@@ -22,6 +23,7 @@ using namespace Planeted;
 
 char *filename = nullptr;
 bool objOutput = false;
+bool stlOutput = false;
 
 bool readargs(int argc, char** argv);
 
@@ -51,13 +53,20 @@ int main(int argc, char **argv)
     }
     else
     {
-        meshfile << POV::MeshToPOVMesh2(mesh);
+        if(stlOutput == true)
+        {
+            meshfile << STL::MeshToSTL(mesh);
+        }
+        else
+        {
+            meshfile << POV::MeshToPOVMesh2(mesh);
 
-        std::cout << "Writing scene file...\n";
-        std::ofstream scenefile("scene.pov");
+            std::cout << "Writing scene file...\n";
+            std::ofstream scenefile("scene.pov");
 
-        scenefile << POV::POVSceneFile(filename);
-        scenefile.close();
+            scenefile << POV::POVSceneFile(filename);
+            scenefile.close();
+        }
     }
     meshfile.close();
 
@@ -117,6 +126,10 @@ bool readargs(int argc, char **argv)
             if(std::string(optarg) == "obj")
             {
                 objOutput = true;
+            }
+            else if(std::string(optarg) == "stl")
+            {
+                stlOutput = true;
             }
             break;
         default:
