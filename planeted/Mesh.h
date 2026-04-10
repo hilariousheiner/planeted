@@ -28,6 +28,9 @@ namespace Planeted
         int AddVertex(float x, float y, float z);
         Vector3 *GetVertex(size_t id);
 
+        const Vector3 &GetVertex(size_t id) const;
+        const Vector3 &GetNormal(size_t id) const;
+
         void AddTriangle(int a, int b, int c);
 
         void SetTriangles(std::vector<TriangleIndices> tris);

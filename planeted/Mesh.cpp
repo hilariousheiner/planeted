@@ -16,6 +16,15 @@ namespace Planeted
         return result;
     }
 
+    const Vector3 &Mesh::GetVertex(size_t id) const
+    {
+        if(id >= this->vertices.size())
+        {
+            throw std::out_of_range("Index out of bounds");
+        }
+        return this->vertices[id];
+    }
+
     Vector3 *Mesh::GetVertex(size_t id)
     {
         if(id >= this->vertices.size())
@@ -23,6 +32,15 @@ namespace Planeted
             throw std::out_of_range("Index out of bounds");
         }
         return &this->vertices[id];
+    }
+
+    const Vector3 &Mesh::GetNormal(size_t id) const
+    {
+        if(id >= this->normals.size())
+        {
+            throw std::out_of_range("Index out of bounds");
+        }
+        return this->normals[id];
     }
 
     void Mesh::AddTriangle(int a, int b, int c)
