@@ -10,7 +10,7 @@ namespace Planeted
 {
     namespace STL
     {
-        std::string MeshToSTL(Mesh &mesh);
+        std::string MeshToSTL(const Mesh &mesh);
     }
 }
 #endif
