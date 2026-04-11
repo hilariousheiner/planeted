@@ -11,7 +11,7 @@ namespace Planeted
 {
     namespace PPM
     {
-        std::string PixelMapToPPM(const PixelMap& pmap);
+        std::string PixelMapToPPM(const PixelMap &pmap);
     }
 }
 #endif // PLANETED_PPM_H

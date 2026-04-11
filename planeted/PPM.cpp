@@ -4,7 +4,7 @@ namespace Planeted
 {
     namespace PPM
     {
-        std::string PixelMapToPPM(const PixelMap& pmap)
+        std::string PixelMapToPPM(const PixelMap &pmap)
         {
             std::stringstream stream;
 
@@ -16,7 +16,7 @@ namespace Planeted
             stream << width << " " << height << "\n";
             stream << "255\n";
 
-            for (const Color& pixel : data)
+            for (const Color &pixel : data)
             {
                 stream << static_cast<int>(pixel.R) << " ";
                 stream << static_cast<int>(pixel.G) << " ";
