@@ -10,7 +10,7 @@ namespace Planeted
 {
     namespace OBJ
     {
-        std::string MeshToOBJ(Mesh &mesh);
+        std::string MeshToOBJ(const Mesh &mesh);
     }
 }
 #endif // PLANETED_OBJ_H

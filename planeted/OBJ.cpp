@@ -8,7 +8,7 @@ namespace Planeted
 {
     namespace OBJ
     {
-        std::string Vertex3ToOBJ(Vector3 &vector3)
+        std::string vertex3ToOBJ(const Vector3 &vector3)
         {
             std::stringstream stream;
 
@@ -18,7 +18,7 @@ namespace Planeted
             return stream.str();
         }
 
-        std::string NormalToOBJ(Vector3 &normal)
+        std::string normalToOBJ(const Vector3 &normal)
         {
             std::stringstream stream;
 
@@ -28,7 +28,7 @@ namespace Planeted
             return stream.str();
         }
 
-        std::string TriangleIndicesToOBJ(TriangleIndices &indices, NormalTypeEnum normalType)
+        std::string triangleIndicesToOBJ(const TriangleIndices &indices, NormalTypeEnum normalType)
         {
             std::stringstream stream;
 
@@ -56,25 +56,25 @@ namespace Planeted
             return stream.str();
         }
 
-        std::string MeshToOBJ(Mesh &mesh)
+        std::string MeshToOBJ(const Mesh &mesh)
         {
             std::stringstream stream;
 
             for(Vector3 v : mesh.Vertices())
             {
-                stream << Vertex3ToOBJ(v) << "\n";
+                stream << vertex3ToOBJ(v) << "\n";
             }
             stream << "\n";
 
             for(Vector3 n : mesh.Normals())
             {
-                stream << NormalToOBJ(n) << "\n";
+                stream << normalToOBJ(n) << "\n";
             }
             stream << "\n";
 
             for(TriangleIndices i : mesh.Triangles())
             {
-                stream << TriangleIndicesToOBJ(i, mesh.GetNormalType()) << "\n";
+                stream << triangleIndicesToOBJ(i, mesh.GetNormalType()) << "\n";
             }
             return stream.str();
         }
