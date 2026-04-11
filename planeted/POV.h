@@ -10,7 +10,7 @@ namespace Planeted
 {
     namespace POV
     {
-        std::string MeshToPOVMesh2(Mesh &mesh);
+        std::string MeshToPOVMesh2(const Mesh &mesh);
         std::string POVSceneFile(const char *modelFilename);
     }
 }

@@ -8,7 +8,7 @@ namespace Planeted
 {
     namespace POV
     {
-        std::string Vector3ToPOV(Vector3 &vector3)
+        std::string vector3ToPOV(const Vector3 &vector3)
         {
             std::stringstream stream;
 
@@ -18,7 +18,7 @@ namespace Planeted
             return stream.str();
         }
 
-        std::string TriangleIndicesToPOV(TriangleIndices &indices)
+        std::string triangleIndicesToPOV(const TriangleIndices &indices)
         {
             std::stringstream stream;
 
@@ -27,7 +27,7 @@ namespace Planeted
             return stream.str();
         }
 
-        std::string MeshToPOVMesh2(Mesh &mesh)
+        std::string MeshToPOVMesh2(const Mesh &mesh)
         {
             std::stringstream stream;
 
@@ -39,7 +39,7 @@ namespace Planeted
 
             for(Vector3 v : mesh.Vertices())
             {
-                stream << ",\n\t\t" << Vector3ToPOV(v);
+                stream << ",\n\t\t" << vector3ToPOV(v);
             }
             stream << "\n\t}\n";
 
@@ -49,7 +49,7 @@ namespace Planeted
 
             for(TriangleIndices i : mesh.Triangles())
             {
-                stream << ",\n\t\t" << TriangleIndicesToPOV(i);
+                stream << ",\n\t\t" << triangleIndicesToPOV(i);
             }
             stream << "\n\t}\n";
 
