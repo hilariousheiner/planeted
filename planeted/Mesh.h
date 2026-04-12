@@ -25,33 +25,37 @@ namespace Planeted
     {
     public:
         Mesh();
+
+        // vertices:
         int AddVertex(float x, float y, float z);
+
         Vector3 *GetVertex(size_t id);
-
         const Vector3 &GetVertex(size_t id) const;
-        const Vector3 &GetNormal(size_t id) const;
-
-        void AddTriangle(int a, int b, int c);
-
-        void SetTriangles(std::vector<TriangleIndices> tris);
 
         int VertexCount() const;
-        int TriangleCount() const;
-
         const std::vector<Vector3> &Vertices() const;
-        const std::vector<Vector3> &Normals() const;
+
+        // triangles:
+        void AddTriangle(int a, int b, int c);
+        void SetTriangles(std::vector<TriangleIndices> tris);
+
+        int TriangleCount() const;
         const std::vector<TriangleIndices> &Triangles() const;
 
-        void ProjectToUnitSphere();
+        // normals
         void CalculateNormals(NormalTypeEnum normalType);
-
         NormalTypeEnum GetNormalType() const;
 
+        const Vector3 &GetNormal(size_t id) const;
+        const std::vector<Vector3> &Normals() const;
+
+        // misc:
+        void ProjectToUnitSphere();
     private:
-        NormalTypeEnum normalType;
         std::vector<Vector3> vertices;
-        std::vector<Vector3> normals;
         std::vector<TriangleIndices> triangles;
+        std::vector<Vector3> normals;
+        NormalTypeEnum normalType;
     };
 }
 #endif
