@@ -3,8 +3,11 @@
 
 #include "ValueNoise.h"
 
+//ToDo: move to Random
+
 namespace Planeted
 {
+    /*
     inline float fbm(const Vector3 &p)
     {
         float G = 0.5f;
@@ -21,5 +24,6 @@ namespace Planeted
         }
         return t;
     }
+    */
 }
 #endif // PLANETED_FBM_H
