@@ -2,20 +2,23 @@
 
 namespace Planeted
 {
-    void Random::Seed(uint32_t seed)
+    namespace Random
     {
-        Random::engine() = std::mt19937(seed);
-    }
+        static std::mt19937& engine()
+        {
+            static std::mt19937 en(std::random_device{}());
+            return en;
+        }
 
-    float Random::Range(float min, float max)
-    {
-        std::uniform_real_distribution<float> distribution(min, max);
-        return distribution(Random::engine());
-    }
+        void Seed(uint32_t seed)
+        {
+            engine() = std::mt19937(seed);
+        }
 
-    std::mt19937& Random::engine()
-    {
-        static std::mt19937 en(std::random_device{}());
-        return en;
+        float Range(float min, float max)
+        {
+            std::uniform_real_distribution<float> distribution(min, max);
+            return distribution(engine());
+        }
     }
 }

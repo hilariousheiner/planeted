@@ -5,13 +5,10 @@
 
 namespace Planeted
 {
-    class Random
+    namespace Random
     {
-    public:
-        static void Seed(uint32_t seed);
-        static float Range(float min, float max);
-    private:
-        static std::mt19937& engine();
-    };
+        void Seed(uint32_t seed);
+        float Range(float min, float max);
+    }
 }
 #endif // PLANETED_RANDOM_H
