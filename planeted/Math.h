@@ -1,6 +1,9 @@
 #ifndef PLANETED_MATH_H
 #define PLANETED_MATH_H
 
+#include <cmath>
+#include <cstdint>
+
 namespace Planeted
 {
     template <typename T>
@@ -46,6 +49,12 @@ namespace Planeted
     {
         int i = static_cast<int>(value);
         return (value < 0 && value != i) ? i - 1 : i;
+    }
+
+    inline std::uint8_t ToUint8(float x)
+    {
+        x = Clamp01(x);
+        return static_cast<std::uint8_t>(std::round(x * 255.0f));
     }
 }
 #endif // PLANETED_MATH_H

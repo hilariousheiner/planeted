@@ -1,10 +1,7 @@
 #ifndef PLANETED_COLOR_H
 #define PLANETED_COLOR_H
 
-#include <cmath> // for std::round
 #include <cstdint>
-
-#include "Math.h" // for Clamp01
 
 namespace Planeted
 {
@@ -14,13 +11,6 @@ namespace Planeted
         std::uint8_t G;
         std::uint8_t B;
     };
-
-
-    inline std::uint8_t ToUint8(float x)
-    {
-        x = Clamp01(x);
-        return static_cast<std::uint8_t>(std::round(x * 255.0f));
-    }
 
     namespace Colors
     {
