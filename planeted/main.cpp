@@ -16,7 +16,6 @@
 #include "PixelMap.h"
 #include "STL.h"
 #include "IcoSphere.h"
-#include "ValueNoise.h"
 
 using namespace Planeted;
 

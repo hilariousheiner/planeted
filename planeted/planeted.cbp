@@ -56,7 +56,6 @@
 		<Unit filename="Random.h" />
 		<Unit filename="STL.cpp" />
 		<Unit filename="STL.h" />
-		<Unit filename="ValueNoise.h" />
 		<Unit filename="Vector2.h" />
 		<Unit filename="Vector3.cpp" />
 		<Unit filename="Vector3.h" />

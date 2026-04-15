@@ -5,7 +5,6 @@
 #include "Mesh.h"
 #include "PlOb.h"
 #include "Random.h"
-#include "ValueNoise.h"
 
 namespace Planeted
 {
