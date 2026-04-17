@@ -179,7 +179,7 @@ namespace Planeted
             return SmoothStepUnclamped(v0, v1, tz);
         }
 
-        float FBM(const Vector3 &p)
+        float ValueNoiseFBM(const Vector3 &p)
         {
             float G = 0.5f;
             float f = 1.0f;

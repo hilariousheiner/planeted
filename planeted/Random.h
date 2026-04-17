@@ -17,7 +17,7 @@ namespace Planeted
 
         float Range(float min, float max);
 
-        float FBM(const Vector3 &p);
+        float ValueNoiseFBM(const Vector3 &p);
 
         float ValueNoise(const float &p);
         float ValueNoise(const Vector2 &p);
