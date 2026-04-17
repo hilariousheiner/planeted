@@ -6,7 +6,7 @@ namespace Planeted
     {
         static const unsigned int valueNoiseTableSize = 256;
 
-        static std::array<float, valueNoiseTableSize>& valueTable()
+        static std::array<float, valueNoiseTableSize> &valueTable()
         {
             static std::array<float, valueNoiseTableSize> result = []
             {
@@ -25,7 +25,7 @@ namespace Planeted
             return result;
         }
 
-        static std::array<unsigned int, valueNoiseTableSize * 2>& permutationTable()
+        static std::array<unsigned int, valueNoiseTableSize * 2> &permutationTable()
         {
             static std::array<unsigned int, valueNoiseTableSize * 2> result = []
             {
