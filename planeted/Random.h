@@ -17,11 +17,11 @@ namespace Planeted
 
         float Range(float min, float max);
 
-        float ValueNoiseFBM(const Vector3 &p);
-
         float ValueNoise(const float &p);
         float ValueNoise(const Vector2 &p);
         float ValueNoise(const Vector3 &p);
+
+        float ValueNoiseFBM(const Vector3 &p);
     }
 }
 #endif // PLANETED_RANDOM_H
