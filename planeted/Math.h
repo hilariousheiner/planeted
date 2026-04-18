@@ -45,6 +45,13 @@ namespace Planeted
         return LerpUnclamped(a, b, x);
     }
 
+    template <typename T, typename U>
+    inline T SmoothStepUnclamped5(const T &a, const T &b, const U &t)
+    {
+        U x = t * t * t * (t * (t * static_cast<U>(6) - static_cast<U>(15)) + static_cast<U>(10));
+        return LerpUnclamped(a, b, x);
+    }
+
     inline int FloorToInt(const float &value)
     {
         int i = static_cast<int>(value);
