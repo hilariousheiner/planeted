@@ -54,6 +54,8 @@
 		<Unit filename="PlOb.h" />
 		<Unit filename="Random.cpp" />
 		<Unit filename="Random.h" />
+		<Unit filename="SCAD.cpp" />
+		<Unit filename="SCAD.h" />
 		<Unit filename="STL.cpp" />
 		<Unit filename="STL.h" />
 		<Unit filename="Vector2.h" />
