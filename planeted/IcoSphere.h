@@ -1,6 +1,8 @@
 #ifndef PLANETED_ICOSPHERE_H
 #define PLANETED_ICOSPHERE_H
 
+#include <string>
+
 #include "PlOb.h"
 #include "Mesh.h"
 #include "Icosahedron.h"
@@ -9,12 +11,12 @@
 namespace Planeted
 {
     // d is number of subdivisions
-    Mesh *MakeIcosphere(int d);
+    Mesh *MakeIcosphere(std::string name, int d);
 
     class IcoSphere : public PlOb
     {
     public:
-        IcoSphere();
+        IcoSphere(std::string name);
         ~IcoSphere() override;
 
         Mesh& GenerateMesh() override;

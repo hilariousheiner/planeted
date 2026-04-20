@@ -1,6 +1,7 @@
 #ifndef PLANETED_MESH_H
 #define PLANETED_MESH_H
 
+#include <string>
 #include <vector>
 #include "Vector3.h"
 
@@ -24,7 +25,7 @@ namespace Planeted
     class Mesh
     {
     public:
-        Mesh();
+        Mesh(std::string name);
 
         // vertices:
         int AddVertex(float x, float y, float z);
@@ -52,6 +53,7 @@ namespace Planeted
         // misc:
         void ProjectToUnitSphere();
     private:
+        std::string name;
         std::vector<Vector3> vertices;
         std::vector<TriangleIndices> triangles;
         std::vector<Vector3> normals;

@@ -1,14 +1,15 @@
 #include "Icosahedron.h"
 
 #include <cmath>
+#include <string>
 
 namespace Planeted
 {
-    Mesh *MakeIcosahedron()
+    Mesh *MakeIcosahedron(std::string name)
     {
         static const float t = (1.0 + sqrt(5.0)) / 2.0;
 
-        Mesh *result = new Mesh();
+        Mesh *result = new Mesh(name);
 
         int v00 = result->AddVertex(-1, t, 0);
         int v01 = result->AddVertex( 1, t, 0);

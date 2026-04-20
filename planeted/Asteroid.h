@@ -1,6 +1,8 @@
 #ifndef PLANETED_ASTEROID_H
 #define PLANETED_ASTEROID_H
 
+#include <string>
+
 #include "IcoSphere.h"
 #include "Mesh.h"
 #include "PlOb.h"
@@ -11,7 +13,7 @@ namespace Planeted
     class Asteroid : public PlOb
     {
     public:
-        Asteroid();
+        Asteroid(std::string name);
         ~Asteroid() override;
 
         Mesh& GenerateMesh() override;

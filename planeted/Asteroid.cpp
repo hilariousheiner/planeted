@@ -2,9 +2,9 @@
 
 namespace Planeted
 {
-    Asteroid::Asteroid()
+    Asteroid::Asteroid(std::string name)
     {
-        this->mesh = MakeIcosphere(4);
+        this->mesh = MakeIcosphere(name, 4);
 
         for(int id = 0; id < this->mesh->VertexCount(); ++id)
         {

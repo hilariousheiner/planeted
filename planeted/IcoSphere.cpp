@@ -2,9 +2,9 @@
 
 namespace Planeted
 {
-    Mesh *MakeIcosphere(int d)
+    Mesh *MakeIcosphere(std::string name, int d)
     {
-        Mesh *result = MakeIcosahedron();
+        Mesh *result = MakeIcosahedron(name);
         MeshSubdivider subdivider(result);
 
         int i = 0;
@@ -19,9 +19,9 @@ namespace Planeted
         return result;
     }
 
-    IcoSphere::IcoSphere()
+    IcoSphere::IcoSphere(std::string name)
     {
-        this->mesh = MakeIcosphere(2);
+        this->mesh = MakeIcosphere(name, 2);
     }
 
     IcoSphere::~IcoSphere()
