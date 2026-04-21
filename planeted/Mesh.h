@@ -52,6 +52,7 @@ namespace Planeted
 
         // misc:
         void ProjectToUnitSphere();
+        const std::string &GetName() const;
     private:
         std::string name;
         std::vector<Vector3> vertices;

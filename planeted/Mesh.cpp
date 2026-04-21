@@ -161,4 +161,9 @@ namespace Planeted
 
         return result;
     }
+
+    const std::string &Mesh::GetName() const
+    {
+        return this->name;
+    }
 }
