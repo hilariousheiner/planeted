@@ -48,17 +48,21 @@ namespace Planeted
         {
             std::stringstream stream;
 
-            stream << "polyhedron(\n";
+            stream << "module " << mesh.GetName() << "()\n";
+            stream << "{\n";
+            stream << "\t polyhedron(\n";
 
-            stream << "\t points = [\n";
-            stream << "\t\t" << listToString<Vector3>(mesh.Vertices(), vector3ToSCAD) << "\n";
-            stream << "\t ],\n";
+            stream << "\t\t points = [\n";
+            stream << "\t\t\t" << listToString<Vector3>(mesh.Vertices(), vector3ToSCAD) << "\n";
+            stream << "\t\t ],\n";
 
-            stream << "\t faces = [\n";
-            stream << "\t\t" << listToString<TriangleIndices>(mesh.Triangles(), triangleIndicesToSCAD) << "\n";
-            stream << "\t ]\n";
+            stream << "\t\t faces = [\n";
+            stream << "\t\t\t" << listToString<TriangleIndices>(mesh.Triangles(), triangleIndicesToSCAD) << "\n";
+            stream << "\t\t ]\n";
 
-            stream << ");";
+            stream << "\t);\n";
+            stream << "}\n";
+            stream << mesh.GetName() << "();\n";
 
             return stream.str();
         }
