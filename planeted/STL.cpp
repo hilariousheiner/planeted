@@ -22,7 +22,7 @@ namespace Planeted
         {
             std::stringstream stream;
 
-            stream << "solid mesh\n";
+            stream << "solid " << mesh.GetName() << "\n";
 
             for(TriangleIndices tri : mesh.Triangles())
             {
