@@ -1,30 +1,14 @@
-#include <functional>
 #include <iomanip>
 #include <sstream>
 #include <string.h>
 
 #include "SCAD.h"
+#include "Utils.h"
 
 namespace Planeted
 {
     namespace SCAD
     {
-        template<typename T>
-        std::string listToString(const std::vector<T> &l, const std::function<std::string(const T&)> &toStringFunc, const char separator = ',')
-        {
-            std::stringstream stream;
-
-            if(l.size() >= 1)
-            {
-                stream << toStringFunc(l[0]);
-                for(size_t i = 1; i < l.size(); ++i)
-                {
-                    stream << separator << toStringFunc(l[i]);
-                }
-            }
-            return stream.str();
-        }
-
         std::string vector3ToSCAD(const Vector3 &vector3)
         {
             std::stringstream stream;

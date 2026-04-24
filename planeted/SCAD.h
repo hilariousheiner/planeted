@@ -4,7 +4,6 @@
 #include <string>
 
 #include "Mesh.h"
-#include "Vector3.h"
 
 namespace Planeted
 {
