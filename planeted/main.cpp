@@ -39,6 +39,8 @@ int main(int argc, char **argv)
 
     std::cout << "Generating mesh..." << std::endl;
 
+    Random::SeedValueNoise(12345);
+
     Asteroid *plob = new Asteroid("asteroid");
     Mesh& mesh = plob->GenerateMesh();
 
