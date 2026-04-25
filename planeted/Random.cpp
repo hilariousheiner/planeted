@@ -6,27 +6,57 @@ namespace Planeted
     {
         static const unsigned int valueNoiseTableSize = 256;
 
+        static std::mt19937 &engine()
+        {
+            static std::mt19937 en(std::random_device{}());
+            return en;
+        }
+
+        static std::mt19937 &noise_engine()
+        {
+            static std::mt19937 en(std::random_device{}());
+            return en;
+        }
+
+        static std::array<float, valueNoiseTableSize> computeValueTable()
+        {
+            std::array<float, valueNoiseTableSize> tmp;
+
+            std::uniform_real_distribution<float> distribution(0.0f, 1.0f);
+
+            // create an array of random values
+            for (float &entry : tmp)
+            {
+                entry = distribution(noise_engine());
+            }
+            return tmp;
+        }
+
+        static std::array<unsigned int, valueNoiseTableSize * 2> computePermutationTable()
+        {
+            std::array<unsigned int, valueNoiseTableSize *2> tmp;
+
+            for(unsigned int i = 0; i < valueNoiseTableSize; ++i)
+            {
+                tmp[i] = i;
+                tmp[i + valueNoiseTableSize] = i;
+            }
+
+            std::shuffle(tmp.begin(), tmp.end(), noise_engine());
+
+            return tmp;
+        }
+
         static std::array<float, valueNoiseTableSize> &valueTable()
         {
-            static std::array<float, valueNoiseTableSize> result = []
-            {
-                std::array<float, valueNoiseTableSize> tmp;
-
-                std::mt19937 engine(std::random_device{}());
-                std::uniform_real_distribution<float> distribution(0.0f, 1.0f);
-
-                // create an array of random values
-                for (float &entry : tmp)
-                {
-                    entry = distribution(engine);
-                }
-                return tmp;
-            }();
+            static std::array<float, valueNoiseTableSize> result = computeValueTable();
             return result;
         }
 
         static std::array<unsigned int, valueNoiseTableSize * 2> &permutationTable()
         {
+            static std::array<unsigned int, valueNoiseTableSize *2> result = computePermutationTable();
+            /*
             static std::array<unsigned int, valueNoiseTableSize * 2> result = []
             {
                 std::array<unsigned int, valueNoiseTableSize *2> tmp;
@@ -37,11 +67,10 @@ namespace Planeted
                     tmp[i + valueNoiseTableSize] = i;
                 }
 
-                std::mt19937 engine(std::random_device{}());
-                std::shuffle(tmp.begin(), tmp.end(), engine);
+                std::shuffle(tmp.begin(), tmp.end(), noise_engine());
 
                 return tmp;
-            }();
+            }();*/
             return result;
         }
 
@@ -80,16 +109,16 @@ namespace Planeted
             return valueTable()[permute(x, y, z)];
         }
 
-
-        static std::mt19937& engine()
-        {
-            static std::mt19937 en(std::random_device{}());
-            return en;
-        }
-
         void Seed(uint32_t seed)
         {
             engine() = std::mt19937(seed);
+        }
+
+        void SeedValueNoise(uint32_t seed)
+        {
+            noise_engine() = std::mt19937(seed);
+            valueTable() = computeValueTable();
+            permutationTable() = computePermutationTable();
         }
 
         float Range(float min, float max)
