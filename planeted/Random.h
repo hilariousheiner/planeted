@@ -13,11 +13,11 @@ namespace Planeted
 {
     namespace Random
     {
-        void Seed(uint32_t seed);
+        void Seed(std::uint32_t seed);
 
         float Range(float min, float max);
 
-        void SeedValueNoise(uint32_t seed);
+        void SeedValueNoise(std::uint32_t seed);
 
         float ValueNoise(const float &p);
         float ValueNoise(const Vector2 &p);

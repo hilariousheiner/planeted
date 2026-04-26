@@ -4,7 +4,7 @@ namespace Planeted
 {
     namespace Random
     {
-        static const unsigned int valueNoiseTableSize = 256;
+        static const std::uint16_t valueNoiseTableSize = 256;
 
         static std::mt19937 &engine()
         {
@@ -34,7 +34,7 @@ namespace Planeted
 
         static std::array<unsigned int, valueNoiseTableSize * 2> computePermutationTable()
         {
-            std::array<unsigned int, valueNoiseTableSize *2> result;
+            std::array<unsigned int, valueNoiseTableSize * 2> result;
 
             for(unsigned int i = 0; i < valueNoiseTableSize; ++i)
             {
@@ -55,7 +55,7 @@ namespace Planeted
 
         static std::array<unsigned int, valueNoiseTableSize * 2> &permutationTable()
         {
-            static std::array<unsigned int, valueNoiseTableSize *2> result = computePermutationTable();
+            static std::array<unsigned int, valueNoiseTableSize * 2> result = computePermutationTable();
             return result;
         }
 
@@ -94,12 +94,12 @@ namespace Planeted
             return valueTable()[permute(x, y, z)];
         }
 
-        void Seed(uint32_t seed)
+        void Seed(std::uint32_t seed)
         {
             engine() = std::mt19937(seed);
         }
 
-        void SeedValueNoise(uint32_t seed)
+        void SeedValueNoise(std::uint32_t seed)
         {
             noise_engine() = std::mt19937(seed);
             valueTable() = computeValueTable();
