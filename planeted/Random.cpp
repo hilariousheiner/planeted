@@ -181,16 +181,16 @@ namespace Planeted
             float ty = p.Y - yi;
             float tz = p.Z - zi;
 
-            float u00 = SmoothStepUnclamped5(c000, c100, tx);
-            float u10 = SmoothStepUnclamped5(c010, c110, tx);
+            float u00 = SmoothStepUnclamped(c000, c100, tx);
+            float u10 = SmoothStepUnclamped(c010, c110, tx);
 
-            float u01 = SmoothStepUnclamped5(c001, c101, tx);
-            float u11 = SmoothStepUnclamped5(c011, c111, tx);
+            float u01 = SmoothStepUnclamped(c001, c101, tx);
+            float u11 = SmoothStepUnclamped(c011, c111, tx);
 
-            float v0 = SmoothStepUnclamped5(u00, u10, ty);
-            float v1 = SmoothStepUnclamped5(u01, u11, ty);
+            float v0 = SmoothStepUnclamped(u00, u10, ty);
+            float v1 = SmoothStepUnclamped(u01, u11, ty);
 
-            return SmoothStepUnclamped5(v0, v1, tz);
+            return SmoothStepUnclamped(v0, v1, tz);
         }
 
         float ValueNoiseFBM(const Vector3 &p)
