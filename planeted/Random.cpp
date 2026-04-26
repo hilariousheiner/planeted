@@ -20,31 +20,31 @@ namespace Planeted
 
         static std::array<float, valueNoiseTableSize> computeValueTable()
         {
-            std::array<float, valueNoiseTableSize> tmp;
+            std::array<float, valueNoiseTableSize> result;
 
             std::uniform_real_distribution<float> distribution(0.0f, 1.0f);
 
             // create an array of random values
-            for (float &entry : tmp)
+            for (float &entry : result)
             {
                 entry = distribution(noise_engine());
             }
-            return tmp;
+            return result;
         }
 
         static std::array<unsigned int, valueNoiseTableSize * 2> computePermutationTable()
         {
-            std::array<unsigned int, valueNoiseTableSize *2> tmp;
+            std::array<unsigned int, valueNoiseTableSize *2> result;
 
             for(unsigned int i = 0; i < valueNoiseTableSize; ++i)
             {
-                tmp[i] = i;
-                tmp[i + valueNoiseTableSize] = i;
+                result[i] = i;
+                result[i + valueNoiseTableSize] = i;
             }
 
-            std::shuffle(tmp.begin(), tmp.end(), noise_engine());
+            std::shuffle(result.begin(), result.end(), noise_engine());
 
-            return tmp;
+            return result;
         }
 
         static std::array<float, valueNoiseTableSize> &valueTable()
@@ -56,21 +56,6 @@ namespace Planeted
         static std::array<unsigned int, valueNoiseTableSize * 2> &permutationTable()
         {
             static std::array<unsigned int, valueNoiseTableSize *2> result = computePermutationTable();
-            /*
-            static std::array<unsigned int, valueNoiseTableSize * 2> result = []
-            {
-                std::array<unsigned int, valueNoiseTableSize *2> tmp;
-
-                for(unsigned int i = 0; i < valueNoiseTableSize; ++i)
-                {
-                    tmp[i] = i;
-                    tmp[i + valueNoiseTableSize] = i;
-                }
-
-                std::shuffle(tmp.begin(), tmp.end(), noise_engine());
-
-                return tmp;
-            }();*/
             return result;
         }
 
