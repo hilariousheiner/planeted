@@ -32,11 +32,11 @@ namespace Planeted
             return result;
         }
 
-        static std::array<unsigned int, valueNoiseTableSize * 2> computePermutationTable()
+        static std::array<std::uint8_t, valueNoiseTableSize * 2> computePermutationTable()
         {
-            std::array<unsigned int, valueNoiseTableSize * 2> result;
+            std::array<std::uint8_t, valueNoiseTableSize * 2> result;
 
-            for(unsigned int i = 0; i < valueNoiseTableSize; ++i)
+            for(std::size_t i = 0; i < valueNoiseTableSize; ++i)
             {
                 result[i] = i;
                 result[i + valueNoiseTableSize] = i;
@@ -46,6 +46,11 @@ namespace Planeted
 
             return result;
         }
+        static std::array<std::uint8_t, valueNoiseTableSize * 2> &permutationTable()
+        {
+            static std::array<std::uint8_t, valueNoiseTableSize * 2> result = computePermutationTable();
+            return result;
+        }
 
         static std::array<float, valueNoiseTableSize> &valueTable()
         {
@@ -53,28 +58,22 @@ namespace Planeted
             return result;
         }
 
-        static std::array<unsigned int, valueNoiseTableSize * 2> &permutationTable()
+        static std::uint8_t toGrid(const int &x)
         {
-            static std::array<unsigned int, valueNoiseTableSize * 2> result = computePermutationTable();
-            return result;
+            return static_cast<std::uint8_t>(x & (valueNoiseTableSize - 1));
         }
 
-        static int toGrid(const int &x)
-        {
-            return x & (valueNoiseTableSize - 1);
-        }
-
-        static unsigned int permute(const int &x)
+        static std::uint8_t permute(const std::uint8_t &x)
         {
             return permutationTable()[x];
         }
 
-        static unsigned int permute(const int &x, const int &y)
+        static std::uint8_t permute(const int &x, const int &y)
         {
             return permutationTable()[permutationTable()[x] + y];
         }
 
-        static unsigned int permute(const int &x, const int &y, const int &z)
+        static std::uint8_t permute(const int &x, const int &y, const int &z)
         {
             return permutationTable()[permutationTable()[permutationTable()[x] + y] + z];
         }
@@ -116,8 +115,8 @@ namespace Planeted
         {
             int pi = FloorToInt(p);
 
-            int p0 = toGrid(pi);
-            int p1 = toGrid(p0 + 1);
+            std::uint8_t p0 = toGrid(pi);
+            std::uint8_t p1 = toGrid(p0 + 1);
 
             const float &c0 = randomValue(p0);
             const float &c1 = randomValue(p1);
