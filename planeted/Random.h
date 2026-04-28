@@ -23,6 +23,8 @@ namespace Planeted
         float ValueNoise(const Vector2 &p);
         float ValueNoise(const Vector3 &p);
 
+        float ValueNoiseFBM(const float &p);
+        float ValueNoiseFBM(const Vector2 &p);
         float ValueNoiseFBM(const Vector3 &p);
     }
 }

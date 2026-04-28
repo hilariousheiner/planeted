@@ -192,6 +192,40 @@ namespace Planeted
             return SmoothStepUnclamped(v0, v1, tz);
         }
 
+        float ValueNoiseFBM(const float &p)
+        {
+            float G = 0.5f;
+            float f = 1.0f;
+            float a = 1.0f;
+            float t = 0.0f;
+
+            for(int i = 0; i < 4; ++i)
+            {
+                t += a*ValueNoise(p*f);
+
+                f *= 2.0f;
+                a *= G;
+            }
+            return t;
+        }
+
+        float ValueNoiseFBM(const Vector2 &p)
+        {
+            float G = 0.5f;
+            float f = 1.0f;
+            float a = 1.0f;
+            float t = 0.0f;
+
+            for(int i = 0; i < 4; ++i)
+            {
+                t += a*ValueNoise(p*f);
+
+                f *= 2.0f;
+                a *= G;
+            }
+            return t;
+        }
+
         float ValueNoiseFBM(const Vector3 &p)
         {
             float G = 0.5f;
