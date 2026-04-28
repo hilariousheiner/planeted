@@ -7,6 +7,8 @@ namespace Planeted
     {
         float X;
         float Y;
+
+        Vector2 operator*(float scalar) const;
     };
 }
 #endif
