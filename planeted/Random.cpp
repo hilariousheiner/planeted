@@ -22,7 +22,7 @@ namespace Planeted
         {
             std::array<float, valueNoiseTableSize> result;
 
-            std::uniform_real_distribution<float> distribution(0.0f, 1.0f);
+            std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
 
             // create an array of random values
             for (float &entry : result)
