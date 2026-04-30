@@ -63,5 +63,12 @@ namespace Planeted
         x = Clamp01(x);
         return static_cast<std::uint8_t>(std::round(x * 255.0f));
     }
+
+    // maps[-1, 1] to [0, 1]
+    inline float SignedToUnitRange(float x)
+    {
+        x = std::max(-1.0f, std::min(1.0f, x));
+        return (x + 1.0f) * 0.5f;
+    }
 }
 #endif // PLANETED_MATH_H
