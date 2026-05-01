@@ -83,8 +83,7 @@ int main(int argc, char **argv)
 
     delete plob;
 
-
-/*    //noise test:
+    //noise test:
     std::cout << "running noise test" << std::endl;
 
     PixelMap pixMap = PixelMap(512, 512);
@@ -92,13 +91,9 @@ int main(int argc, char **argv)
     {
         for(int y = 0; y < 512; ++y)
         {
-            //std::uint8_t n = ToUint8(ValueNoise::GetValue({x * 0.05f, y * 0.05f}));
-            //std::uint8_t n = ToUint8(ValueNoise::GetValue(x * 0.05f));
-            //std::uint8_t n = ToUint8(ValueNoise::GetValue({x * 0.05f, y * 0.05f, 1}));
+            std::uint8_t c = ToUint8(SignedToUnitRange(Random::ValueNoise({x * 0.05f, y * 0.05f, 1})));
 
-            std::uint8_t n = ToUint8(fbm({x * 0.05f, y * 0.05f, 1}));
-
-            pixMap.PutPixel(x, y, {n, n, n});
+            pixMap.PutPixel(x, y, {c, c, c});
         }
     }
 
@@ -106,7 +101,7 @@ int main(int argc, char **argv)
 
     ppmfile << PPM::PixelMapToPPM(pixMap);
     std::cout << "done." << std::endl;
-    */
+
     return EXIT_SUCCESS;
 }
 
