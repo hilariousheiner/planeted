@@ -98,7 +98,7 @@ namespace Planeted
             engine() = std::mt19937(seed);
         }
 
-        void SeedValueNoise(std::uint32_t seed)
+        void SeedNoise(std::uint32_t seed)
         {
             noise_engine() = std::mt19937(seed);
             valueTable() = computeValueTable();

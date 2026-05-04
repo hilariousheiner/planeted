@@ -17,7 +17,7 @@ namespace Planeted
 
         float Range(float min, float max);
 
-        void SeedValueNoise(std::uint32_t seed);
+        void SeedNoise(std::uint32_t seed);
 
         float ValueNoise(const float &p);
         float ValueNoise(const Vector2 &p);
