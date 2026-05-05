@@ -93,6 +93,11 @@ namespace Planeted
             return valueTable()[permute(x, y, z)];
         }
 
+        static const float randomDotGrad(const std::uint8_t &x, const float dx)
+        {
+            return permute(x) & 1 ? dx : -dx;
+        }
+
         void Seed(std::uint32_t seed)
         {
             engine() = std::mt19937(seed);
@@ -122,6 +127,20 @@ namespace Planeted
             const float &c1 = randomValue(p1);
 
             return SmoothStepUnclamped(c0, c1, p - pi);
+        }
+
+        float GradientNoise(const float &p)
+        {
+            int pi = FloorToInt(p);
+            float dp = p - pi;
+
+            std::uint8_t p0 = toGrid(pi);
+            std::uint8_t p1 = toGrid(p0 + 1);
+
+            const float g0 = randomDotGrad(p0, dp);
+            const float g1 = randomDotGrad(p1, dp - 1);
+
+            return SmoothStepUnclamped5(g0, g1, dp);
         }
 
         float ValueNoise(const Vector2 &p)
