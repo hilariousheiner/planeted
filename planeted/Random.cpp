@@ -93,9 +93,9 @@ namespace Planeted
             return valueTable()[permute(x, y, z)];
         }
 
-        static const float randomDotGrad(const std::uint8_t &x, const float dx)
+        static const float randomDotGrad(const std::uint8_t &x, const float tx)
         {
-            return permute(x) & 1 ? dx : -dx;
+            return permute(x) & 1 ? tx : -tx;
         }
 
         void Seed(std::uint32_t seed)
@@ -132,15 +132,16 @@ namespace Planeted
         float GradientNoise(const float &p)
         {
             int pi = FloorToInt(p);
-            float dp = p - pi;
 
             std::uint8_t p0 = toGrid(pi);
             std::uint8_t p1 = toGrid(p0 + 1);
 
-            const float g0 = randomDotGrad(p0, dp);
-            const float g1 = randomDotGrad(p1, dp - 1);
+            float tp = p - pi;
 
-            return SmoothStepUnclamped5(g0, g1, dp);
+            const float g0 = randomDotGrad(p0, tp);
+            const float g1 = randomDotGrad(p1, tp - 1);
+
+            return SmoothStepUnclamped5(g0, g1, tp);
         }
 
         float ValueNoise(const Vector2 &p)
@@ -148,16 +149,16 @@ namespace Planeted
             int xi = FloorToInt(p.X);
             int yi = FloorToInt(p.Y);
 
-            int x0 = toGrid(xi);
-            int y0 = toGrid(yi);
+            int xi0 = toGrid(xi);
+            int yi0 = toGrid(yi);
 
-            int x1 = toGrid(x0 + 1);
-            int y1 = toGrid(y0 + 1);
+            int xi1 = toGrid(xi0 + 1);
+            int yi1 = toGrid(yi0 + 1);
 
-            const float &c00 = randomValue(x0, y0);
-            const float &c10 = randomValue(x1, y0);
-            const float &c01 = randomValue(x0, y1);
-            const float &c11 = randomValue(x1, y1);
+            const float &c00 = randomValue(xi0, yi0);
+            const float &c10 = randomValue(xi1, yi0);
+            const float &c01 = randomValue(xi0, yi1);
+            const float &c11 = randomValue(xi1, yi1);
 
             float tx = p.X - xi;
             float ty = p.Y - yi;
