@@ -98,6 +98,41 @@ namespace Planeted
             return permute(x) & 1 ? tx : -tx;
         }
 
+        static float randomDotGrad(const int &x, const int &y, const float tx, const float ty)
+        {
+            float result;
+
+            switch(permute(x, y) & 7)
+            {
+            case 0:
+                result = tx; // (1, 0) * (tx, ty)
+            case 1:
+                result = -tx; // (-1, 0) * (tx, ty)
+                break;
+            case 2:
+                result = ty; // (0, 1) * (tx, ty)
+                break;
+            case 3:
+                result = -ty; // (0, -1) * (tx, ty)
+                break;
+            case 4:
+                result = tx + ty; // (1, 1) * (tx, ty)
+                break;
+            case 5:
+                result = -tx + ty; // (-1, 1) * (tx, ty)
+                break;
+            case 6:
+                result = tx - ty; // (1, -1) * (tx, ty)
+                break;
+            case 7:
+                result = -tx - ty; // (-1, -1) * (tx, ty)
+                break;
+            default:
+                break;
+            }
+            return result;
+        }
+
         void Seed(std::uint32_t seed)
         {
             engine() = std::mt19937(seed);
@@ -155,18 +190,43 @@ namespace Planeted
             int xi1 = toGrid(xi0 + 1);
             int yi1 = toGrid(yi0 + 1);
 
+            float tx = p.X - xi;
+            float ty = p.Y - yi;
+
             const float &c00 = randomValue(xi0, yi0);
             const float &c10 = randomValue(xi1, yi0);
             const float &c01 = randomValue(xi0, yi1);
             const float &c11 = randomValue(xi1, yi1);
 
-            float tx = p.X - xi;
-            float ty = p.Y - yi;
-
             float u0 = SmoothStepUnclamped(c00, c10, tx);
             float u1 = SmoothStepUnclamped(c01, c11, tx);
 
             return SmoothStepUnclamped(u0, u1, ty);
+        }
+
+        float GradientNoise(const Vector2 &p)
+        {
+            int xi = FloorToInt(p.X);
+            int yi = FloorToInt(p.Y);
+
+            int xi0 = toGrid(xi);
+            int yi0 = toGrid(yi);
+
+            int xi1 = toGrid(xi0 + 1);
+            int yi1 = toGrid(yi0 + 1);
+
+            float tx = p.X - xi;
+            float ty = p.Y - yi;
+
+            const float &c00 = randomDotGrad(xi0, yi0, tx, ty);
+            const float &c10 = randomDotGrad(xi1, yi0, tx - 1, ty);
+            const float &c01 = randomDotGrad(xi0, yi1, tx, ty - 1);
+            const float &c11 = randomDotGrad(xi1, yi1, tx - 1, ty - 1);
+
+            float u0 = SmoothStepUnclamped5(c00, c10, tx);
+            float u1 = SmoothStepUnclamped5(c01, c11, tx);
+
+            return SmoothStepUnclamped5(u0, u1, ty);
         }
 
         float ValueNoise(const Vector3 &p)
