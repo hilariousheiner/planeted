@@ -1,6 +1,7 @@
 #ifndef PLANETED_UTILS_H
 #define PLANETED_UTILS_H
 
+#include <fstream>
 #include <functional>
 #include <string>
 #include <sstream>
@@ -22,6 +23,56 @@ namespace Planeted
             }
         }
         return stream.str();
+    }
+
+    struct filename_t
+    {
+        std::string base;
+        std::string extension;
+
+        std::string ToString()
+        {
+            return base + "." + extension;
+        }
+    };
+
+    inline filename_t splitFilename(const std::string &filename)
+    {
+        filename_t result = {filename, ""};
+
+        std::size_t pos = filename.rfind('.');
+        if(pos != std::string::npos)
+        {
+            result.base = filename.substr(0, pos);
+            result.extension = filename.substr(pos + 1);
+        }
+        return result;
+    }
+
+    inline std::ostream &operator<<(std::ostream &os, const filename_t &filename)
+    {
+        os << filename.base;
+
+        if(!filename.extension.empty())
+        {
+            os << "." << filename.extension;
+        }
+        return os;
+    }
+
+    inline std::string ReadFile(const std::string &path)
+    {
+        std::ifstream file(path);
+
+        if (!file)
+        {
+            return "";
+        }
+
+        std::stringstream buffer;
+        buffer << file.rdbuf();
+
+        return buffer.str();
     }
 }
 #endif // PLANETED_UTILS_H
