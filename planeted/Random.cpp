@@ -423,5 +423,23 @@ namespace Planeted
             }
             return t;
         }
+
+
+        float GradientNoiseFBM(const Vector3 &p)
+        {
+            float G = 0.5f;
+            float f = 1.0f;
+            float a = 1.0f;
+            float t = 0.0f;
+
+            for(int i = 0; i < 4; ++i)
+            {
+                t += a*GradientNoise(p*f);
+
+                f *= 2.0f;
+                a *= G;
+            }
+            return t;
+        }
     }
 }

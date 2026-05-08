@@ -30,6 +30,8 @@ namespace Planeted
         float GradientNoise(const float &p);
         float GradientNoise(const Vector2 &p);
         float GradientNoise(const Vector3 &p);
+
+        float GradientNoiseFBM(const Vector3 &p);
     }
 }
 #endif // PLANETED_RANDOM_H
