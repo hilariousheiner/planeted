@@ -236,30 +236,30 @@ namespace Planeted
             int yi = FloorToInt(p.Y);
             int zi = FloorToInt(p.Z);
 
-            int x0 = toGrid(xi);
-            int y0 = toGrid(yi);
-            int z0 = toGrid(zi);
+            int xi0 = toGrid(xi);
+            int yi0 = toGrid(yi);
+            int zi0 = toGrid(zi);
 
-            int x1 = toGrid(x0 + 1);
-            int y1 = toGrid(y0 + 1);
-            int z1 = toGrid(z0 + 1);
+            int xi1 = toGrid(xi0 + 1);
+            int yi1 = toGrid(yi0 + 1);
+            int zi1 = toGrid(zi0 + 1);
 
-            // get noise value at cell corners:
-            const float &c000 = randomValue(x0, y0, z0);
-            const float &c100 = randomValue(x1, y0, z0);
-            const float &c010 = randomValue(x0, y1, z0);
-            const float &c110 = randomValue(x1, y1, z0);
-
-            const float &c001 = randomValue(x0, y0, z1);
-            const float &c101 = randomValue(x1, y0, z1);
-            const float &c011 = randomValue(x0, y1, z1);
-            const float &c111 = randomValue(x1, y1, z1);
-
-            // interpolate:
             float tx = p.X - xi;
             float ty = p.Y - yi;
             float tz = p.Z - zi;
 
+            // get noise value at cell corners:
+            const float &c000 = randomValue(xi0, yi0, zi0);
+            const float &c100 = randomValue(xi1, yi0, zi0);
+            const float &c010 = randomValue(xi0, yi1, zi0);
+            const float &c110 = randomValue(xi1, yi1, zi0);
+
+            const float &c001 = randomValue(xi0, yi0, zi1);
+            const float &c101 = randomValue(xi1, yi0, zi1);
+            const float &c011 = randomValue(xi0, yi1, zi1);
+            const float &c111 = randomValue(xi1, yi1, zi1);
+
+            // interpolate:
             float u00 = SmoothStepUnclamped(c000, c100, tx);
             float u10 = SmoothStepUnclamped(c010, c110, tx);
 
