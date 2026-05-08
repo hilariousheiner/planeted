@@ -91,7 +91,7 @@ int main(int argc, char **argv)
     {
         for(int y = 0; y < 512; ++y)
         {
-            std::uint8_t c = ToUint8(SignedToUnitRange(Random::GradientNoise({x * 0.05f, y * 0.05f})));
+            std::uint8_t c = ToUint8(SignedToUnitRange(Random::GradientNoise({x * 0.05f, y * 0.05f, 1.0f})));
             //std::uint8_t c = ToUint8(SignedToUnitRange(Random::GradientNoise(x * 0.05f)));
 
             pixMap.PutPixel(x, y, {c, c, c});
