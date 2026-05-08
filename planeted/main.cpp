@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <string>
 #include <unistd.h>
 #include <getopt.h>
 #include <cstdlib>
@@ -16,11 +17,14 @@
 #include "PixelMap.h"
 #include "SCAD.h"
 #include "STL.h"
+#include "Utils.h"
 #include "IcoSphere.h"
 
 using namespace Planeted;
 
-char *filename = nullptr;
+filename_t outfile;
+std::string infile;
+
 bool objOutput = false;
 bool stlOutput = false;
 bool scadOutput = false;
@@ -37,17 +41,18 @@ int main(int argc, char **argv)
         return EXIT_FAILURE; //error;
     }
 
-    std::cout << "Generating mesh..." << std::endl;
+    int seed = std::stoi(ReadFile(infile));
+    std::cout << "Generating mesh with seed " << seed << "..." << std::endl;
 
-    Random::SeedNoise(12345);
+    Random::SeedNoise(seed);
 
-    Asteroid *plob = new Asteroid("asteroid");
+    Asteroid *plob = new Asteroid(outfile.base);
     Mesh& mesh = plob->GenerateMesh();
 
     std::cout << "done (" << mesh.VertexCount() << " vertices and " << mesh.TriangleCount() << " triangles).\n";
 
-    std::cout << "Writing mesh to \"" << filename << "\"...\n";
-    std::ofstream meshfile(filename);
+    std::cout << "Writing mesh to \"" << outfile << "\"...\n";
+    std::ofstream meshfile(outfile.ToString());
 
     if(objOutput == true)
     {
@@ -72,7 +77,7 @@ int main(int argc, char **argv)
                 std::cout << "Writing scene file...\n";
                 std::ofstream scenefile("scene.pov");
 
-                scenefile << POV::POVSceneFile(filename);
+                scenefile << POV::POVSceneFile(outfile.ToString().c_str());
                 scenefile.close();
             }
         }
@@ -83,7 +88,7 @@ int main(int argc, char **argv)
 
     delete plob;
 
-    //noise test:
+    /*noise test:
     std::cout << "running noise test" << std::endl;
 
     PixelMap pixMap = PixelMap(512, 512);
@@ -102,54 +107,49 @@ int main(int argc, char **argv)
 
     ppmfile << PPM::PixelMapToPPM(pixMap);
     std::cout << "done." << std::endl;
-
+    */
     return EXIT_SUCCESS;
 }
 
 bool readargs(int argc, char **argv)
 {
-    int c;
-    int longindex;
-    bool result = false;
+    int opt;
+    bool ifound = false;
+    bool ofound = false;
 
-    struct option longopts[] =
+    while( (opt = getopt(argc, argv, "i:o:")) != -1)
     {
-        {"filename", required_argument, NULL, 'f'},
-        {"output", required_argument, NULL, 'o'},
-        {NULL, 0, NULL, 0}
-    };
-
-    while((c = getopt_long(argc, argv, "f:o:", longopts, &longindex)) != -1)
-    {
-        switch(c)
+        switch(opt)
         {
-        case 'f':
-            filename = optarg;
-            result = true;
-            break;
-        case 'o':
-            if(std::string(optarg) == "obj")
-            {
-                objOutput = true;
-            }
-            else if(std::string(optarg) == "stl")
-            {
-                stlOutput = true;
-            }
-            else if(std::string(optarg) == "scad")
-            {
-                scadOutput = true;
-            }
-            break;
-        default:
-            break;
+            case 'i':
+                infile = std::string(optarg);
+                ifound = true;
+                break;
+            case 'o':
+                outfile = splitFilename(optarg);
+                if(outfile.extension == "obj")
+                {
+                    objOutput = true;
+                }
+                else if(outfile.extension== "stl")
+                {
+                    stlOutput = true;
+                }
+                else if(outfile.extension == "scad")
+                {
+                    scadOutput = true;
+                }
+                ofound = true;
+                break;
+            default:
+                break;
         }
     }
-    return result;
+    return ifound && ofound;
 }
 
 void usage()
 {
-    std::cout << "usage: planeted [-f | --filename = <outputfile>]\n\n";
-    std::cout << "\t planeted is a tool for procedurally creating and editing models of asteroids, moons and small planets." << std::endl;
+    std::cout << "usage: planeted -i infile -o outfile\n\n";
+    std::cout << "\t A cli tool for procedurally creating 3D models of asteroids, moons and minor planets." << std::endl;
 }
