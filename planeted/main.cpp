@@ -12,6 +12,7 @@
 #include "Mesh.h"
 #include "POV.h"
 #include "PPM.h"
+#include "PDSL.h"
 #include "OBJ.h"
 #include "Color.h"
 #include "PixelMap.h"
@@ -41,7 +42,14 @@ int main(int argc, char **argv)
         return EXIT_FAILURE; //error;
     }
 
-    int seed = std::stoi(ReadFile(infile));
+    Lexer lexer(ReadFile(infile));
+    Parser parser(lexer);
+    Program program = parser.Parse();
+    Runtime runtime;
+    Run(program, runtime);
+
+    int seed = runtime.GetVariableValue("seed").IntValue;
+
     std::cout << "Generating mesh with seed " << seed << "..." << std::endl;
 
     Random::SeedNoise(seed);
