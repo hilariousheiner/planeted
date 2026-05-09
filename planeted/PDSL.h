@@ -6,6 +6,8 @@
 #include <unordered_map>
 #include <vector>
 
+#include "Utils.h"
+
 /*
  * PDSL = planeted scripting language
  */
@@ -321,7 +323,7 @@ namespace Planeted
         Lexer &lexer;
     };
 
-    struct Runtime
+    struct PDSL_Runtime
     {
         std::unordered_map<std::string, Value> Environment;
 
@@ -341,7 +343,7 @@ namespace Planeted
         }
     };
 
-    Value evalValue(const Value &value, Runtime &runtime)
+    Value evalValue(const Value &value, PDSL_Runtime &runtime)
     {
         if(value.valueType == ValueTypeEnum::Identifier)
         {
@@ -350,13 +352,26 @@ namespace Planeted
         return value;
     }
 
-    void Run(const Program &program, Runtime &runtime)
+    void run(const Program &program, PDSL_Runtime &runtime)
     {
         for(const Statement &stmt : program.statements)
         {
             Value value = evalValue(stmt.value, runtime);
             runtime.SetVariableValue(stmt.name, value);
         }
+    }
+
+    void PDSL_Run(const std::string &code, PDSL_Runtime &runtime)
+    {
+        Lexer lexer(code);
+        Parser parser(lexer);
+        Program program = parser.Parse();
+        run(program, runtime);
+    }
+
+    void PDSL_RunFile(const std::string &filename, PDSL_Runtime &runtime)
+    {
+        PDSL_Run(ReadFile(filename), runtime);
     }
 }
 #endif
