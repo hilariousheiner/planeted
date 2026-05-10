@@ -133,10 +133,33 @@ namespace Planeted
                 this->advance();
             }
 
-            if(this->peek() == '/' || this->peekNext() == '/')
+            if(this->peek() == '/' && this->peekNext() == '/')
             {
                 while(this->peek() != '\n' && this->peek() != '\0')
                 {
+                    this->advance();
+                }
+                continue;
+            }
+
+            if(this->peek() == '/' && this->peekNext() == '*')
+            {
+                this->advance(); // /
+                this->advance(); // *
+
+                while(true)
+                {
+                    if(this->peek() == '\0')
+                    {
+                        throw std::runtime_error("Unterminated block comment.");
+                    }
+
+                    if(this->peek() == '*' && this->peekNext() == '/')
+                    {
+                        this->advance(); // *
+                        this->advance(); // /
+                        break;
+                    }
                     this->advance();
                 }
                 continue;
