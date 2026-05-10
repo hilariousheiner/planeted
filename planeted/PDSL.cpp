@@ -76,6 +76,7 @@ namespace Planeted
         Token readIdentifier();
         Token readNumber();
         char peek() const;
+        char peekNext() const;
         char advance();
 
         std::string source;
@@ -181,6 +182,16 @@ namespace Planeted
             return '\0';
         }
         return this->source[pos];
+    }
+
+    char Lexer::peekNext() const
+    {
+        size_t next = this->pos + 1;
+        if(next >= this->source.size())
+        {
+            return '\0';
+        }
+        return this->source[next];
     }
 
     char Lexer::advance()
