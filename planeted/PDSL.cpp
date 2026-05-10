@@ -185,6 +185,10 @@ namespace Planeted
 
     char Lexer::advance()
     {
+        if(this->pos >= this->source.size())
+        {
+            return '\0';
+        }
         return this->source[this->pos++];
     }
 
