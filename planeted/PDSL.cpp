@@ -72,7 +72,7 @@ namespace Planeted
         Token Next();
 
     private:
-        void readWhitespace();
+        void readWhitespaceAndComments();
         Token readIdentifier();
         Token readNumber();
         char peek() const;
@@ -90,7 +90,7 @@ namespace Planeted
 
     Token Lexer::Next()
     {
-        this->readWhitespace();
+        this->readWhitespaceAndComments();
 
         char c = this->peek();
 
@@ -124,11 +124,25 @@ namespace Planeted
         }
     }
 
-    void Lexer::readWhitespace()
+    void Lexer::readWhitespaceAndComments()
     {
-        while(std::isspace(this->peek()))
+        while(true)
         {
-            this->advance();
+            while(std::isspace(this->peek()))
+            {
+                this->advance();
+            }
+
+            if(this->peek() == '/' || this->peekNext() == '/')
+            {
+                while(this->peek() != '\n' && this->peek() != '\0')
+                {
+                    this->advance();
+                }
+                continue;
+            }
+
+            break;
         }
     }
 
