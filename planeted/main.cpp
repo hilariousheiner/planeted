@@ -42,11 +42,8 @@ int main(int argc, char **argv)
         return EXIT_FAILURE; //error;
     }
 
-    Lexer lexer(ReadFile(infile));
-    Parser parser(lexer);
-    Program program = parser.Parse();
-    Runtime runtime;
-    Run(program, runtime);
+    PDSL_Runtime runtime;
+    PDSL_RunFile(infile, runtime);
 
     int seed = runtime.GetVariableValue("seed").IntValue;
 
