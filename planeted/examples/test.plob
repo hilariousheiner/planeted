@@ -1,1 +1,3 @@
+import "stdlib.h" 
+
 seed = 12345;
