@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <functional>
+#include <iostream>
 #include <string>
 #include <sstream>
 #include <vector>
@@ -64,9 +65,9 @@ namespace Planeted
     {
         std::ifstream file(path);
 
-        if (!file)
+        if (!file.is_open())
         {
-            return "";
+            throw std::runtime_error("file not found: " + path);
         }
 
         std::stringstream buffer;
