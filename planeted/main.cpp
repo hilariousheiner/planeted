@@ -43,6 +43,7 @@ int main(int argc, char **argv)
     }
 
     PDSL_Runtime runtime;
+    //runtime.debug = true;
     PDSL_RunFile(infile, runtime);
 
     int seed = runtime.GetVariableValue("seed").IntValue;

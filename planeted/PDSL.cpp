@@ -1,16 +1,19 @@
 #include "PDSL.h"
 
+#include <memory>
+
 namespace Planeted
 {
     enum class TokenTypeEnum
     {
         Identifier,
 
-        Int,
-        Float,
-        Bool,
+        IntLiteral,
+        FloatLiteral,
+        BoolLiteral,
+        StringLiteral,
 
-        Keyword,
+        Import,
 
         Equals,
         Semicolon,
@@ -32,17 +35,20 @@ namespace Planeted
         case TokenTypeEnum::Identifier:
             result = "Identifier";
             break;
-        case TokenTypeEnum::Int:
-            result = "Int";
+        case TokenTypeEnum::IntLiteral:
+            result = "IntLiteral";
             break;
-        case TokenTypeEnum::Float:
-            result = "Float";
+        case TokenTypeEnum::FloatLiteral:
+            result = "FloatLiteral";
             break;
-        case TokenTypeEnum::Bool:
-            result = "Bool";
+        case TokenTypeEnum::BoolLiteral:
+            result = "BoolLiteral";
             break;
-        case TokenTypeEnum::Keyword:
-            result = "Keyword";
+        case TokenTypeEnum::StringLiteral:
+            result = "StringLiteral";
+            break;
+        case TokenTypeEnum::Import:
+            result = "Import";
             break;
         case TokenTypeEnum::Equals:
             result = "Equals";
@@ -59,10 +65,11 @@ namespace Planeted
         return result;
     }
 
-    static const std::unordered_map<std::string, bool> keywordDict =
+    static const std::unordered_map<std::string, TokenTypeEnum> keywordDict =
     {
-        {"true", true},
-        {"false", true}
+        {"true", TokenTypeEnum::BoolLiteral},
+        {"false", TokenTypeEnum::BoolLiteral},
+        {"import", TokenTypeEnum::Import}
     };
 
     class Lexer
@@ -73,8 +80,11 @@ namespace Planeted
 
     private:
         void readWhitespaceAndComments();
+
         Token readIdentifier();
         Token readNumber();
+        Token readString();
+
         char peek() const;
         char peekNext() const;
         char advance();
@@ -107,6 +117,11 @@ namespace Planeted
         if(std::isdigit(c))
         {
             return this->readNumber();
+        }
+
+        if(c == '"')
+        {
+            return this->readString();
         }
 
         this->advance();
@@ -178,11 +193,11 @@ namespace Planeted
             text += this->advance();
         }
 
-        std::unordered_map<std::string, bool>::const_iterator it;
+        std::unordered_map<std::string, TokenTypeEnum>::const_iterator it;
         it = keywordDict.find(text);
         if(it != keywordDict.end())
         {
-            return {TokenTypeEnum::Keyword, text};
+            return {it->second, text};
         }
         return {TokenTypeEnum::Identifier, text};
     }
@@ -207,9 +222,30 @@ namespace Planeted
 
         if(isFloat)
         {
-            return {TokenTypeEnum::Float, text};
+            return {TokenTypeEnum::FloatLiteral, text};
         }
-        return {TokenTypeEnum::Int, text};
+        return {TokenTypeEnum::IntLiteral, text};
+    }
+
+    Token Lexer::readString()
+    {
+        std::string lexeme;
+
+        if(this->peek() == '"')
+        {
+            this->advance(); // discard initial "
+
+            while(this->peek() != '"')
+            {
+                if(this->peek() == '\0')
+                {
+                    throw std::runtime_error("unterminated string literal.");
+                }
+                lexeme += this->advance();
+            }
+            this->advance(); // discard final "
+        }
+        return {TokenTypeEnum::StringLiteral, lexeme};
     }
 
     char Lexer::peek() const
@@ -242,13 +278,53 @@ namespace Planeted
 
     struct Statement
     {
+        virtual ~Statement() {}
+
+        virtual void execute(PDSL_Runtime &runtime) = 0;
+    };
+
+
+    Value evalValue(const Value &value, PDSL_Runtime &runtime)
+    {
+        if(value.valueType == ValueTypeEnum::Identifier)
+        {
+            return runtime.GetVariableValue(value.Identifier);
+        }
+        return value;
+    }
+
+    struct AssignmentStatement : Statement
+    {
+        AssignmentStatement(std::string name, Value value) :
+            name(name), value(value) {}
+
+        virtual void execute(PDSL_Runtime &runtime) override
+        {
+            Value evval = evalValue(this->value, runtime);
+            runtime.SetVariableValue(this->name, value);
+        }
+
         std::string name;
         Value value;
     };
 
+    struct ImportStatement : Statement
+    {
+        ImportStatement(std::string path) :
+            path(path) {}
+
+        virtual void execute(PDSL_Runtime &runtime) override
+        {
+            PDSL_Run(ReadFile(this->path), runtime);
+        }
+
+        std::string path;
+    };
+
+
     struct Program
     {
-        std::vector<Statement> statements;
+        std::vector<std::unique_ptr<Statement>> statements;
     };
 
     class Parser
@@ -273,23 +349,45 @@ namespace Planeted
 
     private:
 
-        Statement parseStatement()
+        std::unique_ptr<Statement> parseStatement()
         {
-            Statement result;
+            std::unique_ptr<Statement> result;
 
+            if(this->current.type == TokenTypeEnum::Import)
+            {
+                result = this->parseImportStatement();
+            }
+            else
+            {
+                result = this->parseAssignmentStatement();
+            }
+            return result;
+        }
+
+        std::unique_ptr<ImportStatement> parseImportStatement()
+        {
+            this->expect(TokenTypeEnum::Import);
+
+            std::string path = this->expect(TokenTypeEnum::StringLiteral).lexeme;
+
+            return std::make_unique<ImportStatement>(path);
+        }
+
+        std::unique_ptr<AssignmentStatement> parseAssignmentStatement()
+        {
             //identifier
-            result.name = this->expect(TokenTypeEnum::Identifier).lexeme;
+            std::string name = this->expect(TokenTypeEnum::Identifier).lexeme;
 
             // =
             this->expect(TokenTypeEnum::Equals);
 
             // value
-            result.value = this->parseValue();
+            Value value = this->parseValue();
 
             //;
             this->expect(TokenTypeEnum::Semicolon);
 
-            return result;
+            return std::make_unique<AssignmentStatement>(name, value);
         }
 
         Value parseValue()
@@ -302,15 +400,15 @@ namespace Planeted
                 result.valueType = ValueTypeEnum::Identifier;
                 result.Identifier = current.lexeme;
                 break;
-            case TokenTypeEnum::Int:
+            case TokenTypeEnum::IntLiteral:
                 result.valueType = ValueTypeEnum::Int;
                 result.IntValue = std::stoi(current.lexeme);
                 break;
-            case TokenTypeEnum::Float:
+            case TokenTypeEnum::FloatLiteral:
                 result.valueType = ValueTypeEnum::Float;
                 result.FloatValue = std::stof(current.lexeme);
                 break;
-            case TokenTypeEnum::Bool:
+            case TokenTypeEnum::BoolLiteral:
                 result.valueType = ValueTypeEnum::Bool;
                 result.BoolValue = (current.lexeme == "true");
                 break;
@@ -345,21 +443,11 @@ namespace Planeted
         Lexer &lexer;
     };
 
-    Value evalValue(const Value &value, PDSL_Runtime &runtime)
-    {
-        if(value.valueType == ValueTypeEnum::Identifier)
-        {
-            return runtime.GetVariableValue(value.Identifier);
-        }
-        return value;
-    }
-
     void run(const Program &program, PDSL_Runtime &runtime)
     {
-        for(const Statement &stmt : program.statements)
+        for(const std::unique_ptr<Statement> &stmt : program.statements)
         {
-            Value value = evalValue(stmt.value, runtime);
-            runtime.SetVariableValue(stmt.name, value);
+            stmt->execute(runtime);
         }
     }
 
