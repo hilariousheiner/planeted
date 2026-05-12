@@ -17,6 +17,9 @@ namespace Planeted
 
         Equals,
         Semicolon,
+        LParen,
+        RParen,
+        Comma,
 
         End
     };
@@ -55,6 +58,15 @@ namespace Planeted
             break;
         case TokenTypeEnum::Semicolon:
             result = "Semicolon";
+            break;
+        case TokenTypeEnum::LParen:
+            result = "(";
+            break;
+        case TokenTypeEnum::RParen:
+            result = ")";
+            break;
+        case TokenTypeEnum::Comma:
+            result = ",";
             break;
         case TokenTypeEnum::End:
             result = "End";
@@ -132,7 +144,13 @@ namespace Planeted
             return {TokenTypeEnum::Equals, "="};
             break;
         case ';':
-            return {TokenTypeEnum::Semicolon, "="};
+            return {TokenTypeEnum::Semicolon, ";"};
+        case '(':
+            return {TokenTypeEnum::LParen, "("};
+        case ')':
+            return {TokenTypeEnum::RParen, ")"};
+        case ',':
+            return {TokenTypeEnum::Comma, ","};
         default:
             throw std::runtime_error("unexpected character: " + c);
             break;
@@ -321,7 +339,6 @@ namespace Planeted
         std::string path;
     };
 
-
     struct Program
     {
         std::vector<std::unique_ptr<Statement>> statements;
@@ -333,6 +350,7 @@ namespace Planeted
         Parser(Lexer &lexer) :
             lexer(lexer)
         {
+            this->next = this->lexer.Next();
             this->advance();
         }
 
@@ -423,7 +441,8 @@ namespace Planeted
 
         void advance()
         {
-            this->current = this->lexer.Next();
+            this->current = this->next;
+            this->next = this->lexer.Next();
         }
 
         Token expect(TokenTypeEnum tokenType)
@@ -440,6 +459,7 @@ namespace Planeted
         }
 
         Token current;
+        Token next;
         Lexer &lexer;
     };
 
