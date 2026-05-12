@@ -339,6 +339,20 @@ namespace Planeted
         std::string path;
     };
 
+    struct FunctionCallStatement : Statement
+    {
+        FunctionCallStatement(std::string name, std::vector<Value> args) :
+            name(name), args(args) {}
+
+        virtual void execute(PDSL_Runtime &runtime) override
+        {
+
+        }
+
+        std::string name;
+        std::vector<Value> args;
+    };
+
     struct Program
     {
         std::vector<std::unique_ptr<Statement>> statements;
@@ -377,7 +391,14 @@ namespace Planeted
             }
             else
             {
-                result = this->parseAssignmentStatement();
+                if(this->next.type == TokenTypeEnum::LParen)
+                {
+                    result = this->parseFunctionCallStatement();
+                }
+                else
+                {
+                    result = this->parseAssignmentStatement();
+                }
             }
             return result;
         }
@@ -393,7 +414,7 @@ namespace Planeted
 
         std::unique_ptr<AssignmentStatement> parseAssignmentStatement()
         {
-            //identifier
+            // identifier
             std::string name = this->expect(TokenTypeEnum::Identifier).lexeme;
 
             // =
@@ -402,10 +423,42 @@ namespace Planeted
             // value
             Value value = this->parseValue();
 
-            //;
+            // ;
             this->expect(TokenTypeEnum::Semicolon);
 
             return std::make_unique<AssignmentStatement>(name, value);
+        }
+
+        std::unique_ptr<FunctionCallStatement> parseFunctionCallStatement()
+        {
+            // identifier
+            std::string name = this->expect(TokenTypeEnum::Identifier).lexeme;
+
+            // parse argument list:
+            // (
+            this->expect(TokenTypeEnum::LParen);
+
+            std::vector<Value> args;
+
+            if(this->current.type != TokenTypeEnum::RParen)
+            {
+                while(true)
+                {
+                    args.push_back(this->parseValue());
+                    if(this->current.type == TokenTypeEnum::Comma)
+                    {
+                        this->advance();
+                        continue;
+                    }
+                    break;
+                }
+            }
+            // )
+
+            this->expect(TokenTypeEnum::RParen);
+            // ;
+            this->expect(TokenTypeEnum::Semicolon);
+            return std::make_unique<FunctionCallStatement>(name, args);
         }
 
         Value parseValue()
