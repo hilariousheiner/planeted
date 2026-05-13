@@ -1,6 +1,7 @@
 #ifndef PLANETED_PDSL_H
 #define PLANETED_PDSL_H
 
+#include <functional>
 #include <iostream>
 #include <stdexcept>
 #include <string>
@@ -33,11 +34,29 @@ namespace Planeted
         std::string Identifier;
     };
 
+    struct PDSL_Runtime;
+
+    using BuiltinFunction = std::function<void(PDSL_Runtime&, const std::vector<Value>&)>;
+
     struct PDSL_Runtime
     {
         std::unordered_map<std::string, Value> Environment;
+        std::unordered_map<std::string, BuiltinFunction> BuiltinFunctionsTable;
 
-        bool debug = false;
+        bool DebugFlag = false;
+
+        PDSL_Runtime()
+        {
+            this->BuiltinFunctionsTable["SetDebugFlag"] =
+                [](PDSL_Runtime &runtime, const std::vector<Value> &args)
+                {
+                    if(args.size() != 1)
+                    {
+                        throw std::runtime_error("SetDebugFlag expects one argument.");
+                    }
+                    runtime.DebugFlag = args[0].BoolValue;
+                };
+        }
 
         Value GetVariableValue(const std::string &name) const
         {
@@ -72,7 +91,7 @@ namespace Planeted
 
         PDSL_Run(ReadFile(filename), runtime);
 
-        if(runtime.debug)
+        if(runtime.DebugFlag)
         {
             runtime.DumpEnvironment();
         }

@@ -1,3 +1,5 @@
 import "stdlib.h" 
 
+SetDebugFlag(true);
+
 seed = 12345;

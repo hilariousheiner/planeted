@@ -346,7 +346,20 @@ namespace Planeted
 
         virtual void execute(PDSL_Runtime &runtime) override
         {
+            auto it = runtime.BuiltinFunctionsTable.find(this->name);
+            if(it == runtime.BuiltinFunctionsTable.end())
+            {
+                throw std::runtime_error("Unknown function: " + this->name);
+            }
 
+            std::vector<Value> args_evals;
+
+            for(const auto & arg : this->args)
+            {
+                args_evals.push_back(evalValue(arg, runtime));
+            }
+
+            it->second(runtime, args);
         }
 
         std::string name;
