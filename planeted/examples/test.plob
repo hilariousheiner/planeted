@@ -1,5 +1,7 @@
 import "stdlib.h" 
 
+Log("Hello, World!");
 SetDebugFlag(true);
+//SetDebugFlag(false);
 
-seed = 12345;
+seed = 12345; // the combination on my luggage

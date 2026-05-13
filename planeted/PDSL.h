@@ -21,7 +21,8 @@ namespace Planeted
         Identifier,
         Int,
         Float,
-        Bool
+        Bool,
+        String
     };
 
     struct Value
@@ -31,6 +32,7 @@ namespace Planeted
         int IntValue;
         float FloatValue;
         bool BoolValue;
+        std::string StringValue;
         std::string Identifier;
     };
 
@@ -49,13 +51,22 @@ namespace Planeted
         {
             this->BuiltinFunctionsTable["SetDebugFlag"] =
                 [](PDSL_Runtime &runtime, const std::vector<Value> &args)
+            {
+                if(args.size() != 1)
                 {
-                    if(args.size() != 1)
-                    {
-                        throw std::runtime_error("SetDebugFlag expects one argument.");
-                    }
-                    runtime.DebugFlag = args[0].BoolValue;
-                };
+                    throw std::runtime_error("SetDebugFlag expects one argument.");
+                }
+                runtime.DebugFlag = args[0].BoolValue;
+            };
+            this->BuiltinFunctionsTable["Log"] =
+                [](PDSL_Runtime &runtime, const std::vector<Value> &args)
+            {
+                if(args.size() != 1)
+                {
+                    throw std::runtime_error("Log expects exactly one argument.");
+                }
+                std::cout << args[0].StringValue << "\n";
+            };
         }
 
         Value GetVariableValue(const std::string &name) const

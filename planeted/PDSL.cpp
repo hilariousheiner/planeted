@@ -109,7 +109,6 @@ namespace Planeted
         source(source), pos(0)
     { }
 
-
     Token Lexer::Next()
     {
         this->readWhitespaceAndComments();
@@ -496,8 +495,13 @@ namespace Planeted
                 result.valueType = ValueTypeEnum::Bool;
                 result.BoolValue = (current.lexeme == "true");
                 break;
+            case TokenTypeEnum::StringLiteral:
+                result.valueType = ValueTypeEnum::String;
+                result.StringValue = current.lexeme;
+                break;
             default:
-                throw std::runtime_error("Invalid value type");
+                throw std::runtime_error("Invalid value type: " + TokenTypeToString(this->current.type));
+                break;
             }
 
             this->advance();
