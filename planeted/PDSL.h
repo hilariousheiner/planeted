@@ -33,7 +33,7 @@ namespace Planeted
         float FloatValue;
         bool BoolValue;
         std::string StringValue;
-        std::string Identifier;
+        //std::string Identifier;
     };
 
     struct PDSL_Runtime;

@@ -300,7 +300,38 @@ namespace Planeted
         virtual void execute(PDSL_Runtime &runtime) = 0;
     };
 
+    struct Expression
+    {
+        virtual ~Expression() {}
 
+        virtual Value eval(PDSL_Runtime &runtime) = 0;
+    };
+
+    struct ConstantExpression : Expression
+    {
+        Value value;
+
+        ConstantExpression(Value value) : value(value) {}
+
+        Value eval(PDSL_Runtime &runtime) override
+        {
+            return value;
+        }
+    };
+
+    struct VariableExpression : Expression
+    {
+        std::string Identifier;
+
+        VariableExpression(std::string identifier) : Identifier(identifier) {}
+
+        Value eval(PDSL_Runtime &runtime) override
+        {
+            return runtime.GetVariableValue(this->Identifier);
+        }
+    };
+
+    /*
     Value evalValue(const Value &value, PDSL_Runtime &runtime)
     {
         if(value.valueType == ValueTypeEnum::Identifier)
@@ -309,20 +340,21 @@ namespace Planeted
         }
         return value;
     }
+    */
 
     struct AssignmentStatement : Statement
     {
-        AssignmentStatement(std::string name, Value value) :
-            name(name), value(value) {}
+        AssignmentStatement(std::string name, std::unique_ptr<Expression> expression) :
+            name(name), expression(std::move(expression))
+        { }
 
         virtual void execute(PDSL_Runtime &runtime) override
         {
-            Value evval = evalValue(this->value, runtime);
-            runtime.SetVariableValue(this->name, value);
+            runtime.SetVariableValue(this->name, this->expression->eval(runtime));
         }
 
         std::string name;
-        Value value;
+        std::unique_ptr<Expression> expression;
     };
 
     struct ImportStatement : Statement
@@ -340,8 +372,8 @@ namespace Planeted
 
     struct FunctionCallStatement : Statement
     {
-        FunctionCallStatement(std::string name, std::vector<Value> args) :
-            name(name), args(args) {}
+        FunctionCallStatement(std::string name, std::vector<std::unique_ptr<Expression>> args) :
+            name(name), args(std::move(args)) {}
 
         virtual void execute(PDSL_Runtime &runtime) override
         {
@@ -355,14 +387,14 @@ namespace Planeted
 
             for(const auto & arg : this->args)
             {
-                args_evals.push_back(evalValue(arg, runtime));
+                args_evals.push_back(arg->eval(runtime));
             }
 
-            it->second(runtime, args);
+            it->second(runtime, args_evals);
         }
 
         std::string name;
-        std::vector<Value> args;
+        std::vector<std::unique_ptr<Expression>> args;
     };
 
     struct Program
@@ -432,13 +464,13 @@ namespace Planeted
             // =
             this->expect(TokenTypeEnum::Equals);
 
-            // value
-            Value value = this->parseValue();
+            // expression
+            std::unique_ptr<Expression> expression = this->parseExpression();
 
             // ;
             this->expect(TokenTypeEnum::Semicolon);
 
-            return std::make_unique<AssignmentStatement>(name, value);
+            return std::make_unique<AssignmentStatement>(name, std::move(expression));
         }
 
         std::unique_ptr<FunctionCallStatement> parseFunctionCallStatement()
@@ -450,13 +482,13 @@ namespace Planeted
             // (
             this->expect(TokenTypeEnum::LParen);
 
-            std::vector<Value> args;
+            std::vector<std::unique_ptr<Expression>> args;
 
             if(this->current.type != TokenTypeEnum::RParen)
             {
                 while(true)
                 {
-                    args.push_back(this->parseValue());
+                    args.push_back(this->parseExpression());
                     if(this->current.type == TokenTypeEnum::Comma)
                     {
                         this->advance();
@@ -470,9 +502,51 @@ namespace Planeted
             this->expect(TokenTypeEnum::RParen);
             // ;
             this->expect(TokenTypeEnum::Semicolon);
-            return std::make_unique<FunctionCallStatement>(name, args);
+            return std::make_unique<FunctionCallStatement>(name, std::move(args));
         }
 
+        std::unique_ptr<Expression> parseExpression()
+        {
+            if(this->current.type == TokenTypeEnum::Identifier)
+            {
+                return std::make_unique<VariableExpression>(this->current.lexeme);
+            }
+            return this->parseLiteral();
+        }
+
+        std::unique_ptr<ConstantExpression> parseLiteral()
+        {
+            Value result;
+
+            switch(this->current.type)
+            {
+            case TokenTypeEnum::IntLiteral:
+                result.valueType = ValueTypeEnum::Int;
+                result.IntValue = std::stoi(current.lexeme);
+                break;
+            case TokenTypeEnum::FloatLiteral:
+                result.valueType = ValueTypeEnum::Float;
+                result.FloatValue = std::stof(current.lexeme);
+                break;
+            case TokenTypeEnum::BoolLiteral:
+                result.valueType = ValueTypeEnum::Bool;
+                result.BoolValue = (current.lexeme == "true");
+                break;
+            case TokenTypeEnum::StringLiteral:
+                result.valueType = ValueTypeEnum::String;
+                result.StringValue = current.lexeme;
+                break;
+            default:
+                throw std::runtime_error("Invalid value type: " + TokenTypeToString(this->current.type));
+                break;
+            }
+
+            this->advance();
+
+            return std::make_unique<ConstantExpression>(result);
+        }
+
+        /*
         Value parseValue()
         {
             Value result;
@@ -508,6 +582,7 @@ namespace Planeted
 
             return result;
         }
+        */
 
         void advance()
         {
