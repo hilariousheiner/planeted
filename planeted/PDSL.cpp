@@ -331,17 +331,6 @@ namespace Planeted
         }
     };
 
-    /*
-    Value evalValue(const Value &value, PDSL_Runtime &runtime)
-    {
-        if(value.valueType == ValueTypeEnum::Identifier)
-        {
-            return runtime.GetVariableValue(value.Identifier);
-        }
-        return value;
-    }
-    */
-
     struct AssignmentStatement : Statement
     {
         AssignmentStatement(std::string name, std::unique_ptr<Expression> expression) :
@@ -383,14 +372,14 @@ namespace Planeted
                 throw std::runtime_error("Unknown function: " + this->name);
             }
 
-            std::vector<Value> args_evals;
+            std::vector<Value> evaluatedArgs;
 
             for(const auto & arg : this->args)
             {
-                args_evals.push_back(arg->eval(runtime));
+                evaluatedArgs.push_back(arg->eval(runtime));
             }
 
-            it->second(runtime, args_evals);
+            it->second(runtime, evaluatedArgs);
         }
 
         std::string name;
@@ -509,7 +498,9 @@ namespace Planeted
         {
             if(this->current.type == TokenTypeEnum::Identifier)
             {
-                return std::make_unique<VariableExpression>(this->current.lexeme);
+                std::string identifier = this->current.lexeme;
+                this->advance();
+                return std::make_unique<VariableExpression>(identifier);
             }
             return this->parseLiteral();
         }
@@ -545,44 +536,6 @@ namespace Planeted
 
             return std::make_unique<ConstantExpression>(result);
         }
-
-        /*
-        Value parseValue()
-        {
-            Value result;
-
-            switch(this->current.type)
-            {
-            case TokenTypeEnum::Identifier:
-                result.valueType = ValueTypeEnum::Identifier;
-                result.Identifier = current.lexeme;
-                break;
-            case TokenTypeEnum::IntLiteral:
-                result.valueType = ValueTypeEnum::Int;
-                result.IntValue = std::stoi(current.lexeme);
-                break;
-            case TokenTypeEnum::FloatLiteral:
-                result.valueType = ValueTypeEnum::Float;
-                result.FloatValue = std::stof(current.lexeme);
-                break;
-            case TokenTypeEnum::BoolLiteral:
-                result.valueType = ValueTypeEnum::Bool;
-                result.BoolValue = (current.lexeme == "true");
-                break;
-            case TokenTypeEnum::StringLiteral:
-                result.valueType = ValueTypeEnum::String;
-                result.StringValue = current.lexeme;
-                break;
-            default:
-                throw std::runtime_error("Invalid value type: " + TokenTypeToString(this->current.type));
-                break;
-            }
-
-            this->advance();
-
-            return result;
-        }
-        */
 
         void advance()
         {
