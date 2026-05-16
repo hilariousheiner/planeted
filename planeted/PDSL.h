@@ -10,6 +10,8 @@
 
 #include "Utils.h"
 
+#include "PDSL_Token.h"
+
 /*
  * PDSL = planeted scripting language
  */
@@ -22,7 +24,7 @@ namespace Planeted
         Int,
         Float,
         Bool,
-        String
+        String,
     };
 
     struct Value
@@ -33,7 +35,6 @@ namespace Planeted
         float FloatValue;
         bool BoolValue;
         std::string StringValue;
-        //std::string Identifier;
     };
 
     struct PDSL_Runtime;
