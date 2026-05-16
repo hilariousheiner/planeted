@@ -13,6 +13,7 @@ namespace Planeted
         FloatLiteral,
         BoolLiteral,
         StringLiteral,
+        NullLiteral,
 
         Import,
 
@@ -50,6 +51,9 @@ namespace Planeted
             break;
         case TokenTypeEnum::StringLiteral:
             result = "StringLiteral";
+            break;
+        case TokenTypeEnum::NullLiteral:
+            result = "NullLiteral";
             break;
         case TokenTypeEnum::Import:
             result = "Import";
