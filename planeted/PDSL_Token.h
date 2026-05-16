@@ -1,6 +1,8 @@
 #ifndef PLANETED_PDSL_TOKEN_H
 #define PLANETED_PDSL_TOKEN_H
 
+#include <string>
+
 namespace Planeted
 {
     enum class TokenTypeEnum

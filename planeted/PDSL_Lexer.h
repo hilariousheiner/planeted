@@ -1,6 +1,9 @@
 #ifndef PLANETED_PDSL_LEXER_H
 #define PLANETED_PDSL_LEXER_H
 
+#include <string>
+#include <unordered_map>
+
 #include "PDSL_Token.h"
 
 namespace Planeted
