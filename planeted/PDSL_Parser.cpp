@@ -192,6 +192,7 @@ namespace Planeted
             break;
         case TokenTypeEnum::NullLiteral:
             result.valueType = ValueTypeEnum::Null;
+            break;
         default:
             throw std::runtime_error("Invalid value type: " + TokenTypeToString(this->current.type));
             break;

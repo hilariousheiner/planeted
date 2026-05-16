@@ -37,7 +37,7 @@ namespace Planeted
         bool BoolValue;
         std::string StringValue;
 
-        std::string ToString()
+        std::string ToString() const
         {
             std::string result = "";
 
@@ -94,7 +94,7 @@ namespace Planeted
                 {
                     throw std::runtime_error("Log expects exactly one argument.");
                 }
-                std::cout << args[0].StringValue << "\n";
+                std::cout << args[0].ToString() << "\n";
             };
         }
 

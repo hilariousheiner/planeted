@@ -1,6 +1,6 @@
 import "stdlib.h" 
 
-msg = "Hello, World!";
+msg = null; //"Hello, World!";
 
 log(msg);
 setDebugFlag(true);
