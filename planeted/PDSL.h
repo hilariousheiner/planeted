@@ -78,7 +78,7 @@ namespace Planeted
 
         PDSL_Runtime()
         {
-            this->BuiltinFunctionsTable["SetDebugFlag"] =
+            this->BuiltinFunctionsTable["setDebugFlag"] =
                 [](PDSL_Runtime &runtime, const std::vector<Value> &args)
             {
                 if(args.size() != 1)
@@ -87,7 +87,7 @@ namespace Planeted
                 }
                 runtime.DebugFlag = args[0].BoolValue;
             };
-            this->BuiltinFunctionsTable["Log"] =
+            this->BuiltinFunctionsTable["log"] =
                 [](PDSL_Runtime &runtime, const std::vector<Value> &args)
             {
                 if(args.size() != 1)

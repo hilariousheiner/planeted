@@ -2,8 +2,8 @@ import "stdlib.h"
 
 msg = "Hello, World!";
 
-Log(msg);
-SetDebugFlag(true);
-//SetDebugFlag(false);
+log(msg);
+setDebugFlag(true);
+//setDebugFlag(false);
 
 seed = 12345; // the combination on my luggage
