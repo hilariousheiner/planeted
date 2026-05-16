@@ -50,6 +50,8 @@
 		<Unit filename="PDSL.h" />
 		<Unit filename="PDSL_Lexer.cpp" />
 		<Unit filename="PDSL_Lexer.h" />
+		<Unit filename="PDSL_Parser.cpp" />
+		<Unit filename="PDSL_Parser.h" />
 		<Unit filename="PDSL_Token.h" />
 		<Unit filename="POV.cpp" />
 		<Unit filename="POV.h" />
