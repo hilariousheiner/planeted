@@ -30,11 +30,21 @@ namespace Planeted
     }
 
     ImportStatement::ImportStatement(std::string path)
-        : path(path) {}
+        : path(path)
+    {}
 
     void ImportStatement::execute(PDSL_Runtime &runtime)
     {
         PDSL_Run(ReadFile(this->path), runtime);
+    }
+
+    ReturnStatement::ReturnStatement(std::unique_ptr<Expression> expression)
+        : expression(std::move(expression))
+    {}
+
+    void ReturnStatement::execute(PDSL_Runtime &runtime)
+    {
+        runtime.Result = this->expression->eval(runtime);
     }
 
     FunctionCallStatement::FunctionCallStatement(std::string name, std::vector<std::unique_ptr<Expression>> args)
@@ -81,19 +91,27 @@ namespace Planeted
     {
         std::unique_ptr<Statement> result;
 
-        if(this->current.type == TokenTypeEnum::Import)
+        if(this->current.type == TokenTypeEnum::Return)
         {
-            result = this->parseImportStatement();
+            result = this->parseReturnStatement();
+            //ToDo: stop parsing. If not eof => unreachable code detected.
         }
         else
         {
-            if(this->next.type == TokenTypeEnum::LParen)
+            if(this->current.type == TokenTypeEnum::Import)
             {
-                result = this->parseFunctionCallStatement();
+                result = this->parseImportStatement();
             }
             else
             {
-                result = this->parseAssignmentStatement();
+                if(this->next.type == TokenTypeEnum::LParen)
+                {
+                    result = this->parseFunctionCallStatement();
+                }
+                else
+                {
+                    result = this->parseAssignmentStatement();
+                }
             }
         }
         return result;
@@ -106,6 +124,20 @@ namespace Planeted
         std::string path = this->expect(TokenTypeEnum::StringLiteral).lexeme;
 
         return std::make_unique<ImportStatement>(path);
+    }
+
+    std::unique_ptr<ReturnStatement> Parser::parseReturnStatement()
+    {
+        // return
+        this->expect(TokenTypeEnum::Return);
+
+        // expression
+        std::unique_ptr<Expression> expression = this->parseExpression();
+
+        // ;
+        this->expect(TokenTypeEnum::Semicolon);
+
+        return std::make_unique<ReturnStatement>(std::move(expression));
     }
 
     std::unique_ptr<AssignmentStatement> Parser::parseAssignmentStatement()

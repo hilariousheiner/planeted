@@ -16,6 +16,7 @@ namespace Planeted
         NullLiteral,
 
         Import,
+        Return,
 
         Equals,
         Semicolon,
@@ -57,6 +58,9 @@ namespace Planeted
             break;
         case TokenTypeEnum::Import:
             result = "Import";
+            break;
+        case TokenTypeEnum::Return:
+            result = "Return";
             break;
         case TokenTypeEnum::Equals:
             result = "Equals";

@@ -74,6 +74,7 @@ namespace Planeted
         std::unordered_map<std::string, Value> Environment;
         std::unordered_map<std::string, BuiltinFunction> BuiltinFunctionsTable;
 
+        Value Result;
         bool DebugFlag = false;
 
         PDSL_Runtime()

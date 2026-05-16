@@ -13,7 +13,8 @@ namespace Planeted
         {"true", TokenTypeEnum::BoolLiteral},
         {"false", TokenTypeEnum::BoolLiteral},
         {"null", TokenTypeEnum::NullLiteral},
-        {"import", TokenTypeEnum::Import}
+        {"import", TokenTypeEnum::Import},
+        {"return", TokenTypeEnum::Return},
     };
 
     class Lexer

@@ -46,6 +46,8 @@ int main(int argc, char **argv)
     //runtime.debug = true;
     PDSL_RunFile(infile, runtime);
 
+    std::cout << "program returned: " << runtime.Result.ToString() << "\n";
+
     int seed = runtime.GetVariableValue("seed").IntValue;
 
     std::cout << "Generating mesh with seed " << seed << "..." << std::endl;
