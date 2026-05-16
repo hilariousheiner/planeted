@@ -10,6 +10,7 @@
 
 #include "Utils.h"
 
+#include "PDSL_Lexer.h"
 #include "PDSL_Token.h"
 
 /*

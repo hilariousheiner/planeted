@@ -4,34 +4,6 @@
 
 namespace Planeted
 {
-    static const std::unordered_map<std::string, TokenTypeEnum> keywordDict =
-    {
-        {"true", TokenTypeEnum::BoolLiteral},
-        {"false", TokenTypeEnum::BoolLiteral},
-        {"import", TokenTypeEnum::Import}
-    };
-
-    class Lexer
-    {
-    public:
-        Lexer(const std::string &source);
-        Token Next();
-
-    private:
-        void readWhitespaceAndComments();
-
-        Token readIdentifier();
-        Token readNumber();
-        Token readString();
-
-        char peek() const;
-        char peekNext() const;
-        char advance();
-
-        std::string source;
-        size_t pos;
-    };
-
     Lexer::Lexer(const std::string &source) :
         source(source), pos(0)
     { }
