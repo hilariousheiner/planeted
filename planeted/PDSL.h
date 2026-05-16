@@ -21,7 +21,6 @@ namespace Planeted
 {
     enum class ValueTypeEnum
     {
-        Identifier,
         Int,
         Float,
         Bool,
@@ -37,6 +36,33 @@ namespace Planeted
         float FloatValue;
         bool BoolValue;
         std::string StringValue;
+
+        std::string ToString()
+        {
+            std::string result = "";
+
+            switch(this->valueType)
+            {
+            case ValueTypeEnum::Int:
+                result = std::to_string(this->IntValue);
+                break;
+            case ValueTypeEnum::Float:
+                result = std::to_string(this->FloatValue);
+                break;
+            case ValueTypeEnum::Bool:
+                result = this->BoolValue == true ? "true" : "false";
+                break;
+            case ValueTypeEnum::String:
+                result = this->StringValue;
+                break;
+            case ValueTypeEnum::Null:
+                result = "null";
+                break;
+            default:
+                break;
+            }
+            return result;
+        }
     };
 
     struct PDSL_Runtime;
