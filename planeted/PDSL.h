@@ -26,6 +26,7 @@ namespace Planeted
         Float,
         Bool,
         String,
+        Null
     };
 
     struct Value

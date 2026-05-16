@@ -190,6 +190,8 @@ namespace Planeted
             result.valueType = ValueTypeEnum::String;
             result.StringValue = current.lexeme;
             break;
+        case TokenTypeEnum::NullLiteral:
+            result.valueType = ValueTypeEnum::Null;
         default:
             throw std::runtime_error("Invalid value type: " + TokenTypeToString(this->current.type));
             break;
