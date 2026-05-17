@@ -68,5 +68,7 @@ namespace Planeted
             return result;
         }
     };
+
+    static const Value NullValue = Value();
 }
 #endif // PLANETED_PDSL_VALUE_H
