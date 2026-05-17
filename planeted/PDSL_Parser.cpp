@@ -104,13 +104,13 @@ namespace Planeted
             }
             else
             {
-                if(this->next.type == TokenTypeEnum::LParen)
+                if(this->next.type == TokenTypeEnum::Equals)
                 {
-                    result = this->parseFunctionCallStatement();
+                    result = this->parseAssignmentStatement();
                 }
                 else
                 {
-                    result = this->parseAssignmentStatement();
+                    result = this->parseFunctionCallStatement();
                 }
             }
         }
