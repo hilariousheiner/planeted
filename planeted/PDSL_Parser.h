@@ -44,6 +44,16 @@ namespace Planeted
         Value eval(PDSL_Runtime &runtime) override;
     };
 
+    struct CallExpression : Expression
+    {
+        CallExpression(std::string name, std::vector<std::unique_ptr<Expression>> args);
+
+        Value eval(PDSL_Runtime &runtime) override;
+
+        std::string name;
+        std::vector<std::unique_ptr<Expression>> args;
+    };
+
     struct AssignmentStatement : Statement
     {
         AssignmentStatement(std::string name, std::unique_ptr<Expression> expression);
@@ -82,6 +92,15 @@ namespace Planeted
         std::vector<std::unique_ptr<Expression>> args;
     };
 
+    struct ExpressionStatement : Statement
+    {
+        ExpressionStatement(std::unique_ptr<Expression> expression);
+
+        void execute(PDSL_Runtime &runtime) override;
+
+        std::unique_ptr<Expression> expression;
+    };
+
     class Parser
     {
     public:
@@ -101,9 +120,13 @@ namespace Planeted
 
         std::unique_ptr<FunctionCallStatement> parseFunctionCallStatement();
 
+        std::unique_ptr<ExpressionStatement> parseExpressionStatement();
+
         std::unique_ptr<Expression> parseExpression();
 
         std::unique_ptr<ConstantExpression> parseLiteral();
+
+        std::unique_ptr<CallExpression> parseCallExpression();
 
         void advance();
 

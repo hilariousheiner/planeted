@@ -22,7 +22,7 @@ namespace Planeted
 {
     struct PDSL_Runtime;
 
-    using BuiltinFunction = std::function<void(PDSL_Runtime&, const std::vector<Value>&)>;
+    using BuiltinFunction = std::function<Value(PDSL_Runtime&, const std::vector<Value>&)>;
 
     struct PDSL_Runtime
     {
@@ -42,7 +42,9 @@ namespace Planeted
                     throw std::runtime_error("SetDebugFlag expects one argument.");
                 }
                 runtime.DebugFlag = args[0].BoolValue;
+                return NullValue;
             };
+
             this->BuiltinFunctionsTable["log"] =
                 [](PDSL_Runtime &runtime, const std::vector<Value> &args)
             {
@@ -51,6 +53,7 @@ namespace Planeted
                     throw std::runtime_error("Log expects exactly one argument.");
                 }
                 std::cout << args[0].ToString() << "\n";
+                return NullValue;
             };
         }
 
@@ -77,9 +80,7 @@ namespace Planeted
                 throw std::runtime_error("Unknown function: " + name);
             }
 
-            it->second(*this, args);
-
-            return NullValue;
+            return it->second(*this, args);
         }
 
         void DumpEnvironment()

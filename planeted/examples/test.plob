@@ -3,7 +3,7 @@ import "stdlib.h"
 msg = false; //"Hello, World!";
 
 log(msg);
-setDebugFlag(true);
+//setDebugFlag(true);
 //setDebugFlag(false);
 
 //seed = 12345; // the combination on my luggage

@@ -20,6 +20,22 @@ namespace Planeted
         return runtime.GetVariableValue(this->Identifier);
     }
 
+    CallExpression::CallExpression(std::string name, std::vector<std::unique_ptr<Expression>> args)
+        : name(name), args(std::move(args))
+    {}
+
+    Value CallExpression::eval(PDSL_Runtime &runtime)
+    {
+        std::vector<Value> evaluatedArgs;
+
+        for(const auto & arg : this->args)
+        {
+            evaluatedArgs.push_back(arg->eval(runtime));
+        }
+        return runtime.CallFunction(this->name, evaluatedArgs);
+    }
+
+
     AssignmentStatement::AssignmentStatement(std::string name, std::unique_ptr<Expression> expression)
         : name(name), expression(std::move(expression))
     {}
@@ -60,6 +76,16 @@ namespace Planeted
             evaluatedArgs.push_back(arg->eval(runtime));
         }
         runtime.CallFunction(this->name, evaluatedArgs);
+    }
+
+
+    ExpressionStatement::ExpressionStatement(std::unique_ptr<Expression> expression)
+        : expression(std::move(expression))
+    {}
+
+    void ExpressionStatement::execute(PDSL_Runtime &runtime)
+    {
+        this->expression->eval(runtime);
     }
 
     Parser::Parser(Lexer &lexer)
@@ -103,7 +129,7 @@ namespace Planeted
                 }
                 else
                 {
-                    result = this->parseFunctionCallStatement();
+                    result = this->parseExpressionStatement();
                 }
             }
         }
@@ -182,10 +208,24 @@ namespace Planeted
         return std::make_unique<FunctionCallStatement>(name, std::move(args));
     }
 
+    std::unique_ptr<ExpressionStatement> Parser::parseExpressionStatement()
+    {
+        std::unique_ptr<Expression> expression = this->parseExpression();
+
+        // ;
+        this->expect(TokenTypeEnum::Semicolon);
+
+        return std::make_unique<ExpressionStatement>(std::move(expression));
+    }
+
     std::unique_ptr<Expression> Parser::parseExpression()
     {
         if(this->current.type == TokenTypeEnum::Identifier)
         {
+            if(this->next.type == TokenTypeEnum::LParen)
+            {
+                return this->parseCallExpression();
+            }
             std::string identifier = this->current.lexeme;
             this->advance();
             return std::make_unique<VariableExpression>(identifier);
@@ -225,6 +265,37 @@ namespace Planeted
 
         this->advance();
         return std::make_unique<ConstantExpression>(result);
+    }
+
+
+    std::unique_ptr<CallExpression> Parser::parseCallExpression()
+    {
+        // identifier
+        std::string name = this->expect(TokenTypeEnum::Identifier).lexeme;
+
+        // parse argument list:
+        // (
+        this->expect(TokenTypeEnum::LParen);
+
+        std::vector<std::unique_ptr<Expression>> args;
+
+        if(this->current.type != TokenTypeEnum::RParen)
+        {
+            while(true)
+            {
+                args.push_back(this->parseExpression());
+                if(this->current.type == TokenTypeEnum::Comma)
+                {
+                    this->advance();
+                    continue;
+                }
+                break;
+            }
+        }
+        // )
+
+        this->expect(TokenTypeEnum::RParen);
+        return std::make_unique<CallExpression>(name, std::move(args));
     }
 
     void Parser::advance()
