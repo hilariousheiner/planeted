@@ -44,6 +44,7 @@ int main(int argc, char **argv)
 
     PDSL_Runtime runtime;
     //runtime.debug = true;
+    runtime.SetVariableValue("seed", Value(12345)); // the combination on my luggage
     PDSL_RunFile(infile, runtime);
 
     std::cout << "program returned: " << runtime.Result.ToString() << "\n";

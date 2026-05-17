@@ -6,6 +6,6 @@ log(msg);
 setDebugFlag(true);
 //setDebugFlag(false);
 
-seed = 12345; // the combination on my luggage
+//seed = 12345; // the combination on my luggage
 
 return 5;
