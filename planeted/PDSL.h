@@ -69,6 +69,19 @@ namespace Planeted
             this->Environment[name] = value;
         }
 
+        Value CallFunction(std::string &name, std::vector<Value> &args)
+        {
+            auto it = this->BuiltinFunctionsTable.find(name);
+            if(it == this->BuiltinFunctionsTable.end())
+            {
+                throw std::runtime_error("Unknown function: " + name);
+            }
+
+            it->second(*this, args);
+
+            return NullValue;
+        }
+
         void DumpEnvironment()
         {
             std::cout << "environment: \n";

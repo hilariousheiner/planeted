@@ -53,20 +53,13 @@ namespace Planeted
 
     void FunctionCallStatement::execute(PDSL_Runtime &runtime)
     {
-        auto it = runtime.BuiltinFunctionsTable.find(this->name);
-        if(it == runtime.BuiltinFunctionsTable.end())
-        {
-            throw std::runtime_error("Unknown function: " + this->name);
-        }
-
         std::vector<Value> evaluatedArgs;
 
         for(const auto & arg : this->args)
         {
             evaluatedArgs.push_back(arg->eval(runtime));
         }
-
-        it->second(runtime, evaluatedArgs);
+        runtime.CallFunction(this->name, evaluatedArgs);
     }
 
     Parser::Parser(Lexer &lexer)
