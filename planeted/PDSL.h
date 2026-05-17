@@ -37,6 +37,26 @@ namespace Planeted
         bool BoolValue;
         std::string StringValue;
 
+        Value()
+            : valueType(ValueTypeEnum::Null)
+        {}
+
+        Value(int intValue)
+            : IntValue(intValue), valueType(ValueTypeEnum::Int)
+        {}
+
+        Value(float floatValue)
+            : FloatValue(floatValue), valueType(ValueTypeEnum::Float)
+        {}
+
+        Value(bool boolValue)
+            : BoolValue(boolValue), valueType(ValueTypeEnum::Bool)
+        {}
+
+        Value(std::string stringValue)
+            : StringValue(stringValue), valueType(ValueTypeEnum::String)
+        {}
+
         std::string ToString() const
         {
             std::string result = "";
