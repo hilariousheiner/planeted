@@ -43,21 +43,11 @@ int main(int argc, char **argv)
     }
 
     PDSL_Runtime runtime;
-    //runtime.debug = true;
-    runtime.SetVariableValue("seed", Value(12345)); // the combination on my luggage
     PDSL_RunFile(infile, runtime);
 
     std::cout << "program returned: " << runtime.Result.ToString() << "\n";
 
-    /*
-    int seed = runtime.GetVariableValue("seed").IntValue;
-    std::cout << "Generating mesh with seed " << seed << "..." << std::endl;
-
-    Random::SeedNoise(seed);
-
-    Asteroid *plob = new Asteroid(outfile.base);
-    */
-    Mesh &mesh = *runtime.Result.MeshValue; //plob->GenerateMesh();
+    Mesh &mesh = *runtime.Result.GetMeshValue();
 
     std::cout << "done (" << mesh.VertexCount() << " vertices and " << mesh.TriangleCount() << " triangles).\n";
 
@@ -95,8 +85,6 @@ int main(int argc, char **argv)
     meshfile.close();
 
     std::cout << "done." << std::endl;
-
-    //delete plob;
 
     /*noise test:
     std::cout << "running noise test" << std::endl;
