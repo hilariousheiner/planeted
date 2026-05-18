@@ -1,11 +1,11 @@
 import "stdlib.h" 
 
-msg = false; //"Hello, World!";
-
-log(msg);
+//msg = false; //"Hello, World!";
+//log(msg);
 //setDebugFlag(true);
 //setDebugFlag(false);
-
 //seed = 12345; // the combination on my luggage
 
-return 5;
+m = icosahedron("asteroid");
+
+return m;
