@@ -49,14 +49,15 @@ int main(int argc, char **argv)
 
     std::cout << "program returned: " << runtime.Result.ToString() << "\n";
 
+    /*
     int seed = runtime.GetVariableValue("seed").IntValue;
-
     std::cout << "Generating mesh with seed " << seed << "..." << std::endl;
 
     Random::SeedNoise(seed);
 
     Asteroid *plob = new Asteroid(outfile.base);
-    Mesh& mesh = plob->GenerateMesh();
+    */
+    Mesh &mesh = *runtime.Result.MeshValue; //plob->GenerateMesh();
 
     std::cout << "done (" << mesh.VertexCount() << " vertices and " << mesh.TriangleCount() << " triangles).\n";
 
@@ -95,7 +96,7 @@ int main(int argc, char **argv)
 
     std::cout << "done." << std::endl;
 
-    delete plob;
+    //delete plob;
 
     /*noise test:
     std::cout << "running noise test" << std::endl;
