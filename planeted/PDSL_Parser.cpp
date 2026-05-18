@@ -240,23 +240,19 @@ namespace Planeted
         switch(this->current.type)
         {
         case TokenTypeEnum::IntLiteral:
-            result.valueType = ValueTypeEnum::Int;
-            result.IntValue = std::stoi(current.lexeme);
+            result = Value(std::stoi(current.lexeme));
             break;
         case TokenTypeEnum::FloatLiteral:
-            result.valueType = ValueTypeEnum::Float;
-            result.FloatValue = std::stof(current.lexeme);
+            result = Value(std::stof(current.lexeme));
             break;
         case TokenTypeEnum::BoolLiteral:
-            result.valueType = ValueTypeEnum::Bool;
-            result.BoolValue = (current.lexeme == "true");
+            result = Value(current.lexeme == "true");
             break;
         case TokenTypeEnum::StringLiteral:
-            result.valueType = ValueTypeEnum::String;
-            result.StringValue = current.lexeme;
+            result = Value(current.lexeme);
             break;
         case TokenTypeEnum::NullLiteral:
-            result.valueType = ValueTypeEnum::Null;
+            result = Value::Null();
             break;
         default:
             throw std::runtime_error("Invalid value type: " + TokenTypeToString(this->current.type));

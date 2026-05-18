@@ -42,8 +42,8 @@ namespace Planeted
                 {
                     throw std::runtime_error("setDebugFlag expects one argument.");
                 }
-                runtime.DebugFlag = args[0].BoolValue;
-                return NullValue;
+                runtime.DebugFlag = args[0].GetBoolValue();
+                return Value::Null();
             };
 
             this->BuiltinFunctionsTable["log"] =
@@ -54,7 +54,7 @@ namespace Planeted
                     throw std::runtime_error("log expects exactly one argument.");
                 }
                 std::cout << args[0].ToString() << "\n";
-                return NullValue;
+                return Value::Null();
             };
 
             this->BuiltinFunctionsTable["icosahedron"] =
