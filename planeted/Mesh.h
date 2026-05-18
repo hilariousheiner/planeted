@@ -25,6 +25,7 @@ namespace Planeted
     class Mesh
     {
     public:
+        Mesh();
         Mesh(std::string name);
 
         // vertices:

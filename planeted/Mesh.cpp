@@ -3,9 +3,13 @@
 
 namespace Planeted
 {
+    Mesh::Mesh()
+      : name("mesh"), normalType(NormalTypeEnum::None)
+    {}
+
     Mesh::Mesh(std::string name)
         : name(name), normalType(NormalTypeEnum::None)
-    { }
+    {}
 
     int Mesh::AddVertex(float x, float y, float z)
     {
