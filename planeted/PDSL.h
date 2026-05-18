@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include <vector>
 
+#include "Icosahedron.h"
 #include "Utils.h"
 
 #include "PDSL_Lexer.h"
@@ -39,7 +40,7 @@ namespace Planeted
             {
                 if(args.size() != 1)
                 {
-                    throw std::runtime_error("SetDebugFlag expects one argument.");
+                    throw std::runtime_error("setDebugFlag expects one argument.");
                 }
                 runtime.DebugFlag = args[0].BoolValue;
                 return NullValue;
@@ -50,10 +51,20 @@ namespace Planeted
             {
                 if(args.size() != 1)
                 {
-                    throw std::runtime_error("Log expects exactly one argument.");
+                    throw std::runtime_error("log expects exactly one argument.");
                 }
                 std::cout << args[0].ToString() << "\n";
                 return NullValue;
+            };
+
+            this->BuiltinFunctionsTable["icosahedron"] =
+                [](PDSL_Runtime &runtime, const std::vector<Value> &args)
+            {
+                if(args.size() != 1)
+                {
+                    throw std::runtime_error("icosahedron expects exactly one argument.");
+                }
+                return Value(MakeIcosahedron(args[0].ToString()));
             };
         }
 
