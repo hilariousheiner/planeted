@@ -1,6 +1,8 @@
 #ifndef PLANETED_PDSL_VALUE_H
 #define PLANETED_PDSL_VALUE_H
 
+#include "Mesh.h"
+
 namespace Planeted
 {
     enum class ValueTypeEnum
@@ -9,7 +11,8 @@ namespace Planeted
         Float,
         Bool,
         String,
-        Null
+        Null,
+        Mesh
     };
 
     struct Value
@@ -20,6 +23,7 @@ namespace Planeted
         float FloatValue;
         bool BoolValue;
         std::string StringValue;
+        Mesh *MeshValue;
 
         Value()
             : valueType(ValueTypeEnum::Null)
@@ -39,6 +43,10 @@ namespace Planeted
 
         Value(std::string stringValue)
             : StringValue(stringValue), valueType(ValueTypeEnum::String)
+        {}
+
+        Value(Mesh *meshValue)
+            : MeshValue(meshValue), valueType(ValueTypeEnum::Mesh)
         {}
 
         std::string ToString() const
@@ -61,6 +69,9 @@ namespace Planeted
                 break;
             case ValueTypeEnum::Null:
                 result = "null";
+                break;
+            case ValueTypeEnum::Mesh:
+                result = "mesh: " + this->MeshValue->GetName();
                 break;
             default:
                 break;
