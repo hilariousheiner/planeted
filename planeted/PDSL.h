@@ -35,7 +35,7 @@ namespace Planeted
 
         PDSL_Runtime()
         {
-            this->BuiltinFunctionsTable["setDebugFlag"] =
+            this->InstallBuiltinFunction("setDebugFlag",
                 [](PDSL_Runtime &runtime, const std::vector<Value> &args)
             {
                 if(args.size() != 1)
@@ -44,9 +44,9 @@ namespace Planeted
                 }
                 runtime.DebugFlag = args[0].GetBoolValue();
                 return Value::Null();
-            };
+            });
 
-            this->BuiltinFunctionsTable["log"] =
+            this->InstallBuiltinFunction("log",
                 [](PDSL_Runtime &runtime, const std::vector<Value> &args)
             {
                 if(args.size() != 1)
@@ -55,9 +55,9 @@ namespace Planeted
                 }
                 std::cout << args[0].ToString() << "\n";
                 return Value::Null();
-            };
+            });
 
-            this->BuiltinFunctionsTable["icosahedron"] =
+            this->InstallBuiltinFunction("icosahedron",
                 [](PDSL_Runtime &runtime, const std::vector<Value> &args)
             {
                 if(args.size() != 1)
@@ -65,7 +65,7 @@ namespace Planeted
                     throw std::runtime_error("icosahedron expects exactly one argument.");
                 }
                 return Value(MakeIcosahedron(args[0].ToString()));
-            };
+            });
         }
 
         Value GetVariableValue(const std::string &name) const
@@ -92,6 +92,11 @@ namespace Planeted
             }
 
             return it->second(*this, args);
+        }
+
+        void InstallBuiltinFunction(std::string name, BuiltinFunction fn)
+        {
+            this->BuiltinFunctionsTable[name] = fn;
         }
 
         void DumpEnvironment()
