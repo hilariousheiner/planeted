@@ -10,4 +10,6 @@ m = icosahedron("asteroid");
 
 m = subdivide(m, 4);
 
+m = displace(m, 0.25);
+
 return m;

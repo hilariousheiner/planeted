@@ -43,6 +43,28 @@ namespace Planeted
 
                 return Value(m);
             });
+
+            runtime.InstallBuiltinFunction("displace",
+                [](PDSL_Runtime &runtime, const std::vector<Value> &args)
+            {
+                if(args.size() != 2)
+                {
+                    throw std::runtime_error("displace expects two arguments.");
+                }
+
+                Mesh *m = args[0].GetMeshValue();
+                float a = args[1].GetFloatValue();
+
+                for(int id = 0; id < m->VertexCount(); ++id)
+                {
+                    Vector3 *vertex = m->GetVertex(id);
+                    float scalar = 1 + a * Random::GradientNoiseFBM(*vertex);
+                    *vertex *= scalar;
+                }
+                m->CalculateNormals(NormalTypeEnum::PerVertex);
+
+                return Value(m);
+            });
         }
     }
 }
