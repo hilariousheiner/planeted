@@ -82,16 +82,6 @@ namespace Planeted
         std::unique_ptr<Expression> expression;
     };
 
-    struct FunctionCallStatement : Statement
-    {
-        FunctionCallStatement(std::string name, std::vector<std::unique_ptr<Expression>> args);
-
-        void execute(PDSL_Runtime &runtime) override;
-
-        std::string name;
-        std::vector<std::unique_ptr<Expression>> args;
-    };
-
     struct ExpressionStatement : Statement
     {
         ExpressionStatement(std::unique_ptr<Expression> expression);
@@ -117,8 +107,6 @@ namespace Planeted
         std::unique_ptr<ReturnStatement> parseReturnStatement();
 
         std::unique_ptr<AssignmentStatement> parseAssignmentStatement();
-
-        std::unique_ptr<FunctionCallStatement> parseFunctionCallStatement();
 
         std::unique_ptr<ExpressionStatement> parseExpressionStatement();
 

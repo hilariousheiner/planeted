@@ -63,22 +63,6 @@ namespace Planeted
         runtime.Result = this->expression->eval(runtime);
     }
 
-    FunctionCallStatement::FunctionCallStatement(std::string name, std::vector<std::unique_ptr<Expression>> args)
-        : name(name), args(std::move(args))
-    {}
-
-    void FunctionCallStatement::execute(PDSL_Runtime &runtime)
-    {
-        std::vector<Value> evaluatedArgs;
-
-        for(const auto & arg : this->args)
-        {
-            evaluatedArgs.push_back(arg->eval(runtime));
-        }
-        runtime.CallFunction(this->name, evaluatedArgs);
-    }
-
-
     ExpressionStatement::ExpressionStatement(std::unique_ptr<Expression> expression)
         : expression(std::move(expression))
     {}
@@ -174,38 +158,6 @@ namespace Planeted
         this->expect(TokenTypeEnum::Semicolon);
 
         return std::make_unique<AssignmentStatement>(name, std::move(expression));
-    }
-
-    std::unique_ptr<FunctionCallStatement> Parser::parseFunctionCallStatement()
-    {
-        // identifier
-        std::string name = this->expect(TokenTypeEnum::Identifier).lexeme;
-
-        // parse argument list:
-        // (
-        this->expect(TokenTypeEnum::LParen);
-
-        std::vector<std::unique_ptr<Expression>> args;
-
-        if(this->current.type != TokenTypeEnum::RParen)
-        {
-            while(true)
-            {
-                args.push_back(this->parseExpression());
-                if(this->current.type == TokenTypeEnum::Comma)
-                {
-                    this->advance();
-                    continue;
-                }
-                break;
-            }
-        }
-        // )
-
-        this->expect(TokenTypeEnum::RParen);
-        // ;
-        this->expect(TokenTypeEnum::Semicolon);
-        return std::make_unique<FunctionCallStatement>(name, std::move(args));
     }
 
     std::unique_ptr<ExpressionStatement> Parser::parseExpressionStatement()
