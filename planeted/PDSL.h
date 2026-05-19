@@ -56,16 +56,6 @@ namespace Planeted
                 std::cout << args[0].ToString() << "\n";
                 return Value::Null();
             });
-
-            this->InstallBuiltinFunction("icosahedron",
-                [](PDSL_Runtime &runtime, const std::vector<Value> &args)
-            {
-                if(args.size() != 1)
-                {
-                    throw std::runtime_error("icosahedron expects exactly one argument.");
-                }
-                return Value(MakeIcosahedron(args[0].ToString()));
-            });
         }
 
         Value GetVariableValue(const std::string &name) const

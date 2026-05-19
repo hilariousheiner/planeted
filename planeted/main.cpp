@@ -13,6 +13,7 @@
 #include "POV.h"
 #include "PPM.h"
 #include "PDSL.h"
+#include "PDSL_Lib.h"
 #include "OBJ.h"
 #include "Color.h"
 #include "PixelMap.h"
@@ -20,7 +21,6 @@
 #include "STL.h"
 #include "Utils.h"
 #include "IcoSphere.h"
-
 using namespace Planeted;
 
 filename_t outfile;
@@ -43,6 +43,9 @@ int main(int argc, char **argv)
     }
 
     PDSL_Runtime runtime;
+
+    PDSL_Lib::Load(runtime);
+
     PDSL_RunFile(infile, runtime);
 
     std::cout << "program returned: " << runtime.Result.ToString() << "\n";
