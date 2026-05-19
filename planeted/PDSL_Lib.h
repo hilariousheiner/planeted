@@ -44,6 +44,21 @@ namespace Planeted
                 return Value(m);
             });
 
+            runtime.InstallBuiltinFunction("seedNoise",
+                [](PDSL_Runtime &runtime, const std::vector<Value> &args)
+            {
+                if(args.size() != 1)
+                {
+                    throw std::runtime_error("seedNoise expects one argument.");
+                }
+
+                int seed = args[0].GetIntValue();
+
+                Random::SeedNoise(seed);
+
+                return Value::Null();
+            });
+
             runtime.InstallBuiltinFunction("displace",
                 [](PDSL_Runtime &runtime, const std::vector<Value> &args)
             {

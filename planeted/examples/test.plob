@@ -1,14 +1,10 @@
 import "stdlib.h" 
 
-//msg = false; //"Hello, World!";
-//log(msg);
-//setDebugFlag(true);
-//setDebugFlag(false);
-//seed = 12345; // the combination on my luggage
-
 m = icosahedron("asteroid");
 
 m = subdivide(m, 4);
+
+seedNoise(12345); // the combination on my luggage
 
 m = displace(m, 0.25);
 
