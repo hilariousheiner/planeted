@@ -18,6 +18,31 @@ namespace Planeted
                 }
                 return Value(MakeIcosahedron(args[0].ToString()));
             });
+
+            runtime.InstallBuiltinFunction("subdivide",
+                [](PDSL_Runtime &runtime, const std::vector<Value> &args)
+            {
+                if(args.size() != 2)
+                {
+                    throw std::runtime_error("subdivide expects two arguments.");
+                }
+
+                Mesh *m = args[0].GetMeshValue();
+                int d = args[1].GetIntValue();
+
+                MeshSubdivider subdivider(m);
+
+                int i = 0;
+                while(i < d)
+                {
+                    subdivider.Subdivide();
+                    ++i;
+                }
+
+                m->ProjectToUnitSphere();
+
+                return Value(m);
+            });
         }
     }
 }

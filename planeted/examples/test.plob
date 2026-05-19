@@ -8,4 +8,6 @@ import "stdlib.h"
 
 m = icosahedron("asteroid");
 
+m = subdivide(m, 4);
+
 return m;
