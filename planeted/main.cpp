@@ -48,45 +48,51 @@ int main(int argc, char **argv)
 
     PDSL_RunFile(infile, runtime);
 
-    std::cout << "program returned: " << runtime.Result.ToString() << "\n";
-
-    Mesh &mesh = *runtime.Result.GetMeshValue();
-
-    std::cout << "done (" << mesh.VertexCount() << " vertices and " << mesh.TriangleCount() << " triangles).\n";
-
-    std::cout << "Writing mesh to \"" << outfile << "\"...\n";
-    std::ofstream meshfile(outfile.ToString());
-
-    if(objOutput == true)
+    if(!runtime.Result.IsNull())
     {
-        meshfile << OBJ::MeshToOBJ(mesh);
-    }
-    else
-    {
-        if(stlOutput == true)
+        std::cout << "program returned: " << runtime.Result.ToString() << "\n";
+
+        Mesh &mesh = *runtime.Result.GetMeshValue();
+
+        std::cout << "done (" << mesh.VertexCount() << " vertices and " << mesh.TriangleCount() << " triangles).\n";
+
+        std::cout << "Writing mesh to \"" << outfile << "\"...\n";
+        std::ofstream meshfile(outfile.ToString());
+
+        if(objOutput == true)
         {
-            meshfile << STL::MeshToSTL(mesh);
+            meshfile << OBJ::MeshToOBJ(mesh);
         }
         else
         {
-            if(scadOutput == true)
+            if(stlOutput == true)
             {
-                meshfile << SCAD::MeshToSCAD(mesh);
+                meshfile << STL::MeshToSTL(mesh);
             }
             else
             {
-                meshfile << POV::MeshToPOVMesh2(mesh);
+                if(scadOutput == true)
+                {
+                    meshfile << SCAD::MeshToSCAD(mesh);
+                }
+                else
+                {
+                    meshfile << POV::MeshToPOVMesh2(mesh);
 
-                std::cout << "Writing scene file...\n";
-                std::ofstream scenefile("scene.pov");
+                    std::cout << "Writing scene file...\n";
+                    std::ofstream scenefile("scene.pov");
 
-                scenefile << POV::POVSceneFile(outfile.ToString().c_str());
-                scenefile.close();
+                    scenefile << POV::POVSceneFile(outfile.ToString().c_str());
+                    scenefile.close();
+                }
             }
         }
+        meshfile.close();
     }
-    meshfile.close();
-
+    else
+    {
+        std::cout << "no output written.\n";
+    }
     std::cout << "done." << std::endl;
 
     /*noise test:
