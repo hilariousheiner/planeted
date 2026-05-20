@@ -1,8 +1,0 @@
-// test2.plob
-// another comment
-
-/*
- * a block commment!
- */
-
-        seed = 1618033;
