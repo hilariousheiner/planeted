@@ -70,5 +70,53 @@ namespace Planeted
         x = std::max(-1.0f, std::min(1.0f, x));
         return (x + 1.0f) * 0.5f;
     }
+
+    // murmurhash finalizer, written by Austin Appleby:
+    // https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp
+    inline uint32_t fmix32(uint32_t h)
+    {
+        h ^= h >> 16;
+        h *= 0x85ebca6b;
+        h ^= h >> 13;
+        h *= 0xc2b2ae35;
+        h ^= h >> 16;
+        return h;
+    }
+
+    inline uint32_t hash1D(int x, uint32_t seed)
+    {
+        uint32_t h = seed;
+
+        h ^= uint32_t(x) * 0x9e3779b1;
+
+        return fmix32(h);
+    }
+
+    inline uint32_t hash2D(int x, int y, uint32_t seed)
+    {
+        uint32_t h = seed;
+
+        h ^= uint32_t(x) * 0x9e3779b1;
+        h ^= uint32_t(y) * 0x85ebca77;
+
+        return fmix32(h);
+    }
+
+    inline uint32_t hash3D(int x, int y, int z, uint32_t seed)
+    {
+        uint32_t h = seed;
+
+        h ^= uint32_t(x) * 0x9e3779b1;
+        h ^= uint32_t(y) * 0x85ebca77;
+        h ^= uint32_t(z) * 0xc2b2ae3d;
+
+        return fmix32(h);
+    }
+
+    inline float hashToSigned(uint32_t h)
+    {
+        float u = h * (1.0 / 4294967296.0);
+        return u * 2.0 - 1.0;
+    }
 }
 #endif // PLANETED_MATH_H

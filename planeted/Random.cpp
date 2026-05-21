@@ -191,22 +191,11 @@ namespace Planeted
             return result;
         }
 
-        void Seed(std::uint32_t seed)
-        {
-            engine() = std::mt19937(seed);
-        }
-
         void SeedNoise(std::uint32_t seed)
         {
             noise_engine() = std::mt19937(seed);
             valueTable() = computeValueTable();
             permutationTable() = computePermutationTable();
-        }
-
-        float Range(float min, float max)
-        {
-            std::uniform_real_distribution<float> distribution(min, max);
-            return distribution(engine());
         }
 
         float ValueNoise(const float &p)
