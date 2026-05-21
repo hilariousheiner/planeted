@@ -198,6 +198,15 @@ namespace Planeted
             permutationTable() = computePermutationTable();
         }
 
+        float WhiteNoise(const float &p)
+        {
+            int pi = std::floor(p);
+
+            uint32_t h = hash1D(pi, 12345);
+
+            return hashToSigned(h);
+        }
+
         float ValueNoise(const float &p)
         {
             int pi = FloorToInt(p);
