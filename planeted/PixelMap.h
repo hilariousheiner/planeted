@@ -1,14 +1,16 @@
 #ifndef PLANETED_PIXELMAP_H
 #define PLANETED_PIXELMAP_H
 
-#include <vector>
+#include <functional>
 #include <stdexcept>
+#include <vector>
 
 #include "Color.h"
 
-
 namespace Planeted
 {
+    using ColorFunction = std::function<std::uint8_t(const int x, const int y)>;
+
     class PixelMap
     {
     public:
@@ -40,6 +42,25 @@ namespace Planeted
                 for(int i = x0; i < x1; ++i)
                 {
                     this->pixels[start + i] = color;
+                }
+            }
+        }
+
+        void FillRect(int x, int y, int w, int h, ColorFunction colorFun)
+        {
+            int x0 = std::max(x, 0);
+            int y0 = std::max(y, 0);
+            int x1 = std::min(this->width, x + w);
+            int y1 = std::min(this->height, y + h);
+
+            for(int j = y0; j < y1; ++j)
+            {
+                int start = j * this->width;
+
+                for(int i = x0; i < x1; ++i)
+                {
+                    std::uint8_t c = colorFun(i, j);
+                    this->pixels[start + i] = {c, c, c};
                 }
             }
         }
