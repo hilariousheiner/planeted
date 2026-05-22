@@ -235,6 +235,16 @@ namespace Planeted
             return SmoothStepUnclamped5(g0, g1, tp);
         }
 
+        float WhiteNoise(const Vector2 &p)
+        {
+            int xi = std::floor(p.X);
+            int yi = std::floor(p.Y);
+
+            uint32_t h = hash2D(xi, yi, 12345);
+
+            return hashToSigned(h);
+        }
+
         float ValueNoise(const Vector2 &p)
         {
             int xi = FloorToInt(p.X);

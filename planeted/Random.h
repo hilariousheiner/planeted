@@ -24,6 +24,7 @@ namespace Planeted
         void SeedNoise(std::uint32_t seed);
 
         float WhiteNoise(const float &p);
+        float WhiteNoise(const Vector2 &p);
 
         float ValueNoise(const float &p);
         float ValueNoise(const Vector2 &p);

@@ -54,6 +54,7 @@ namespace Planeted
         switch(noiseType)
         {
         case Random::NoiseTypeEnum::White:
+            fn = [](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::WhiteNoise({x * 100.0f, y * 100.0f}))); };
             break;
         case Random::NoiseTypeEnum::Value:
             fn = [](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::ValueNoise({x * 0.05f, y * 0.05f}))); };
