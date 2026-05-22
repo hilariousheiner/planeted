@@ -10,47 +10,41 @@
 
 namespace Planeted
 {
-    inline void NoiseTest1D(Random::NoiseTypeEnum noiseType)
+    inline void noiseTest(const std::string &name, const std::string &filename, ColorFunction fn)
     {
-        /*noise test:*/
-        std::cout << "running 1D noise test" << std::endl;
+        std::cout << "running " << name << " noise test." << std::endl;
 
         PixelMap pixMap = PixelMap(512, 512);
-        for(int x = 0; x < 512; ++x)
-        {
-            for(int y = 0; y < 512; ++y)
-            {
-                std::uint8_t c = 0;
 
-                switch(noiseType)
-                {
-                case Random::NoiseTypeEnum::White:
-                    c = ToUint8(SignedToUnitRange(Random::WhiteNoise(x*100)));
-                    break;
-                case Random::NoiseTypeEnum::Value:
-                    c = ToUint8(SignedToUnitRange(Random::ValueNoise(x * 0.05f)));
-                    break;
-                case Random::NoiseTypeEnum::Perlin:
-                    break;
-                case Random::NoiseTypeEnum::Gradient:
-                    c = ToUint8(SignedToUnitRange(Random::GradientNoise(x * 0.05f)));
-                    break;
-                default:
-                    break;
-                }
-                //std::uint8_t c = ToUint8(SignedToUnitRange(Random::GradientNoise({x * 0.05f, y * 0.05f, 1.0f})));
-                //std::uint8_t
+        pixMap.FillRect(0, 0, 512, 512, fn);
 
-                pixMap.PutPixel(x, y, {c, c, c});
-            }
-        }
-
-        std::ofstream ppmfile("test.ppm");
+        std::ofstream ppmfile(filename);
 
         ppmfile << PPM::PixelMapToPPM(pixMap);
         std::cout << "done." << std::endl;
-        //*/
+    }
+
+    inline void NoiseTest1D(Random::NoiseTypeEnum noiseType)
+    {
+        ColorFunction fn = [](const int x, const int y) { return 0; };
+
+        switch(noiseType)
+        {
+        case Random::NoiseTypeEnum::White:
+            fn = [](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::WhiteNoise(x*100))); };
+            break;
+        case Random::NoiseTypeEnum::Value:
+            fn = [](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::ValueNoise(x * 0.05f))); };
+            break;
+        case Random::NoiseTypeEnum::Perlin:
+            break;
+        case Random::NoiseTypeEnum::Gradient:
+            fn = [](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::GradientNoise(x * 0.05f))); };
+            break;
+        default:
+            break;
+        }
+        noiseTest("1D", "noiseTest1D.ppm", fn);
     }
 }
-
 #endif
