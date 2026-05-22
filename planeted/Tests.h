@@ -46,5 +46,49 @@ namespace Planeted
         }
         noiseTest("1D", "noiseTest1D.ppm", fn);
     }
+
+    inline void NoiseTest2D(Random::NoiseTypeEnum noiseType)
+    {
+        ColorFunction fn = [](const int x, const int y) { return 0; };
+
+        switch(noiseType)
+        {
+        case Random::NoiseTypeEnum::White:
+            break;
+        case Random::NoiseTypeEnum::Value:
+            fn = [](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::ValueNoise({x * 0.05f, y * 0.05f}))); };
+            break;
+        case Random::NoiseTypeEnum::Perlin:
+            break;
+        case Random::NoiseTypeEnum::Gradient:
+            fn = [](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::GradientNoise({x * 0.05f, y * 0.05f}))); };
+            break;
+        default:
+            break;
+        }
+        noiseTest("2D", "noiseTest2D.ppm", fn);
+    }
+
+    inline void NoiseTest3D(Random::NoiseTypeEnum noiseType)
+    {
+        ColorFunction fn = [](const int x, const int y) { return 0; };
+
+        switch(noiseType)
+        {
+        case Random::NoiseTypeEnum::White:
+            break;
+        case Random::NoiseTypeEnum::Value:
+            fn = [](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::ValueNoise({x * 0.05f, y * 0.05f, 1}))); };
+            break;
+        case Random::NoiseTypeEnum::Perlin:
+            break;
+        case Random::NoiseTypeEnum::Gradient:
+            fn = [](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::GradientNoise({x * 0.05f, y * 0.05f, 1}))); };
+            break;
+        default:
+            break;
+        }
+        noiseTest("3D", "noiseTest3D.ppm", fn);
+    }
 }
 #endif
