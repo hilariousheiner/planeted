@@ -77,14 +77,15 @@ namespace Planeted
         switch(noiseType)
         {
         case Random::NoiseTypeEnum::White:
+            fn = [](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::WhiteNoise({x * 100.0f, y * 100.0f, 1.0f}))); };
             break;
         case Random::NoiseTypeEnum::Value:
-            fn = [](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::ValueNoise({x * 0.05f, y * 0.05f, 1}))); };
+            fn = [](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::ValueNoise({x * 0.05f, y * 0.05f, 1.0f}))); };
             break;
         case Random::NoiseTypeEnum::Perlin:
             break;
         case Random::NoiseTypeEnum::Gradient:
-            fn = [](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::GradientNoise({x * 0.05f, y * 0.05f, 1}))); };
+            fn = [](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::GradientNoise({x * 0.05f, y * 0.05f, 1.0f}))); };
             break;
         default:
             break;

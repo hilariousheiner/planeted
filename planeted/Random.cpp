@@ -295,6 +295,17 @@ namespace Planeted
             return SmoothStepUnclamped5(u0, u1, ty);
         }
 
+        float WhiteNoise(const Vector3 &p)
+        {
+            int xi = std::floor(p.X);
+            int yi = std::floor(p.Y);
+            int zi = std::floor(p.Z);
+
+            uint32_t h = hash3D(xi, yi, zi, 12345);
+
+            return hashToSigned(h);
+        }
+
         float ValueNoise(const Vector3 &p)
         {
              // calculate grid cell corner coordinates:

@@ -25,6 +25,7 @@ namespace Planeted
 
         float WhiteNoise(const float &p);
         float WhiteNoise(const Vector2 &p);
+        float WhiteNoise(const Vector3 &p);
 
         float ValueNoise(const float &p);
         float ValueNoise(const Vector2 &p);
