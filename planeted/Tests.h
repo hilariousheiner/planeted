@@ -28,11 +28,12 @@ namespace Planeted
                     c = ToUint8(SignedToUnitRange(Random::WhiteNoise(x*100)));
                     break;
                 case Random::NoiseTypeEnum::Value:
+                    c = ToUint8(SignedToUnitRange(Random::ValueNoise(x * 0.05f)));
                     break;
                 case Random::NoiseTypeEnum::Perlin:
-                    c = ToUint8(SignedToUnitRange(Random::GradientNoise(x * 0.05f)));
                     break;
                 case Random::NoiseTypeEnum::Gradient:
+                    c = ToUint8(SignedToUnitRange(Random::GradientNoise(x * 0.05f)));
                     break;
                 default:
                     break;
