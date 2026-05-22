@@ -13,6 +13,14 @@ namespace Planeted
 {
     namespace Random
     {
+        enum class NoiseTypeEnum
+        {
+            White = 0,
+            Value = 1,
+            Perlin = 2,
+            Gradient = 3
+        };
+
         void SeedNoise(std::uint32_t seed);
 
         float WhiteNoise(const float &p);
