@@ -68,6 +68,7 @@
 		<Unit filename="SCAD.h" />
 		<Unit filename="STL.cpp" />
 		<Unit filename="STL.h" />
+		<Unit filename="Tests.h" />
 		<Unit filename="Utils.h" />
 		<Unit filename="Vector2.cpp" />
 		<Unit filename="Vector2.h" />
