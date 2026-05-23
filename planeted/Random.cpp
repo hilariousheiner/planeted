@@ -5,6 +5,7 @@ namespace Planeted
     namespace Random
     {
         static const std::uint16_t valueNoiseTableSize = 256;
+        static std::uint32_t seed = 12345;
 
         static std::mt19937 &engine()
         {
@@ -193,6 +194,7 @@ namespace Planeted
 
         void SeedNoise(std::uint32_t seed)
         {
+            Random::seed = seed;
             noise_engine() = std::mt19937(seed);
             valueTable() = computeValueTable();
             permutationTable() = computePermutationTable();
@@ -202,7 +204,7 @@ namespace Planeted
         {
             int pi = std::floor(p);
 
-            uint32_t h = hash1D(pi, 12345);
+            uint32_t h = hash1D(pi, Random::seed);
 
             return hashToSigned(h);
         }
@@ -214,8 +216,8 @@ namespace Planeted
             std::uint8_t p0 = toGrid(pi);
             std::uint8_t p1 = toGrid(p0 + 1);
 
-            const float &c0 = randomValue(p0);
-            const float &c1 = randomValue(p1);
+            const float &c0 = hashToSigned(hash1D(p0, Random::seed));
+            const float &c1 = hashToSigned(hash1D(p1, Random::seed));
 
             return SmoothStepUnclamped(c0, c1, p - pi);
         }
@@ -240,7 +242,7 @@ namespace Planeted
             int xi = std::floor(p.X);
             int yi = std::floor(p.Y);
 
-            uint32_t h = hash2D(xi, yi, 12345);
+            uint32_t h = hash2D(xi, yi, Random::seed);
 
             return hashToSigned(h);
         }
@@ -259,10 +261,10 @@ namespace Planeted
             float tx = p.X - xi;
             float ty = p.Y - yi;
 
-            const float &c00 = randomValue(xi0, yi0);
-            const float &c10 = randomValue(xi1, yi0);
-            const float &c01 = randomValue(xi0, yi1);
-            const float &c11 = randomValue(xi1, yi1);
+            const float &c00 = hashToSigned(hash2D(xi0, yi0, Random::seed));
+            const float &c10 = hashToSigned(hash2D(xi1, yi0, Random::seed));
+            const float &c01 = hashToSigned(hash2D(xi0, yi1, Random::seed));
+            const float &c11 = hashToSigned(hash2D(xi1, yi1, Random::seed));
 
             float u0 = SmoothStepUnclamped(c00, c10, tx);
             float u1 = SmoothStepUnclamped(c01, c11, tx);
@@ -284,9 +286,9 @@ namespace Planeted
             float tx = p.X - xi;
             float ty = p.Y - yi;
 
-            const float &c00 = randomDotGrad(xi0, yi0, tx, ty);
-            const float &c10 = randomDotGrad(xi1, yi0, tx - 1, ty);
-            const float &c01 = randomDotGrad(xi0, yi1, tx, ty - 1);
+            const float &c00 = randomDotGrad(xi0, yi0, tx    , ty    );
+            const float &c10 = randomDotGrad(xi1, yi0, tx - 1, ty    );
+            const float &c01 = randomDotGrad(xi0, yi1, tx    , ty - 1);
             const float &c11 = randomDotGrad(xi1, yi1, tx - 1, ty - 1);
 
             float u0 = SmoothStepUnclamped5(c00, c10, tx);
@@ -326,15 +328,15 @@ namespace Planeted
             float tz = p.Z - zi;
 
             // get noise value at cell corners:
-            const float &c000 = randomValue(xi0, yi0, zi0);
-            const float &c100 = randomValue(xi1, yi0, zi0);
-            const float &c010 = randomValue(xi0, yi1, zi0);
-            const float &c110 = randomValue(xi1, yi1, zi0);
+            const float &c000 = hashToSigned(hash3D(xi0, yi0, zi0, Random::seed));
+            const float &c100 = hashToSigned(hash3D(xi1, yi0, zi0, Random::seed));
+            const float &c010 = hashToSigned(hash3D(xi0, yi1, zi0, Random::seed));
+            const float &c110 = hashToSigned(hash3D(xi1, yi1, zi0, Random::seed));
 
-            const float &c001 = randomValue(xi0, yi0, zi1);
-            const float &c101 = randomValue(xi1, yi0, zi1);
-            const float &c011 = randomValue(xi0, yi1, zi1);
-            const float &c111 = randomValue(xi1, yi1, zi1);
+            const float &c001 = hashToSigned(hash3D(xi0, yi0, zi1, Random::seed));
+            const float &c101 = hashToSigned(hash3D(xi1, yi0, zi1, Random::seed));
+            const float &c011 = hashToSigned(hash3D(xi0, yi1, zi1, Random::seed));
+            const float &c111 = hashToSigned(hash3D(xi1, yi1, zi1, Random::seed));
 
             // interpolate:
             float u00 = SmoothStepUnclamped(c000, c100, tx);
