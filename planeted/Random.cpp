@@ -64,12 +64,12 @@ namespace Planeted
             return permutationTable()[permutationTable()[permutationTable()[x] + y] + z];
         }
 
-        static const float randomDotGrad(const std::uint8_t &x, const float tx)
+        static const float randomDotGradPerlin(const std::uint8_t &x, const float tx)
         {
             return permute(x) & 1 ? tx : -tx;
         }
 
-        static float randomDotGrad(const int &x, const int &y, const float tx, const float ty)
+        static float randomDotGradPerlin(const int &x, const int &y, const float tx, const float ty)
         {
             float result;
 
@@ -104,7 +104,7 @@ namespace Planeted
             return result;
         }
 
-        static float randomDotGrad(const int &x, const int &y, const int &z, const float tx, const float ty, const float tz)
+        static float randomDotGradPerlin(const int &x, const int &y, const int &z, const float tx, const float ty, const float tz)
         {
             float result;
 
@@ -189,7 +189,7 @@ namespace Planeted
             return SmoothStepUnclamped(c0, c1, p - pi);
         }
 
-        float GradientNoise1D(const float &p)
+        float PerlinNoise1D(const float &p)
         {
             int pi = FloorToInt(p);
 
@@ -198,8 +198,8 @@ namespace Planeted
 
             float tp = p - pi;
 
-            const float g0 = randomDotGrad(p0, tp);
-            const float g1 = randomDotGrad(p1, tp - 1);
+            const float g0 = randomDotGradPerlin(p0, tp);
+            const float g1 = randomDotGradPerlin(p1, tp - 1);
 
             return SmoothStepUnclamped5(g0, g1, tp);
         }
@@ -239,7 +239,7 @@ namespace Planeted
             return SmoothStepUnclamped(u0, u1, ty);
         }
 
-        float GradientNoise2D(const Vector2 &p)
+        float PerlinNoise2D(const Vector2 &p)
         {
             int xi = FloorToInt(p.X);
             int yi = FloorToInt(p.Y);
@@ -253,10 +253,10 @@ namespace Planeted
             float tx = p.X - xi;
             float ty = p.Y - yi;
 
-            const float &c00 = randomDotGrad(xi0, yi0, tx    , ty    );
-            const float &c10 = randomDotGrad(xi1, yi0, tx - 1, ty    );
-            const float &c01 = randomDotGrad(xi0, yi1, tx    , ty - 1);
-            const float &c11 = randomDotGrad(xi1, yi1, tx - 1, ty - 1);
+            const float &c00 = randomDotGradPerlin(xi0, yi0, tx    , ty    );
+            const float &c10 = randomDotGradPerlin(xi1, yi0, tx - 1, ty    );
+            const float &c01 = randomDotGradPerlin(xi0, yi1, tx    , ty - 1);
+            const float &c11 = randomDotGradPerlin(xi1, yi1, tx - 1, ty - 1);
 
             float u0 = SmoothStepUnclamped5(c00, c10, tx);
             float u1 = SmoothStepUnclamped5(c01, c11, tx);
@@ -318,7 +318,7 @@ namespace Planeted
             return SmoothStepUnclamped(v0, v1, tz);
         }
 
-        float GradientNoise3D(const Vector3 &p)
+        float PerlinNoise3D(const Vector3 &p)
         {
              // calculate grid cell corner coordinates:
             int xi = FloorToInt(p.X);
@@ -338,15 +338,15 @@ namespace Planeted
             float tz = p.Z - zi;
 
             // compute dot products with gradients at cell corners:
-            const float &c000 = randomDotGrad(xi0, yi0, zi0, tx    , ty    , tz   );
-            const float &c100 = randomDotGrad(xi1, yi0, zi0, tx - 1, ty    , tz   );
-            const float &c010 = randomDotGrad(xi0, yi1, zi0, tx    , ty - 1, tz   );
-            const float &c110 = randomDotGrad(xi1, yi1, zi0, tx - 1, ty - 1, tz   );
+            const float &c000 = randomDotGradPerlin(xi0, yi0, zi0, tx    , ty    , tz   );
+            const float &c100 = randomDotGradPerlin(xi1, yi0, zi0, tx - 1, ty    , tz   );
+            const float &c010 = randomDotGradPerlin(xi0, yi1, zi0, tx    , ty - 1, tz   );
+            const float &c110 = randomDotGradPerlin(xi1, yi1, zi0, tx - 1, ty - 1, tz   );
 
-            const float &c001 = randomDotGrad(xi0, yi0, zi1, tx    , ty    , tz - 1);
-            const float &c101 = randomDotGrad(xi1, yi0, zi1, tx - 1, ty    , tz - 1);
-            const float &c011 = randomDotGrad(xi0, yi1, zi1, tx    , ty - 1, tz - 1);
-            const float &c111 = randomDotGrad(xi1, yi1, zi1, tx - 1, ty - 1, tz - 1);
+            const float &c001 = randomDotGradPerlin(xi0, yi0, zi1, tx    , ty    , tz - 1);
+            const float &c101 = randomDotGradPerlin(xi1, yi0, zi1, tx - 1, ty    , tz - 1);
+            const float &c011 = randomDotGradPerlin(xi0, yi1, zi1, tx    , ty - 1, tz - 1);
+            const float &c111 = randomDotGradPerlin(xi1, yi1, zi1, tx - 1, ty - 1, tz - 1);
 
             // interpolate:
             float u00 = SmoothStepUnclamped5(c000, c100, tx);

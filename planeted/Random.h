@@ -35,9 +35,9 @@ namespace Planeted
         float ValueNoise2D(const Vector2 &p);
         float ValueNoise3D(const Vector3 &p);
 
-        float GradientNoise1D(const float &p);
-        float GradientNoise2D(const Vector2 &p);
-        float GradientNoise3D(const Vector3 &p);
+        float PerlinNoise1D(const float &p);
+        float PerlinNoise2D(const Vector2 &p);
+        float PerlinNoise3D(const Vector3 &p);
 
         float FBM1D(const float &p, NoiseFunction1D noiseFun);
         float FBM2D(const Vector2 &p, NoiseFunction2D noiseFun);

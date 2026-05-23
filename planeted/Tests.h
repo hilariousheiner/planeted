@@ -37,9 +37,9 @@ namespace Planeted
             fn = [](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::ValueNoise1D(x * 0.05f))); };
             break;
         case Random::NoiseTypeEnum::Perlin:
+            fn = [](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::PerlinNoise1D(x * 0.05f))); };
             break;
         case Random::NoiseTypeEnum::Gradient:
-            fn = [](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::GradientNoise1D(x * 0.05f))); };
             break;
         default:
             break;
@@ -60,9 +60,9 @@ namespace Planeted
             fn = [](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::ValueNoise2D({x * 0.05f, y * 0.05f}))); };
             break;
         case Random::NoiseTypeEnum::Perlin:
+            fn = [](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::PerlinNoise2D({x * 0.05f, y * 0.05f}))); };
             break;
         case Random::NoiseTypeEnum::Gradient:
-            fn = [](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::GradientNoise2D({x * 0.05f, y * 0.05f}))); };
             break;
         default:
             break;
@@ -83,9 +83,9 @@ namespace Planeted
             fn = [](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::ValueNoise3D({x * 0.05f, y * 0.05f, 1.0f}))); };
             break;
         case Random::NoiseTypeEnum::Perlin:
+            fn = [](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::PerlinNoise3D({x * 0.05f, y * 0.05f, 1.0f}))); };
             break;
         case Random::NoiseTypeEnum::Gradient:
-            fn = [](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::GradientNoise3D({x * 0.05f, y * 0.05f, 1.0f}))); };
             break;
         default:
             break;
