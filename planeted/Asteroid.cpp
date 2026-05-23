@@ -9,7 +9,7 @@ namespace Planeted
         for(int id = 0; id < this->mesh->VertexCount(); ++id)
         {
             Vector3 *vertex = this->mesh->GetVertex(id);
-            float scalar = 1 + 0.25 * Random::GradientNoiseFBM(*vertex);
+            float scalar = 1 + 0.25 * Random::FBM3D(*vertex, Random::GradientNoise3D);
             *vertex *= scalar;
         }
         this->mesh->CalculateNormals(NormalTypeEnum::PerVertex);

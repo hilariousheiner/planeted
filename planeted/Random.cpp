@@ -7,30 +7,10 @@ namespace Planeted
         static const std::uint16_t valueNoiseTableSize = 256;
         static std::uint32_t seed = 12345;
 
-        static std::mt19937 &engine()
-        {
-            static std::mt19937 en(std::random_device{}());
-            return en;
-        }
-
         static std::mt19937 &noise_engine()
         {
             static std::mt19937 en(std::random_device{}());
             return en;
-        }
-
-        static std::array<float, valueNoiseTableSize> computeValueTable()
-        {
-            std::array<float, valueNoiseTableSize> result;
-
-            std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
-
-            // create an array of random values
-            for (float &entry : result)
-            {
-                entry = distribution(noise_engine());
-            }
-            return result;
         }
 
         static std::array<std::uint8_t, valueNoiseTableSize * 2> computePermutationTable()
@@ -53,12 +33,6 @@ namespace Planeted
             return result;
         }
 
-        static std::array<float, valueNoiseTableSize> &valueTable()
-        {
-            static std::array<float, valueNoiseTableSize> result = computeValueTable();
-            return result;
-        }
-
         static std::uint8_t toGrid(const int &x)
         {
             return static_cast<std::uint8_t>(x & (valueNoiseTableSize - 1));
@@ -77,21 +51,6 @@ namespace Planeted
         static std::uint8_t permute(const int &x, const int &y, const int &z)
         {
             return permutationTable()[permutationTable()[permutationTable()[x] + y] + z];
-        }
-
-        static const float &randomValue(const int &x)
-        {
-            return valueTable()[permute(x)];
-        }
-
-        static const float &randomValue(const int &x, const int &y)
-        {
-            return valueTable()[permute(x, y)];
-        }
-
-        static const float &randomValue(const int &x, const int &y, const int &z)
-        {
-            return valueTable()[permute(x, y, z)];
         }
 
         static const float randomDotGrad(const std::uint8_t &x, const float tx)
@@ -196,11 +155,10 @@ namespace Planeted
         {
             Random::seed = seed;
             noise_engine() = std::mt19937(seed);
-            valueTable() = computeValueTable();
             permutationTable() = computePermutationTable();
         }
 
-        float WhiteNoise(const float &p)
+        float WhiteNoise1D(const float &p)
         {
             int pi = std::floor(p);
 
@@ -209,7 +167,7 @@ namespace Planeted
             return hashToSigned(h);
         }
 
-        float ValueNoise(const float &p)
+        float ValueNoise1D(const float &p)
         {
             int pi = FloorToInt(p);
 
@@ -222,7 +180,7 @@ namespace Planeted
             return SmoothStepUnclamped(c0, c1, p - pi);
         }
 
-        float GradientNoise(const float &p)
+        float GradientNoise1D(const float &p)
         {
             int pi = FloorToInt(p);
 
@@ -237,7 +195,7 @@ namespace Planeted
             return SmoothStepUnclamped5(g0, g1, tp);
         }
 
-        float WhiteNoise(const Vector2 &p)
+        float WhiteNoise2D(const Vector2 &p)
         {
             int xi = std::floor(p.X);
             int yi = std::floor(p.Y);
@@ -247,7 +205,7 @@ namespace Planeted
             return hashToSigned(h);
         }
 
-        float ValueNoise(const Vector2 &p)
+        float ValueNoise2D(const Vector2 &p)
         {
             int xi = FloorToInt(p.X);
             int yi = FloorToInt(p.Y);
@@ -272,7 +230,7 @@ namespace Planeted
             return SmoothStepUnclamped(u0, u1, ty);
         }
 
-        float GradientNoise(const Vector2 &p)
+        float GradientNoise2D(const Vector2 &p)
         {
             int xi = FloorToInt(p.X);
             int yi = FloorToInt(p.Y);
@@ -297,18 +255,18 @@ namespace Planeted
             return SmoothStepUnclamped5(u0, u1, ty);
         }
 
-        float WhiteNoise(const Vector3 &p)
+        float WhiteNoise3D(const Vector3 &p)
         {
             int xi = std::floor(p.X);
             int yi = std::floor(p.Y);
             int zi = std::floor(p.Z);
 
-            uint32_t h = hash3D(xi, yi, zi, 12345);
+            uint32_t h = hash3D(xi, yi, zi, Random::seed);
 
             return hashToSigned(h);
         }
 
-        float ValueNoise(const Vector3 &p)
+        float ValueNoise3D(const Vector3 &p)
         {
              // calculate grid cell corner coordinates:
             int xi = FloorToInt(p.X);
@@ -351,7 +309,7 @@ namespace Planeted
             return SmoothStepUnclamped(v0, v1, tz);
         }
 
-        float GradientNoise(const Vector3 &p)
+        float GradientNoise3D(const Vector3 &p)
         {
              // calculate grid cell corner coordinates:
             int xi = FloorToInt(p.X);
@@ -394,7 +352,7 @@ namespace Planeted
             return SmoothStepUnclamped5(v0, v1, tz);
         }
 
-        float ValueNoiseFBM(const float &p)
+        float FBM1D(const float &p, NoiseFunction1D noiseFun)
         {
             float G = 0.5f;
             float f = 1.0f;
@@ -403,15 +361,14 @@ namespace Planeted
 
             for(int i = 0; i < 4; ++i)
             {
-                t += a*ValueNoise(p*f);
+                t += a*noiseFun(p*f);
 
                 f *= 2.0f;
                 a *= G;
             }
             return t;
         }
-
-        float ValueNoiseFBM(const Vector2 &p)
+        float FBM2D(const Vector2 &p, NoiseFunction2D noiseFun)
         {
             float G = 0.5f;
             float f = 1.0f;
@@ -420,15 +377,14 @@ namespace Planeted
 
             for(int i = 0; i < 4; ++i)
             {
-                t += a*ValueNoise(p*f);
+                t += a*noiseFun(p*f);
 
                 f *= 2.0f;
                 a *= G;
             }
             return t;
         }
-
-        float ValueNoiseFBM(const Vector3 &p)
+        float FBM3D(const Vector3 &p, NoiseFunction3D noiseFun)
         {
             float G = 0.5f;
             float f = 1.0f;
@@ -437,25 +393,7 @@ namespace Planeted
 
             for(int i = 0; i < 4; ++i)
             {
-                t += a*ValueNoise(p*f);
-
-                f *= 2.0f;
-                a *= G;
-            }
-            return t;
-        }
-
-
-        float GradientNoiseFBM(const Vector3 &p)
-        {
-            float G = 0.5f;
-            float f = 1.0f;
-            float a = 1.0f;
-            float t = 0.0f;
-
-            for(int i = 0; i < 4; ++i)
-            {
-                t += a*GradientNoise(p*f);
+                t += a*noiseFun(p*f);
 
                 f *= 2.0f;
                 a *= G;
