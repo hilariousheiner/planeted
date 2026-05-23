@@ -4,38 +4,49 @@ namespace Planeted
 {
     namespace Random
     {
-        static const std::uint16_t valueNoiseTableSize = 256;
+        static const std::uint16_t permutationTableSize = 256;
         static std::uint32_t seed = 12345;
 
-        static std::mt19937 &noise_engine()
+        static std::uint8_t permutation[] =
         {
-            static std::mt19937 en(std::random_device{}());
-            return en;
-        }
+            8  , 170, 242, 67 , 248, 216, 115, 247, 164, 133, 195, 73 , 45 , 209, 13 , 53 ,
+            9  , 131, 102, 214, 153, 254, 224, 63 , 244, 51 , 7  , 172, 106, 137, 95 , 201,
+            41 , 71 , 166, 186, 83 , 197, 96 , 89 , 175, 226, 129, 34 , 80 , 97 , 93 , 12 ,
+            84 , 70 , 152, 22 , 134, 125, 210, 135, 139, 49 , 100, 105, 109, 165, 117, 228,
+            37 , 107, 11 , 24 , 128, 239, 86 , 88 , 108, 28 , 120, 76 , 98 , 19 , 118, 221,
+            1  , 218, 82 , 179, 64 , 94 , 44 , 141, 149, 168, 99 , 187, 46 , 123, 243, 167,
+            50 , 143, 85 , 193, 25 , 62 , 56 , 203, 200, 198, 26 , 119, 65 , 146, 246, 145,
+            191, 15 , 91 , 233, 206, 176, 148, 48 , 78 , 27 , 35 , 101, 184, 87 , 207, 180,
+            177, 23 , 81 , 219, 124, 55 , 250, 42 , 196, 59 , 5  , 161, 38 , 114, 230, 150,
+            156, 10 , 240, 112, 31 , 162, 241, 213, 160, 238, 69 , 18 , 32 , 144, 151, 116,
+            223, 234, 211, 154, 140, 127, 6  , 194, 122, 79 , 113, 75 , 217, 192, 163, 58 ,
+            14 , 92 , 251, 190, 54 , 188, 227, 77 , 103, 181, 3  , 132, 208, 155, 253, 121,
+            255, 60 , 245, 202, 157, 130, 52 , 36 , 173, 169, 74 , 29 , 39 , 4  , 17 , 147,
+            47 , 61 , 252, 204, 159, 232, 225, 229, 57 , 43 , 237, 142, 183, 104, 72 , 236,
+            2  , 189, 66 , 111, 30 , 158, 215, 126, 138, 220, 231, 249, 16 , 20 , 0  , 33 ,
+            212, 182, 136, 185, 110, 40 , 235, 21 , 222, 178, 174, 205, 68 , 90 , 171, 199
+        };
 
-        static std::array<std::uint8_t, valueNoiseTableSize * 2> computePermutationTable()
+        static std::array<std::uint8_t, permutationTableSize * 2> computePermutationTable()
         {
-            std::array<std::uint8_t, valueNoiseTableSize * 2> result;
+            std::array<std::uint8_t, permutationTableSize * 2> result;
 
-            for(std::size_t i = 0; i < valueNoiseTableSize; ++i)
+            for(std::size_t i = 0; i < permutationTableSize; ++i)
             {
-                result[i] = i;
-                result[i + valueNoiseTableSize] = i;
+                result[i] = permutation[i];
+                result[i + permutationTableSize] = permutation[i];
             }
-
-            std::shuffle(result.begin(), result.end(), noise_engine());
-
             return result;
         }
-        static std::array<std::uint8_t, valueNoiseTableSize * 2> &permutationTable()
+        static std::array<std::uint8_t, permutationTableSize * 2> &permutationTable()
         {
-            static std::array<std::uint8_t, valueNoiseTableSize * 2> result = computePermutationTable();
+            static std::array<std::uint8_t, permutationTableSize * 2> result = computePermutationTable();
             return result;
         }
 
         static std::uint8_t toGrid(const int &x)
         {
-            return static_cast<std::uint8_t>(x & (valueNoiseTableSize - 1));
+            return static_cast<std::uint8_t>(x & (permutationTableSize - 1));
         }
 
         static std::uint8_t permute(const std::uint8_t &x)
@@ -154,8 +165,6 @@ namespace Planeted
         void SeedNoise(std::uint32_t seed)
         {
             Random::seed = seed;
-            noise_engine() = std::mt19937(seed);
-            permutationTable() = computePermutationTable();
         }
 
         float WhiteNoise1D(const float &p)

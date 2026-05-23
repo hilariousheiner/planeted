@@ -97,7 +97,7 @@ int main(int argc, char **argv)
     }
     std::cout << "done." << std::endl;
 
-    NoiseTest3D(Random::NoiseTypeEnum::Value);
+    NoiseTest3D(Random::NoiseTypeEnum::Gradient);
 
     return EXIT_SUCCESS;
 }
