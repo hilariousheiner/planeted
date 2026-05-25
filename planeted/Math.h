@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <cstdint>
+#include <string>
 
 namespace Planeted
 {
@@ -117,6 +118,20 @@ namespace Planeted
     {
         float u = h * (1.0 / 4294967296.0);
         return u * 2.0 - 1.0;
+    }
+
+    // FNV-1a hash function.
+    // https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
+    inline uint32_t FNV32(const std::string &s)
+    {
+        uint32_t h = 2166136261u; //FNV offset basis
+
+        for (unsigned char c : s)
+        {
+            h ^= c;
+            h *= 16777619u; //FNV prime
+        }
+        return h;
     }
 }
 #endif // PLANETED_MATH_H
