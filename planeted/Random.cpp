@@ -5,7 +5,7 @@ namespace Planeted
     namespace Random
     {
         static const std::uint16_t permutationTableSize = 256;
-        static std::uint32_t seed = 12345;
+        static std::uint32_t seed = FMix32(FNV32("Planeted"));
 
         static std::uint8_t permutation[] =
         {
@@ -165,6 +165,10 @@ namespace Planeted
         void SeedNoise(std::uint32_t seed)
         {
             Random::seed = seed;
+        }
+        void SeedNoise(std::string seed)
+        {
+            SeedNoise(FMix32(FNV32(seed)));
         }
 
         float WhiteNoise1D(const float &p)

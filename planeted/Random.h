@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <array>
 #include <functional>
+#include <string>
 
 #include "Math.h"
 #include "Vector2.h"
@@ -26,6 +27,7 @@ namespace Planeted
         using NoiseFunction3D = std::function<float(const Vector3 &p)>;
 
         void SeedNoise(std::uint32_t seed);
+        void SeedNoise(std::string seed);
 
         float WhiteNoise1D(const float &p);
         float WhiteNoise2D(const Vector2 &p);

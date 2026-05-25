@@ -4,7 +4,7 @@ m = icosahedron("asteroid");
 
 m = subdivide(m, 4);
 
-seedNoise(12345); // the combination on my luggage
+seedNoise("HELLO, WORLD!");
 
 m = displace(m, 0.25);
 

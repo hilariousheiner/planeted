@@ -52,10 +52,20 @@ namespace Planeted
                     throw std::runtime_error("seedNoise expects one argument.");
                 }
 
-                int seed = args[0].GetIntValue();
-
-                Random::SeedNoise(seed);
-
+                if(args[0].GetValueType() == ValueTypeEnum::Int)
+                {
+                    int seed = args[0].GetIntValue();
+                    Random::SeedNoise(seed);
+                }
+                else if(args[0].GetValueType() == ValueTypeEnum::String)
+                {
+                    std::string seed = args[0].GetStringValue();
+                    Random::SeedNoise(seed);
+                }
+                else
+                {
+                    throw std::runtime_error("seed must be an integer or a string.");
+                }
                 return Value::Null();
             });
 
@@ -73,7 +83,7 @@ namespace Planeted
                 for(int id = 0; id < m->VertexCount(); ++id)
                 {
                     Vector3 *vertex = m->GetVertex(id);
-                    float scalar = 1 + a * Random::FBM3D(*vertex, Random::PerlinNoise3D);
+                    float scalar = 1 + a * Random::FBM3D(*vertex, Random::ValueNoise3D);
                     *vertex *= scalar;
                 }
                 m->CalculateNormals(NormalTypeEnum::PerVertex);
