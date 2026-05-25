@@ -34,6 +34,7 @@ namespace Planeted
         float GetFloatValue() const;
         bool GetBoolValue() const;
         std::string GetStringValue() const;
+
         Mesh *GetMeshValue() const;
 
         ValueTypeEnum GetValueType() const;
