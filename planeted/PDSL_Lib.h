@@ -1,6 +1,7 @@
 #ifndef PLANETED_PDSL_LIB_H
 #define PLANETED_PDSL_LIB_H
 
+#include "MeshSubdivider.h"
 #include "PDSL.h"
 
 namespace Planeted

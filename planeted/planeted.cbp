@@ -32,8 +32,6 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="Asteroid.cpp" />
-		<Unit filename="Asteroid.h" />
 		<Unit filename="Color.h" />
 		<Unit filename="IcoSphere.cpp" />
 		<Unit filename="IcoSphere.h" />
