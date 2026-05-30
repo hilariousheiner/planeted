@@ -7,6 +7,32 @@ namespace Planeted
 {
     namespace PDSL_Lib
     {
+        static Random::NoiseTypeEnum noiseType = Random::NoiseTypeEnum::Value;
+
+        Random::NoiseTypeEnum toNoiseType(int type)
+        {
+            Random::NoiseTypeEnum result = Random::NoiseTypeEnum::Value;
+
+            switch(type)
+            {
+            case 0:
+                result = Random::NoiseTypeEnum::White;
+                break;
+            case 1:
+                result = Random::NoiseTypeEnum::Value;
+                break;
+            case 2:
+                result = Random::NoiseTypeEnum::Perlin;
+                break;
+            case 3:
+                result = Random::NoiseTypeEnum::Gradient;
+                break;
+            default:
+                break;
+            }
+            return result;
+        }
+
         void Load(PDSL_Runtime &runtime)
         {
             runtime.InstallBuiltinFunction("icosahedron",
@@ -65,6 +91,26 @@ namespace Planeted
                 else
                 {
                     throw std::runtime_error("seed must be an integer or a string.");
+                }
+                return Value::Null();
+            });
+
+
+            runtime.InstallBuiltinFunction("setNoiseType",
+                [](PDSL_Runtime &runtime, const std::vector<Value> &args)
+            {
+                if(args.size() != 1)
+                {
+                    throw std::runtime_error("setNoiseType expects one argument.");
+                }
+
+                if(args[0].GetValueType() == ValueTypeEnum::Int)
+                {
+                    PDSL_Lib::noiseType = toNoiseType(args[0].GetIntValue());
+                }
+                else
+                {
+                    throw std::runtime_error("argument passed to setNoiseType must be an integer.");
                 }
                 return Value::Null();
             });
