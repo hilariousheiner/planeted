@@ -180,7 +180,14 @@ namespace Planeted
         {
             Random::numberOfOctaves = numberOfOctaves;
         }
-
+        void SetLacunarity(float lacunarity)
+        {
+            Random::lacunarity = lacunarity;
+        }
+        void SetPersistence(float persistence)
+        {
+            Random::persistence = persistence;
+        }
 
         float WhiteNoise1D(const float &p)
         {

@@ -30,6 +30,8 @@ namespace Planeted
         void SeedNoise(std::string seed);
 
         void SetNumberOfOctaves(std::uint32_t numberOfOctaves);
+        void SetPersistence(float persistence);
+        void SetLacunarity(float lacunarity);
 
         float WhiteNoise1D(const float &p);
         float WhiteNoise2D(const Vector2 &p);
