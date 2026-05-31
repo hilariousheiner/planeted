@@ -5,10 +5,12 @@ namespace Planeted
     namespace Random
     {
         static const std::uint16_t permutationTableSize = 256;
+
         static std::uint32_t seed = FMix32(FNV32("Planeted"));
+
         static std::uint32_t numberOfOctaves = 4;
-        static float persistence = 0.5f;
         static float lacunarity = 2.0f;
+        static float persistence = 0.5f;
 
         static std::uint8_t permutation[] =
         {
