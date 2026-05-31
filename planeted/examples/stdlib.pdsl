@@ -2,6 +2,7 @@
  * Planeted scripting language standard library.
  */
  
-NOISE_TYPE_VALUE = 0;
-NOISE_TYPE_PERLIN = 1; 
-NOISE_TYPE_GRADIENT = 2;
+NOISE_TYPE_WHITE = 0;
+NOISE_TYPE_VALUE = 1;
+NOISE_TYPE_PERLIN = 2; 
+NOISE_TYPE_GRADIENT = 3;
