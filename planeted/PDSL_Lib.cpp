@@ -1,5 +1,7 @@
 #include "PDSL_Lib.h"
 
+#include <iostream>
+
 #include "MeshSubdivider.h"
 #include "Random.h"
 
@@ -26,6 +28,28 @@ namespace Planeted
                 break;
             case 3:
                 result = Random::NoiseTypeEnum::Gradient;
+                break;
+            default:
+                break;
+            }
+            return result;
+        }
+
+        Random::NoiseFunction3D getCurrentNoise()
+        {
+            Random::NoiseFunction3D result = nullptr;
+
+            switch(PDSL_Lib::noiseType)
+            {
+            case Random::NoiseTypeEnum::White:
+                std::cout << "white noise" << std::endl;
+                result = Random::ValueNoise3D;
+                break;
+            case Random::NoiseTypeEnum::Value:
+                result = Random::ValueNoise3D;
+                break;
+            case Random::NoiseTypeEnum::Perlin:
+                result = Random::PerlinNoise3D;
                 break;
             default:
                 break;
@@ -121,7 +145,7 @@ namespace Planeted
             for(int id = 0; id < m->VertexCount(); ++id)
             {
                 Vector3 *vertex = m->GetVertex(id);
-                float scalar = 1 + a * Random::FBM3D(*vertex, Random::ValueNoise3D);
+                float scalar = 1 + a * Random::FBM3D(*vertex, PDSL_Lib::getCurrentNoise());
                 *vertex *= scalar;
             }
             m->CalculateNormals(NormalTypeEnum::PerVertex);
