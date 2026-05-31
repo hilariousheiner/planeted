@@ -5,6 +5,7 @@ m = icosahedron("asteroid");
 m = subdivide(m, 4);
 
 seedNoise("HELLO, WORLD!");
+setNoiseType(NOISE_TYPE_PERLIN);
 
 m = displace(m, 0.25);
 
