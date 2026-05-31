@@ -376,51 +376,54 @@ namespace Planeted
 
         float FBM1D(const float &p, NoiseFunction1D noiseFun)
         {
-            float G = 0.5f;
-            float f = 1.0f;
-            float a = 1.0f;
-            float t = 0.0f;
+            float result = 0.0f;
+
+            //float G = 0.5f;
+            float frequency = 1.0f;
+            float amplitude = 1.0f;
 
             for(std::uint32_t i = 0; i < Random::numberOfOctaves; ++i)
             {
-                t += a*noiseFun(p*f);
+                result += amplitude*noiseFun(p*frequency);
 
-                f *= Random::lacunarity;
-                a *= Random::persistence;
+                frequency *= Random::lacunarity;
+                amplitude *= Random::persistence;
             }
-            return t;
+            return result;
         }
         float FBM2D(const Vector2 &p, NoiseFunction2D noiseFun)
         {
-            float G = 0.5f;
-            float f = 1.0f;
-            float a = 1.0f;
-            float t = 0.0f;
+            float result = 0.0f;
+
+            //float G = 0.5f;
+            float frequency = 1.0f;
+            float amplitude = 1.0f;
 
             for(std::uint32_t i = 0; i < Random::numberOfOctaves; ++i)
             {
-                t += a*noiseFun(p*f);
+                result += amplitude*noiseFun(p*frequency);
 
-                f *= Random::lacunarity;
-                a *= Random::persistence;
+                frequency *= Random::lacunarity;
+                amplitude *= Random::persistence;
             }
-            return t;
+            return result;
         }
         float FBM3D(const Vector3 &p, NoiseFunction3D noiseFun)
         {
-            float G = 0.5f;
-            float f = 1.0f;
-            float a = 1.0f;
-            float t = 0.0f;
+            float result = 0.0f;
+
+            //float G = 0.5f;
+            float frequency = 1.0f;
+            float amplitude = 1.0f;
 
             for(std::uint32_t i = 0; i < Random::numberOfOctaves; ++i)
             {
-                t += a*noiseFun(p*f);
+                result += amplitude*noiseFun(p*frequency);
 
-                f *= Random::lacunarity;
-                a *= Random::persistence;
+                frequency *= Random::lacunarity;
+                amplitude *= Random::persistence;
             }
-            return t;
+            return result;
         }
     }
 }
