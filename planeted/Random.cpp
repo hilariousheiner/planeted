@@ -6,6 +6,7 @@ namespace Planeted
     {
         static const std::uint16_t permutationTableSize = 256;
         static std::uint32_t seed = FMix32(FNV32("Planeted"));
+        static std::uint32_t numberOfOctaves = 4;
 
         static std::uint8_t permutation[] =
         {
@@ -170,6 +171,12 @@ namespace Planeted
         {
             SeedNoise(FMix32(FNV32(seed)));
         }
+
+        void SetNumberOfOctaves(std::uint32_t numberOfOctaves)
+        {
+            Random::numberOfOctaves = numberOfOctaves;
+        }
+
 
         float WhiteNoise1D(const float &p)
         {
@@ -372,7 +379,7 @@ namespace Planeted
             float a = 1.0f;
             float t = 0.0f;
 
-            for(int i = 0; i < 4; ++i)
+            for(std::uint32_t i = 0; i < Random::numberOfOctaves; ++i)
             {
                 t += a*noiseFun(p*f);
 
@@ -388,7 +395,7 @@ namespace Planeted
             float a = 1.0f;
             float t = 0.0f;
 
-            for(int i = 0; i < 4; ++i)
+            for(std::uint32_t i = 0; i < Random::numberOfOctaves; ++i)
             {
                 t += a*noiseFun(p*f);
 
@@ -404,7 +411,7 @@ namespace Planeted
             float a = 1.0f;
             float t = 0.0f;
 
-            for(int i = 0; i < 4; ++i)
+            for(std::uint32_t i = 0; i < Random::numberOfOctaves; ++i)
             {
                 t += a*noiseFun(p*f);
 
