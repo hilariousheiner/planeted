@@ -7,6 +7,8 @@ namespace Planeted
         static const std::uint16_t permutationTableSize = 256;
         static std::uint32_t seed = FMix32(FNV32("Planeted"));
         static std::uint32_t numberOfOctaves = 4;
+        static float persistence = 0.5f;
+        static float lacunarity = 2.0f;
 
         static std::uint8_t permutation[] =
         {
@@ -383,8 +385,8 @@ namespace Planeted
             {
                 t += a*noiseFun(p*f);
 
-                f *= 2.0f;
-                a *= G;
+                f *= Random::lacunarity;
+                a *= Random::persistence;
             }
             return t;
         }
@@ -399,8 +401,8 @@ namespace Planeted
             {
                 t += a*noiseFun(p*f);
 
-                f *= 2.0f;
-                a *= G;
+                f *= Random::lacunarity;
+                a *= Random::persistence;
             }
             return t;
         }
@@ -415,8 +417,8 @@ namespace Planeted
             {
                 t += a*noiseFun(p*f);
 
-                f *= 2.0f;
-                a *= G;
+                f *= Random::lacunarity;
+                a *= Random::persistence;
             }
             return t;
         }
