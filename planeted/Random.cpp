@@ -188,6 +188,25 @@ namespace Planeted
 
             return HashToSigned(h);
         }
+        float WhiteNoise2D(const Vector2 &p)
+        {
+            int xi = std::floor(p.X);
+            int yi = std::floor(p.Y);
+
+            uint32_t h = Hash2D(xi, yi, Random::seed);
+
+            return HashToSigned(h);
+        }
+        float WhiteNoise3D(const Vector3 &p)
+        {
+            int xi = std::floor(p.X);
+            int yi = std::floor(p.Y);
+            int zi = std::floor(p.Z);
+
+            uint32_t h = Hash3D(xi, yi, zi, Random::seed);
+
+            return HashToSigned(h);
+        }
 
         float ValueNoise1D(const float &p)
         {
@@ -201,32 +220,6 @@ namespace Planeted
 
             return SmoothStepUnclamped(c0, c1, p - pi);
         }
-
-        float PerlinNoise1D(const float &p)
-        {
-            int pi = FloorToInt(p);
-
-            std::uint8_t p0 = toGrid(pi);
-            std::uint8_t p1 = toGrid(p0 + 1);
-
-            float tp = p - pi;
-
-            const float g0 = randomDotGradPerlin(p0, tp);
-            const float g1 = randomDotGradPerlin(p1, tp - 1);
-
-            return SmoothStepUnclamped5(g0, g1, tp);
-        }
-
-        float WhiteNoise2D(const Vector2 &p)
-        {
-            int xi = std::floor(p.X);
-            int yi = std::floor(p.Y);
-
-            uint32_t h = Hash2D(xi, yi, Random::seed);
-
-            return HashToSigned(h);
-        }
-
         float ValueNoise2D(const Vector2 &p)
         {
             int xi = FloorToInt(p.X);
@@ -251,43 +244,6 @@ namespace Planeted
 
             return SmoothStepUnclamped(u0, u1, ty);
         }
-
-        float PerlinNoise2D(const Vector2 &p)
-        {
-            int xi = FloorToInt(p.X);
-            int yi = FloorToInt(p.Y);
-
-            int xi0 = toGrid(xi);
-            int yi0 = toGrid(yi);
-
-            int xi1 = toGrid(xi0 + 1);
-            int yi1 = toGrid(yi0 + 1);
-
-            float tx = p.X - xi;
-            float ty = p.Y - yi;
-
-            const float &c00 = randomDotGradPerlin(xi0, yi0, tx    , ty    );
-            const float &c10 = randomDotGradPerlin(xi1, yi0, tx - 1, ty    );
-            const float &c01 = randomDotGradPerlin(xi0, yi1, tx    , ty - 1);
-            const float &c11 = randomDotGradPerlin(xi1, yi1, tx - 1, ty - 1);
-
-            float u0 = SmoothStepUnclamped5(c00, c10, tx);
-            float u1 = SmoothStepUnclamped5(c01, c11, tx);
-
-            return SmoothStepUnclamped5(u0, u1, ty);
-        }
-
-        float WhiteNoise3D(const Vector3 &p)
-        {
-            int xi = std::floor(p.X);
-            int yi = std::floor(p.Y);
-            int zi = std::floor(p.Z);
-
-            uint32_t h = Hash3D(xi, yi, zi, Random::seed);
-
-            return HashToSigned(h);
-        }
-
         float ValueNoise3D(const Vector3 &p)
         {
              // calculate grid cell corner coordinates:
@@ -331,6 +287,44 @@ namespace Planeted
             return SmoothStepUnclamped(v0, v1, tz);
         }
 
+        float PerlinNoise1D(const float &p)
+        {
+            int pi = FloorToInt(p);
+
+            std::uint8_t p0 = toGrid(pi);
+            std::uint8_t p1 = toGrid(p0 + 1);
+
+            float tp = p - pi;
+
+            const float g0 = randomDotGradPerlin(p0, tp);
+            const float g1 = randomDotGradPerlin(p1, tp - 1);
+
+            return SmoothStepUnclamped5(g0, g1, tp);
+        }
+        float PerlinNoise2D(const Vector2 &p)
+        {
+            int xi = FloorToInt(p.X);
+            int yi = FloorToInt(p.Y);
+
+            int xi0 = toGrid(xi);
+            int yi0 = toGrid(yi);
+
+            int xi1 = toGrid(xi0 + 1);
+            int yi1 = toGrid(yi0 + 1);
+
+            float tx = p.X - xi;
+            float ty = p.Y - yi;
+
+            const float &c00 = randomDotGradPerlin(xi0, yi0, tx    , ty    );
+            const float &c10 = randomDotGradPerlin(xi1, yi0, tx - 1, ty    );
+            const float &c01 = randomDotGradPerlin(xi0, yi1, tx    , ty - 1);
+            const float &c11 = randomDotGradPerlin(xi1, yi1, tx - 1, ty - 1);
+
+            float u0 = SmoothStepUnclamped5(c00, c10, tx);
+            float u1 = SmoothStepUnclamped5(c01, c11, tx);
+
+            return SmoothStepUnclamped5(u0, u1, ty);
+        }
         float PerlinNoise3D(const Vector3 &p)
         {
              // calculate grid cell corner coordinates:
@@ -378,7 +372,6 @@ namespace Planeted
         {
             float result = 0.0f;
 
-            //float G = 0.5f;
             float frequency = 1.0f;
             float amplitude = 1.0f;
 
@@ -395,7 +388,6 @@ namespace Planeted
         {
             float result = 0.0f;
 
-            //float G = 0.5f;
             float frequency = 1.0f;
             float amplitude = 1.0f;
 
@@ -412,7 +404,6 @@ namespace Planeted
         {
             float result = 0.0f;
 
-            //float G = 0.5f;
             float frequency = 1.0f;
             float amplitude = 1.0f;
 
