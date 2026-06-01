@@ -42,8 +42,7 @@ namespace Planeted
             switch(PDSL_Lib::noiseType)
             {
             case Random::NoiseTypeEnum::White:
-                std::cout << "white noise" << std::endl;
-                result = Random::ValueNoise3D;
+                result = Random::WhiteNoise3D;
                 break;
             case Random::NoiseTypeEnum::Value:
                 result = Random::ValueNoise3D;
@@ -156,9 +155,14 @@ namespace Planeted
         void Load(PDSL_Runtime &runtime)
         {
             runtime.InstallBuiltinFunction("icosahedron", builtin_icosahedron);
+
             runtime.InstallBuiltinFunction("subdivide", builtin_subdivide);
+
             runtime.InstallBuiltinFunction("seedNoise", builtin_seedNoise);
+
             runtime.InstallBuiltinFunction("setNoiseType", builtin_setNoiseType);
+
+
             runtime.InstallBuiltinFunction("displace", builtin_displace);
         }
     }
