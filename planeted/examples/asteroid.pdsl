@@ -1,12 +1,12 @@
 import "stdlib.pdsl" 
 
+seedNoise("POTATO");
+setNoiseType(NOISE_TYPE_VALUE);
+
+setNumberOfOctaves(1);
+
 m = icosahedron("asteroid");
-
 m = subdivide(m, 4);
-
-seedNoise("HELLO, WORLD!");
-setNoiseType(NOISE_TYPE_PERLIN);
-
 m = displace(m, 0.25);
 
 return m;
