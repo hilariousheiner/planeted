@@ -1,12 +1,20 @@
 import "stdlib.pdsl" 
 
 seedNoise("POTATO");
-setNoiseType(NOISE_TYPE_VALUE);
-
-setNumberOfOctaves(1);
 
 m = icosahedron("asteroid");
 m = subdivide(m, 4);
-m = displace(m, 0.25);
+
+setNoiseType(NOISE_TYPE_VALUE);
+setNumberOfOctaves(4);
+setLacunarity(1.0);
+
+m = displace(m, 0.5);
+
+setNoiseType(NOISE_TYPE_WHITE);
+setNumberOfOctaves(2);
+setLacunarity(2.0);
+
+m = displace(m, 0.025);
 
 return m;

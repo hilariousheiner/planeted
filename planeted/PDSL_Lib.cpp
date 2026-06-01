@@ -145,6 +145,24 @@ namespace Planeted
             return Value::Null();
         }
 
+        Value builtin_setLacunarity(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        {
+            if(args.size() != 1)
+            {
+                throw std::runtime_error("setLacunarity expects one argument.");
+            }
+
+            if(args[0].GetValueType() == ValueTypeEnum::Float)
+            {
+                Random::SetLacunarity(args[0].GetFloatValue());
+            }
+            else
+            {
+                throw std::runtime_error("argument passed to setLacunarity must be a float.");
+            }
+            return Value::Null();
+        }
+
         Value builtin_displace(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 2)
@@ -177,6 +195,7 @@ namespace Planeted
             runtime.InstallBuiltinFunction("setNoiseType", builtin_setNoiseType);
 
             runtime.InstallBuiltinFunction("setNumberOfOctaves", builtin_setNumberOfOctaves);
+            runtime.InstallBuiltinFunction("setLacunarity", builtin_setLacunarity);
 
             runtime.InstallBuiltinFunction("displace", builtin_displace);
         }
