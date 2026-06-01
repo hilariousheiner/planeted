@@ -33,6 +33,8 @@ namespace Planeted
         void SetPersistence(float persistence);
         void SetLacunarity(float lacunarity);
 
+        void SetWhiteNoiseScale(float scale);
+
         float WhiteNoise1D(const float &p);
         float WhiteNoise2D(const Vector2 &p);
         float WhiteNoise3D(const Vector3 &p);

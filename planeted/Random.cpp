@@ -11,6 +11,7 @@ namespace Planeted
         static std::uint32_t numberOfOctaves = 1;
         static float lacunarity = 2.0f;
         static float persistence = 0.5f;
+        static float whiteNoiseScale = 100.0f;
 
         static std::uint8_t permutation[] =
         {
@@ -189,9 +190,14 @@ namespace Planeted
             Random::persistence = persistence;
         }
 
+        void SetWhiteNoiseScale(float scale)
+        {
+            Random::whiteNoiseScale = scale;
+        }
+
         float WhiteNoise1D(const float &p)
         {
-            int pi = std::floor(p);
+            int pi = std::floor(p * Random::whiteNoiseScale);
 
             uint32_t h = Hash1D(pi, Random::seed);
 
@@ -199,8 +205,8 @@ namespace Planeted
         }
         float WhiteNoise2D(const Vector2 &p)
         {
-            int xi = std::floor(p.X);
-            int yi = std::floor(p.Y);
+            int xi = std::floor(p.X * Random::whiteNoiseScale);
+            int yi = std::floor(p.Y * Random::whiteNoiseScale);
 
             uint32_t h = Hash2D(xi, yi, Random::seed);
 
@@ -208,9 +214,9 @@ namespace Planeted
         }
         float WhiteNoise3D(const Vector3 &p)
         {
-            int xi = std::floor(p.X * 100.0f);
-            int yi = std::floor(p.Y * 100.0f);
-            int zi = std::floor(p.Z * 100.0f);
+            int xi = std::floor(p.X * Random::whiteNoiseScale);
+            int yi = std::floor(p.Y * Random::whiteNoiseScale);
+            int zi = std::floor(p.Z * Random::whiteNoiseScale);
 
             uint32_t h = Hash3D(xi, yi, zi, Random::seed);
 
