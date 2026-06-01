@@ -8,7 +8,7 @@ namespace Planeted
 
         static std::uint32_t seed = FMix32(FNV32("Planeted"));
 
-        static std::uint32_t numberOfOctaves = 4;
+        static std::uint32_t numberOfOctaves = 1;
         static float lacunarity = 2.0f;
         static float persistence = 0.5f;
 
@@ -208,9 +208,9 @@ namespace Planeted
         }
         float WhiteNoise3D(const Vector3 &p)
         {
-            int xi = std::floor(p.X);
-            int yi = std::floor(p.Y);
-            int zi = std::floor(p.Z);
+            int xi = std::floor(p.X * 100.0f);
+            int yi = std::floor(p.Y * 100.0f);
+            int zi = std::floor(p.Z * 100.0f);
 
             uint32_t h = Hash3D(xi, yi, zi, Random::seed);
 
