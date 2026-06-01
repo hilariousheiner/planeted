@@ -131,6 +131,20 @@ namespace Planeted
             return Value::Null();
         }
 
+        Value builtin_setNumberOfOctaves(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        {
+            if(args.size() != 1)
+            {
+                throw std::runtime_error("setNumberOfOctaves expects one argument.");
+            }
+
+            if(args[0].GetValueType() == ValueTypeEnum::Int)
+            {
+                Random::SetNumberOfOctaves(args[0].GetIntValue());
+            }
+            return Value::Null();
+        }
+
         Value builtin_displace(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 2)
@@ -162,6 +176,7 @@ namespace Planeted
 
             runtime.InstallBuiltinFunction("setNoiseType", builtin_setNoiseType);
 
+            runtime.InstallBuiltinFunction("setNumberOfOctaves", builtin_setNumberOfOctaves);
 
             runtime.InstallBuiltinFunction("displace", builtin_displace);
         }
