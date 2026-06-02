@@ -81,8 +81,23 @@ namespace Planeted
         h ^= h >> 13;
         h *= 0xc2b2ae35;
         h ^= h >> 16;
+
         return h;
     }
+
+    // 64 bit version of musmurhash finalizer, written by Autin Appleby:
+    // https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp
+    inline uint64_t FMix64(uint64_t k)
+    {
+        k ^= k >> 33;
+        k *= 0xff51afd7ed558ccdULL;
+        k ^= k >> 33;
+        k *= 0xc4ceb9fe1a85ec53ULL;
+        k ^= k >> 33;
+
+        return k;
+    }
+
 
     inline uint32_t Hash1D(int x, uint32_t seed)
     {
@@ -121,7 +136,7 @@ namespace Planeted
     }
 
     // FNV-1a hash function.
-    // https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function
+    // https://en.wikipedia.org/wiki/Fowler-Noll-Vo_hash_function
     inline uint32_t FNV32(const std::string &s)
     {
         uint32_t h = 2166136261u; //FNV offset basis
@@ -132,6 +147,20 @@ namespace Planeted
             h *= 16777619u; //FNV prime
         }
         return h;
+    }
+
+    // SplitMix64 by Sebastiano Vigna
+    // https://prng.di.unimi.it/splitmix64.c
+    inline uint64_t SplitMix64(uint64_t &state)
+    {
+        state += 0x9e3779b97f4a7c15ull;
+
+        uint64_t z = state;
+
+        z = (z ^ (z >> 30)) * 0xbf58476d1ce4e5b9ull;
+        z = (z ^ (z >> 27)) * 0x94d049bb133111ebull;
+
+        return z ^ (z >> 31);
     }
 }
 #endif // PLANETED_MATH_H
