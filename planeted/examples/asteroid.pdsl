@@ -12,9 +12,10 @@ setLacunarity(1.0);
 m = displace(m, 0.5);
 
 setNoiseType(NOISE_TYPE_WHITE);
-setNumberOfOctaves(2);
+setWhiteNoiseScale(1.0);
+setNumberOfOctaves(1);
 setLacunarity(2.0);
 
-m = displace(m, 0.025);
+m = displace(m, 0.25);
 
 return m;
