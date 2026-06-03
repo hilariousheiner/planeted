@@ -134,7 +134,7 @@ namespace Planeted
         return u * 2.0 - 1.0;
     }
 
-    // FNV-1a hash function.
+    // FNV-1a hash function:
     // https://en.wikipedia.org/wiki/Fowler-Noll-Vo_hash_function
     inline uint32_t FNV32(const std::string &s)
     {
@@ -142,10 +142,15 @@ namespace Planeted
 
         for (unsigned char c : s)
         {
-            h ^= c;
+            h ^= static_cast<uint32_t>(c);
             h *= 16777619u; //FNV prime
         }
         return h;
+    }
+
+    inline uint32_t StringToSeed32(const std::string &s)
+    {
+        return FMix32(FNV32(s));
     }
 
     // SplitMix64 by Sebastiano Vigna

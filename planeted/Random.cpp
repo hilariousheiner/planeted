@@ -6,7 +6,7 @@ namespace Planeted
     {
         static const std::uint16_t permutationTableSize = 256;
 
-        static std::uint32_t seed = FMix32(FNV32("Planeted"));
+        static std::uint32_t seed = StringToSeed32("Planeted");
 
         static std::uint32_t numberOfOctaves = 1;
         static float lacunarity = 2.0f;
@@ -174,7 +174,7 @@ namespace Planeted
         }
         void SeedNoise(std::string seed)
         {
-            SeedNoise(FMix32(FNV32(seed)));
+            SeedNoise(StringToSeed32(seed));
         }
 
         void SetNumberOfOctaves(std::uint32_t numberOfOctaves)
