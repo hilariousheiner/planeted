@@ -10,6 +10,7 @@ namespace Planeted
     namespace PDSL_Lib
     {
         static Random::NoiseTypeEnum noiseType = Random::NoiseTypeEnum::Value;
+        static Random::NoiseStyleEnum noiseStyle = Random::NoiseStyleEnum::Plain;
 
         Random::NoiseTypeEnum toNoiseType(int type)
         {
@@ -34,10 +35,30 @@ namespace Planeted
             }
             return result;
         }
+        Random::NoiseStyleEnum toNoiseStyle(int style)
+        {
+            Random::NoiseStyleEnum result = Random::NoiseStyleEnum::Plain;
+
+            switch(style)
+            {
+            case 0:
+                result = Random::NoiseStyleEnum::Plain;
+                break;
+            case 1:
+                result = Random::NoiseStyleEnum::Billow;
+                break;
+            case 2:
+                result = Random::NoiseStyleEnum::Ridge;
+                break;
+            default:
+                break;
+            }
+            return result;
+        }
 
         Random::NoiseFunction3D getCurrentNoise()
         {
-            return Random::GetNoiseFunction3D(PDSL_Lib::noiseType, Random::NoiseStyleEnum::Plain);
+            return Random::GetNoiseFunction3D(PDSL_Lib::noiseType, PDSL_Lib::noiseStyle);
         }
 
         Value builtin_icosahedron(PDSL_Runtime &runtime, const std::vector<Value> &args)
@@ -111,6 +132,23 @@ namespace Planeted
             else
             {
                 throw std::runtime_error("argument passed to setNoiseType must be an integer.");
+            }
+            return Value::Null();
+        }
+        Value builtin_setNoiseStyle(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        {
+            if(args.size() != 1)
+            {
+                throw std::runtime_error("setNoiseStyle expects one argument.");
+            }
+
+            if(args[0].GetValueType() == ValueTypeEnum::Int)
+            {
+                PDSL_Lib::noiseStyle = toNoiseStyle(args[0].GetIntValue());
+            }
+            else
+            {
+                throw std::runtime_error("argument passed to setNoiseStyle must be an integer.");
             }
             return Value::Null();
         }
@@ -213,6 +251,7 @@ namespace Planeted
             runtime.InstallBuiltinFunction("seedNoise", builtin_seedNoise);
 
             runtime.InstallBuiltinFunction("setNoiseType", builtin_setNoiseType);
+            runtime.InstallBuiltinFunction("setNoiseStyle", builtin_setNoiseStyle);
 
             runtime.InstallBuiltinFunction("setWhiteNoiseScale", builtin_setWhiteNoiseScale);
 

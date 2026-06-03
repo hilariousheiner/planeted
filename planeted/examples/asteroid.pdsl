@@ -1,23 +1,25 @@
 import "stdlib.pdsl" 
 
-seedNoise("BETTY");
+seedNoise("CLOUD");
 
 m = icosahedron("asteroid");
 m = subdivide(m, 4);
 
-setNoiseType(NOISE_TYPE_VALUE);
+setNoiseType(NOISE_TYPE_PERLIN);
+setNoiseStyle(NOISE_STYLE_BILLOW);
 
-/*
-setNumberOfOctaves(4);
+setNumberOfOctaves(2);
 setLacunarity(1.0);
 
 m = displace(m, 0.5);
 
+
+/*
 setNoiseType(NOISE_TYPE_WHITE);
 setWhiteNoiseScale(1.0);
 setNumberOfOctaves(1);
 setLacunarity(2.0);
-*/
 m = displace(m, 0.25);
+*/
 
 return m;
