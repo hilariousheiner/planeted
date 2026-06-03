@@ -73,6 +73,31 @@ namespace Planeted
                 return std::abs(noiseFun(p));
             };
         }
+
+        inline NoiseFunction1D Ridge1D(NoiseFunction1D noiseFun)
+        {
+            return [noiseFun](const float &p)
+            {
+                float n = (0.9f - std::abs(noiseFun(p)));
+                return n*n;
+            };
+        }
+        inline NoiseFunction2D Ridge2D(NoiseFunction2D noiseFun)
+        {
+            return [noiseFun](const Vector2 &p)
+            {
+                float n = (0.9f - std::abs(noiseFun(p)));
+                return n*n;
+            };
+        }
+        inline NoiseFunction3D Ridge3D(NoiseFunction3D noiseFun)
+        {
+            return [noiseFun](const Vector3 &p)
+            {
+                float n = (0.9f - std::abs(noiseFun(p)));
+                return n*n;
+            };
+        }
     }
 }
 #endif // PLANETED_RANDOM_H

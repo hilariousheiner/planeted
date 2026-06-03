@@ -128,5 +128,23 @@ namespace Planeted
 
         noiseTest("Billow 3D", "billowNoiseTest3D.ppm", fn);
     }
+
+    inline void RidgeTest3D(Random::NoiseTypeEnum noiseType)
+    {
+        Random::NoiseFunction3D noiseFun = [](const Vector3 &p) { return 0.0f; };
+
+        switch(noiseType)
+        {
+        case Random::NoiseTypeEnum::Perlin:
+            noiseFun = Random::Ridge3D(Random::PerlinNoise3D);
+            break;
+        default:
+            break;
+        }
+
+        ColorFunction fn = [noiseFun](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::FBM3D({x * 0.05f, y * 0.05f, 1.0f}, noiseFun))); };
+
+        noiseTest("Ridge 3D", "ridgeNoiseTest3D.ppm", fn);
+    }
 }
 #endif
