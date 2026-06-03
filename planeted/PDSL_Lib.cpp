@@ -37,6 +37,7 @@ namespace Planeted
 
         Random::NoiseFunction3D getCurrentNoise()
         {
+            /*
             Random::NoiseFunction3D result = nullptr;
 
             switch(PDSL_Lib::noiseType)
@@ -54,6 +55,8 @@ namespace Planeted
                 break;
             }
             return result;
+            */
+            return Random::GetBaseNoiseFunction3D(PDSL_Lib::noiseType);
         }
 
         Value builtin_icosahedron(PDSL_Runtime &runtime, const std::vector<Value> &args)

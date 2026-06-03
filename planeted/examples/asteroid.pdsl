@@ -5,7 +5,7 @@ seedNoise("BETTY");
 m = icosahedron("asteroid");
 m = subdivide(m, 4);
 
-setNoiseType(NOISE_TYPE_PERLIN);
+setNoiseType(NOISE_TYPE_WHITE);
 
 /*
 setNumberOfOctaves(4);

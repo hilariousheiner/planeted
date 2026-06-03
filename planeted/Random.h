@@ -23,6 +23,13 @@ namespace Planeted
             Gradient = 3
         };
 
+        enum class NoiseStyleEnum
+        {
+            Plain = 0,
+            Billow = 1,
+            Ridge = 2
+        };
+
         using NoiseFunction1D = std::function<float(const float&)>;
         using NoiseFunction2D = std::function<float(const Vector2 &p)>;
         using NoiseFunction3D = std::function<float(const Vector3 &p)>;
@@ -97,6 +104,67 @@ namespace Planeted
                 float n = (0.9f - std::abs(noiseFun(p)));
                 return n*n;
             };
+        }
+
+        inline NoiseFunction1D GetBaseNoiseFunction1D(NoiseTypeEnum noiseType)
+        {
+            NoiseFunction1D result = nullptr;
+
+            switch(noiseType)
+            {
+            case NoiseTypeEnum::White:
+                result = WhiteNoise1D;
+                break;
+            case NoiseTypeEnum::Value:
+                result = ValueNoise1D;
+                break;
+            case NoiseTypeEnum::Perlin:
+                result = PerlinNoise1D;
+                break;
+            default:
+                break;
+            }
+            return result;
+        }
+        inline NoiseFunction2D GetBaseNoiseFunction2D(NoiseTypeEnum noiseType)
+        {
+            NoiseFunction2D result = nullptr;
+
+            switch(noiseType)
+            {
+            case NoiseTypeEnum::White:
+                result = WhiteNoise2D;
+                break;
+            case NoiseTypeEnum::Value:
+                result = ValueNoise2D;
+                break;
+            case NoiseTypeEnum::Perlin:
+                result = PerlinNoise2D;
+                break;
+            default:
+                break;
+            }
+            return result;
+        }
+        inline NoiseFunction3D GetBaseNoiseFunction3D(NoiseTypeEnum noiseType)
+        {
+            NoiseFunction3D result = nullptr;
+
+            switch(noiseType)
+            {
+            case NoiseTypeEnum::White:
+                result = WhiteNoise3D;
+                break;
+            case NoiseTypeEnum::Value:
+                result = ValueNoise3D;
+                break;
+            case NoiseTypeEnum::Perlin:
+                result = PerlinNoise3D;
+                break;
+            default:
+                break;
+            }
+            return result;
         }
     }
 }
