@@ -92,5 +92,41 @@ namespace Planeted
         }
         noiseTest("3D", "noiseTest3D.ppm", fn);
     }
+
+    inline void BillowTest2D(Random::NoiseTypeEnum noiseType)
+    {
+        Random::NoiseFunction2D noiseFun = [](const Vector2 &p) { return 0.0f; };
+
+        switch(noiseType)
+        {
+        case Random::NoiseTypeEnum::Perlin:
+            noiseFun = Random::Billow2D(Random::PerlinNoise2D);
+            break;
+        default:
+            break;
+        }
+
+        ColorFunction fn = [noiseFun](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::FBM2D({x * 0.05f, y* 0.05f}, noiseFun))); };
+
+        noiseTest("Billow 2D", "billowNoiseTest2D.ppm", fn);
+    }
+
+    inline void BillowTest3D(Random::NoiseTypeEnum noiseType)
+    {
+        Random::NoiseFunction3D noiseFun = [](const Vector3 &p) { return 0.0f; };
+
+        switch(noiseType)
+        {
+        case Random::NoiseTypeEnum::Perlin:
+            noiseFun = Random::Billow3D(Random::PerlinNoise3D);
+            break;
+        default:
+            break;
+        }
+
+        ColorFunction fn = [noiseFun](const int x, const int y) { return ToUint8(SignedToUnitRange(Random::FBM3D({x * 0.05f, y * 0.05f, 1.0f}, noiseFun))); };
+
+        noiseTest("Billow 3D", "billowNoiseTest3D.ppm", fn);
+    }
 }
 #endif

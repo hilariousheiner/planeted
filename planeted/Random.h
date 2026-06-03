@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <array>
+#include <cmath> //for std::abs
 #include <functional>
 #include <string>
 
@@ -50,6 +51,28 @@ namespace Planeted
         float FBM1D(const float &p, NoiseFunction1D noiseFun);
         float FBM2D(const Vector2 &p, NoiseFunction2D noiseFun);
         float FBM3D(const Vector3 &p, NoiseFunction3D noiseFun);
+
+        inline NoiseFunction1D Billow1D(NoiseFunction1D noiseFun)
+        {
+            return [noiseFun](const float &p)
+            {
+                return std::abs(noiseFun(p));
+            };
+        }
+        inline NoiseFunction2D Billow2D(NoiseFunction2D noiseFun)
+        {
+            return [noiseFun](const Vector2 &p)
+            {
+                return std::abs(noiseFun(p));
+            };
+        }
+        inline NoiseFunction3D Billow3D(NoiseFunction3D noiseFun)
+        {
+            return [noiseFun](const Vector3 &p)
+            {
+                return std::abs(noiseFun(p));
+            };
+        }
     }
 }
 #endif // PLANETED_RANDOM_H
