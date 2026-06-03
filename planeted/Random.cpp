@@ -4,16 +4,15 @@ namespace Planeted
 {
     namespace Random
     {
-        static const std::uint16_t permutationTableSize = 256;
-
         static std::uint32_t seed = StringToSeed32("Planeted");
+        static std::uint64_t seed64 = StringToSeed64("Planeted");
 
         static std::uint32_t numberOfOctaves = 1;
         static float lacunarity = 2.0f;
         static float persistence = 0.5f;
         static float whiteNoiseScale = 100.0f;
 
-        static std::uint8_t permutation[] =
+        static Permutation permutation =
         {
             8  , 170, 242, 67 , 248, 216, 115, 247, 164, 133, 195, 73 , 45 , 209, 13 , 53 ,
             9  , 131, 102, 214, 153, 254, 224, 63 , 244, 51 , 7  , 172, 106, 137, 95 , 201,
@@ -33,26 +32,29 @@ namespace Planeted
             212, 182, 136, 185, 110, 40 , 235, 21 , 222, 178, 174, 205, 68 , 90 , 171, 199
         };
 
-        static std::array<std::uint8_t, permutationTableSize * 2> computePermutationTable()
+        /*
+        static PermutationTable computePermutationTable()
         {
-            std::array<std::uint8_t, permutationTableSize * 2> result;
+            PermutationTable result;
 
-            for(std::size_t i = 0; i < permutationTableSize; ++i)
+            for(std::size_t i = 0; i < PermutationSize; ++i)
             {
                 result[i] = permutation[i];
-                result[i + permutationTableSize] = permutation[i];
+                result[i + PermutationSize] = permutation[i];
             }
             return result;
         }
-        static std::array<std::uint8_t, permutationTableSize * 2> &permutationTable()
+        */
+
+        static PermutationTable &permutationTable()
         {
-            static std::array<std::uint8_t, permutationTableSize * 2> result = computePermutationTable();
+            static PermutationTable result = MakePermutationTable(Random::permutation, Random::seed64);
             return result;
         }
 
         static std::uint8_t toGrid(const int &x)
         {
-            return static_cast<std::uint8_t>(x & (permutationTableSize - 1));
+            return static_cast<std::uint8_t>(x & (PermutationSize - 1));
         }
 
         static std::uint8_t permute(const std::uint8_t &x)
@@ -171,10 +173,12 @@ namespace Planeted
         void SeedNoise(std::uint32_t seed)
         {
             Random::seed = seed;
+            Random::seed64 = FMix64(static_cast<uint64_t>(seed));
         }
         void SeedNoise(std::string seed)
         {
-            SeedNoise(StringToSeed32(seed));
+            Random::seed = StringToSeed32(seed);
+            Random::seed64 = StringToSeed64(seed);
         }
 
         void SetNumberOfOctaves(std::uint32_t numberOfOctaves)
