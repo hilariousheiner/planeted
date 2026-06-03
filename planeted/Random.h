@@ -34,6 +34,10 @@ namespace Planeted
         using NoiseFunction2D = std::function<float(const Vector2 &p)>;
         using NoiseFunction3D = std::function<float(const Vector3 &p)>;
 
+        using NoiseTransform1D = std::function<NoiseFunction1D(NoiseFunction1D)>;
+        using NoiseTransform2D = std::function<NoiseFunction2D(NoiseFunction2D)>;
+        using NoiseTransform3D = std::function<NoiseFunction3D(NoiseFunction3D)>;
+
         void SeedNoise(std::uint32_t seed);
         void SeedNoise(std::string seed);
 
@@ -163,6 +167,99 @@ namespace Planeted
                 break;
             default:
                 break;
+            }
+            return result;
+        }
+
+
+        inline NoiseTransform1D GetNoiseStyleTransform1D(NoiseStyleEnum noiseStyle)
+        {
+            NoiseTransform1D result = nullptr;
+
+            switch(noiseStyle)
+            {
+            case NoiseStyleEnum::Plain:
+                break;
+            case NoiseStyleEnum::Billow:
+                result = Billow1D;
+                break;
+            case NoiseStyleEnum::Ridge:
+                result = Ridge1D;
+                break;
+            default:
+                break;
+            }
+            return result;
+        }
+        inline NoiseTransform2D GetNoiseStyleTransform2D(NoiseStyleEnum noiseStyle)
+        {
+            NoiseTransform2D result = nullptr;
+
+            switch(noiseStyle)
+            {
+            case NoiseStyleEnum::Plain:
+                break;
+            case NoiseStyleEnum::Billow:
+                result = Billow2D;
+                break;
+            case NoiseStyleEnum::Ridge:
+                result = Ridge2D;
+                break;
+            default:
+                break;
+            }
+            return result;
+        }
+        inline NoiseTransform3D GetNoiseStyleTransform3D(NoiseStyleEnum noiseStyle)
+        {
+            NoiseTransform3D result = nullptr;
+
+            switch(noiseStyle)
+            {
+            case NoiseStyleEnum::Plain:
+                break;
+            case NoiseStyleEnum::Billow:
+                result = Billow3D;
+                break;
+            case NoiseStyleEnum::Ridge:
+                result = Ridge3D;
+                break;
+            default:
+                break;
+            }
+            return result;
+        }
+
+        inline NoiseFunction1D GetNoiseFunction1D(NoiseTypeEnum noiseType, NoiseStyleEnum noiseStyle)
+        {
+            NoiseFunction1D result = GetBaseNoiseFunction1D(noiseType);
+            NoiseTransform1D noiseTransform = GetNoiseStyleTransform1D(noiseStyle);
+
+            if(noiseTransform != nullptr)
+            {
+                result = noiseTransform(result);
+            }
+            return result;
+        }
+        inline NoiseFunction2D GetNoiseFunction2D(NoiseTypeEnum noiseType, NoiseStyleEnum noiseStyle)
+        {
+            NoiseFunction2D result = GetBaseNoiseFunction2D(noiseType);
+            NoiseTransform2D noiseTransform = GetNoiseStyleTransform2D(noiseStyle);
+
+            if(noiseTransform != nullptr)
+            {
+                result = noiseTransform(result);
+            }
+            return result;
+        }
+        inline NoiseFunction3D GetNoiseFunction3D(NoiseTypeEnum noiseType, NoiseStyleEnum noiseStyle)
+        {
+            NoiseFunction3D result = GetBaseNoiseFunction3D(noiseType);
+            NoiseTransform3D noiseTransform = GetNoiseStyleTransform3D(noiseStyle);
+
+            if(noiseTransform != nullptr)
+            {
+                result = noiseTransform(result);
             }
             return result;
         }

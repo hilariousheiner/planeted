@@ -37,26 +37,7 @@ namespace Planeted
 
         Random::NoiseFunction3D getCurrentNoise()
         {
-            /*
-            Random::NoiseFunction3D result = nullptr;
-
-            switch(PDSL_Lib::noiseType)
-            {
-            case Random::NoiseTypeEnum::White:
-                result = Random::WhiteNoise3D;
-                break;
-            case Random::NoiseTypeEnum::Value:
-                result = Random::ValueNoise3D;
-                break;
-            case Random::NoiseTypeEnum::Perlin:
-                result = Random::PerlinNoise3D;
-                break;
-            default:
-                break;
-            }
-            return result;
-            */
-            return Random::GetBaseNoiseFunction3D(PDSL_Lib::noiseType);
+            return Random::GetNoiseFunction3D(PDSL_Lib::noiseType, Random::NoiseStyleEnum::Plain);
         }
 
         Value builtin_icosahedron(PDSL_Runtime &runtime, const std::vector<Value> &args)
