@@ -98,7 +98,6 @@ namespace Planeted
         return k;
     }
 
-
     inline uint32_t Hash1D(int x, uint32_t seed)
     {
         uint32_t h = seed;
@@ -161,6 +160,41 @@ namespace Planeted
         z = (z ^ (z >> 27)) * 0x94d049bb133111ebull;
 
         return z ^ (z >> 31);
+    }
+
+    constexpr int PermutationSize = 256;
+
+    using Permutation = std::array<uint8_t, PermutationSize>;
+    using PermutationTable = std::array<uint8_t, PermutationSize * 2>;
+
+    inline PermutationTable MakePermutationTable(Permutation &permutation, uint64_t seed)
+    {
+        PermutationTable result;
+
+        // copy the permutation into the first half of the table:
+        for (int i = 0; i < PermutationSize; ++i)
+        {
+            result[i] = permutation[i];
+        }
+
+        // shuffle the first half of the table
+        // using a Fisher-Yates shuffle with SplitMix64:
+        uint64_t state = seed;
+
+        for (int i = PermutationSize-1; i > 0; --i)
+        {
+            int j = static_cast<int>(SplitMix64(state) % (i + 1));
+            std::swap(result[i], result[j]);
+        }
+
+        // duplicate the shuffled permutation into the second half of the table:
+        for (int i = 0; i < PermutationSize; ++i)
+        {
+            result[i + PermutationSize] = result[i];
+        }
+
+        // done.
+        return result;
     }
 }
 #endif // PLANETED_MATH_H
