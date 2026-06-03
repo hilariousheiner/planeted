@@ -42,8 +42,9 @@ namespace Planeted
         void SeedNoise(std::string seed);
 
         void SetNumberOfOctaves(std::uint32_t numberOfOctaves);
-        void SetPersistence(float persistence);
+        void SetStartFrequency(float frequency);
         void SetLacunarity(float lacunarity);
+        void SetPersistence(float persistence);
 
         void SetWhiteNoiseScale(float scale);
 
@@ -170,7 +171,6 @@ namespace Planeted
             }
             return result;
         }
-
 
         inline NoiseTransform1D GetNoiseStyleTransform1D(NoiseStyleEnum noiseStyle)
         {

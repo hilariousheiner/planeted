@@ -10,6 +10,8 @@ namespace Planeted
         static std::uint32_t numberOfOctaves = 1;
         static float lacunarity = 2.0f;
         static float persistence = 0.5f;
+        static float startFrequency = 1.0f;
+
         static float whiteNoiseScale = 100.0f;
 
         static Permutation permutation =
@@ -184,6 +186,10 @@ namespace Planeted
         void SetNumberOfOctaves(std::uint32_t numberOfOctaves)
         {
             Random::numberOfOctaves = numberOfOctaves;
+        }
+        void SetStartFrequency(float frequency)
+        {
+            Random::startFrequency = frequency;
         }
         void SetLacunarity(float lacunarity)
         {
@@ -391,7 +397,7 @@ namespace Planeted
         {
             float result = 0.0f;
 
-            float frequency = 1.0f;
+            float frequency = Random::startFrequency;
             float amplitude = 1.0f;
 
             for(std::uint32_t i = 0; i < Random::numberOfOctaves; ++i)
@@ -407,7 +413,7 @@ namespace Planeted
         {
             float result = 0.0f;
 
-            float frequency = 1.0f;
+            float frequency = Random::startFrequency;
             float amplitude = 1.0f;
 
             for(std::uint32_t i = 0; i < Random::numberOfOctaves; ++i)
@@ -423,7 +429,7 @@ namespace Planeted
         {
             float result = 0.0f;
 
-            float frequency = 1.0f;
+            float frequency = Random::startFrequency;
             float amplitude = 1.0f;
 
             for(std::uint32_t i = 0; i < Random::numberOfOctaves; ++i)
