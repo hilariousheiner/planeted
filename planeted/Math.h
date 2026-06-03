@@ -147,10 +147,25 @@ namespace Planeted
         }
         return h;
     }
+    inline uint64_t FNV64(const std::string& text)
+    {
+        uint64_t h = 14695981039346656037ull;
+
+        for (unsigned char c : text)
+        {
+            h ^= static_cast<uint64_t>(c);
+            h *= 1099511628211ull;
+        }
+        return h;
+    }
 
     inline uint32_t StringToSeed32(const std::string &s)
     {
         return FMix32(FNV32(s));
+    }
+    inline uint32_t StringToSeed64(const std::string &s)
+    {
+        return FMix64(FNV64(s));
     }
 
     // SplitMix64 by Sebastiano Vigna
