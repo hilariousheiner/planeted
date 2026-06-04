@@ -96,10 +96,6 @@ int main(int argc, char **argv)
     }
     std::cout << "done." << std::endl;
 
-    /*
-    Random::SetNumberOfOctaves(2);
-    RidgeTest3D(Random::NoiseTypeEnum::Perlin);
-    */
     return EXIT_SUCCESS;
 }
 
