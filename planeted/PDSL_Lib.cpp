@@ -166,6 +166,19 @@ namespace Planeted
             }
             return Value::Null();
         }
+        Value builtin_setStartFrequency(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        {
+            if(args.size() != 1)
+            {
+                throw std::runtime_error("setStartFrequency expects one argument.");
+            }
+
+            if(args[0].GetValueType() == ValueTypeEnum::Float)
+            {
+                Random::SetStartFrequency(args[0].GetFloatValue());
+            }
+            return Value::Null();
+        }
 
         Value builtin_setLacunarity(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
@@ -256,6 +269,7 @@ namespace Planeted
             runtime.InstallBuiltinFunction("setWhiteNoiseScale", builtin_setWhiteNoiseScale);
 
             runtime.InstallBuiltinFunction("setNumberOfOctaves", builtin_setNumberOfOctaves);
+            runtime.InstallBuiltinFunction("setStartFrequency", builtin_setStartFrequency);
             runtime.InstallBuiltinFunction("setLacunarity", builtin_setLacunarity);
             runtime.InstallBuiltinFunction("setPersistence", builtin_setPersistence);
 
