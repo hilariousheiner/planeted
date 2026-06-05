@@ -25,21 +25,26 @@ namespace Planeted
     {
         return [noiseFun](const int x, const int y)
         {
-            return NoiseToGrayScale(Random::FBM1D(x * 0.05f, noiseFun));
+            float nx = x/512.0f -0.5f;
+            return NoiseToGrayScale(Random::FBM1D(nx, noiseFun));
         };
     }
     ColorFunction ToColorFunction(Random::NoiseFunction2D noiseFun)
     {
         return [noiseFun](const int x, const int y)
         {
-            return NoiseToGrayScale(Random::FBM2D({x * 0.05f, y * 0.05f}, noiseFun));
+            float nx = x/512.0f -0.5f;
+            float ny = y/512.0f -0.5f;
+            return NoiseToGrayScale(Random::FBM2D({nx, ny}, noiseFun));
         };
     }
     ColorFunction ToColorFunction(Random::NoiseFunction3D noiseFun)
     {
         return [noiseFun](const int x, const int y)
         {
-            return NoiseToGrayScale(Random::FBM3D({x * 0.05f, y * 0.05f, 1.0f}, noiseFun));
+            float nx = x/512.0f -0.5f;
+            float ny = y/512.0f -0.5f;
+            return NoiseToGrayScale(Random::FBM3D({nx, ny, 1.0f}, noiseFun));
         };
     }
 

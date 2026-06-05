@@ -96,6 +96,10 @@ int main(int argc, char **argv)
     }
     std::cout << "done." << std::endl;
 
+    Random::SetStartFrequency(2);
+    Random::SetNumberOfOctaves(8);
+    NoiseTest3D(Random::NoiseTypeEnum::Value, Random::NoiseStyleEnum::Ridge);
+
     return EXIT_SUCCESS;
 }
 
