@@ -44,67 +44,9 @@ namespace Planeted
         float PerlinNoise2D(const Vector2 &p);
         float PerlinNoise3D(const Vector3 &p);
 
-
-        inline NoiseFunction1D GetBaseNoiseFunction1D(NoiseTypeEnum noiseType)
-        {
-            NoiseFunction1D result = nullptr;
-
-            switch(noiseType)
-            {
-            case NoiseTypeEnum::White:
-                result = WhiteNoise1D;
-                break;
-            case NoiseTypeEnum::Value:
-                result = ValueNoise1D;
-                break;
-            case NoiseTypeEnum::Perlin:
-                result = PerlinNoise1D;
-                break;
-            default:
-                break;
-            }
-            return result;
-        }
-        inline NoiseFunction2D GetBaseNoiseFunction2D(NoiseTypeEnum noiseType)
-        {
-            NoiseFunction2D result = nullptr;
-
-            switch(noiseType)
-            {
-            case NoiseTypeEnum::White:
-                result = WhiteNoise2D;
-                break;
-            case NoiseTypeEnum::Value:
-                result = ValueNoise2D;
-                break;
-            case NoiseTypeEnum::Perlin:
-                result = PerlinNoise2D;
-                break;
-            default:
-                break;
-            }
-            return result;
-        }
-        inline NoiseFunction3D GetBaseNoiseFunction3D(NoiseTypeEnum noiseType)
-        {
-            NoiseFunction3D result = nullptr;
-
-            switch(noiseType)
-            {
-            case NoiseTypeEnum::White:
-                result = WhiteNoise3D;
-                break;
-            case NoiseTypeEnum::Value:
-                result = ValueNoise3D;
-                break;
-            case NoiseTypeEnum::Perlin:
-                result = PerlinNoise3D;
-                break;
-            default:
-                break;
-            }
-            return result;
-        }
+        NoiseFunction1D GetBaseNoiseFunction1D(NoiseTypeEnum noiseType);
+        NoiseFunction2D GetBaseNoiseFunction2D(NoiseTypeEnum noiseType);
+        NoiseFunction3D GetBaseNoiseFunction3D(NoiseTypeEnum noiseType);
 
         void SetNumberOfOctaves(std::uint32_t numberOfOctaves);
         void SetStartFrequency(float frequency);

@@ -379,6 +379,67 @@ namespace Planeted
             return SmoothStepUnclamped5(v0, v1, tz);
         }
 
+        NoiseFunction1D GetBaseNoiseFunction1D(NoiseTypeEnum noiseType)
+        {
+            NoiseFunction1D result = nullptr;
+
+            switch(noiseType)
+            {
+            case NoiseTypeEnum::White:
+                result = WhiteNoise1D;
+                break;
+            case NoiseTypeEnum::Value:
+                result = ValueNoise1D;
+                break;
+            case NoiseTypeEnum::Perlin:
+                result = PerlinNoise1D;
+                break;
+            default:
+                break;
+            }
+            return result;
+        }
+        NoiseFunction2D GetBaseNoiseFunction2D(NoiseTypeEnum noiseType)
+        {
+            NoiseFunction2D result = nullptr;
+
+            switch(noiseType)
+            {
+            case NoiseTypeEnum::White:
+                result = WhiteNoise2D;
+                break;
+            case NoiseTypeEnum::Value:
+                result = ValueNoise2D;
+                break;
+            case NoiseTypeEnum::Perlin:
+                result = PerlinNoise2D;
+                break;
+            default:
+                break;
+            }
+            return result;
+        }
+        NoiseFunction3D GetBaseNoiseFunction3D(NoiseTypeEnum noiseType)
+        {
+            NoiseFunction3D result = nullptr;
+
+            switch(noiseType)
+            {
+            case NoiseTypeEnum::White:
+                result = WhiteNoise3D;
+                break;
+            case NoiseTypeEnum::Value:
+                result = ValueNoise3D;
+                break;
+            case NoiseTypeEnum::Perlin:
+                result = PerlinNoise3D;
+                break;
+            default:
+                break;
+            }
+            return result;
+        }
+
         float FBM1D(const float &p, NoiseFunction1D noiseFun)
         {
             float result = 0.0f;
