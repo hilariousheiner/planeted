@@ -489,5 +489,51 @@ namespace Planeted
             return result;
         }
 
+        NoiseFunction1D Billow1D(NoiseFunction1D noiseFun)
+        {
+            return [noiseFun](const float &p)
+            {
+                return std::abs(noiseFun(p));
+            };
+        }
+        NoiseFunction2D Billow2D(NoiseFunction2D noiseFun)
+        {
+            return [noiseFun](const Vector2 &p)
+            {
+                return std::abs(noiseFun(p));
+            };
+        }
+        NoiseFunction3D Billow3D(NoiseFunction3D noiseFun)
+        {
+            return [noiseFun](const Vector3 &p)
+            {
+                return std::abs(noiseFun(p));
+            };
+        }
+
+        NoiseFunction1D Ridge1D(NoiseFunction1D noiseFun)
+        {
+            return [noiseFun](const float &p)
+            {
+                float n = (0.9f - std::abs(noiseFun(p)));
+                return n*n;
+            };
+        }
+        NoiseFunction2D Ridge2D(NoiseFunction2D noiseFun)
+        {
+            return [noiseFun](const Vector2 &p)
+            {
+                float n = (0.9f - std::abs(noiseFun(p)));
+                return n*n;
+            };
+        }
+        NoiseFunction3D Ridge3D(NoiseFunction3D noiseFun)
+        {
+            return [noiseFun](const Vector3 &p)
+            {
+                float n = (0.9f - std::abs(noiseFun(p)));
+                return n*n;
+            };
+        }
     }
 }

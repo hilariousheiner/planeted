@@ -68,52 +68,13 @@ namespace Planeted
         using NoiseTransform2D = std::function<NoiseFunction2D(NoiseFunction2D)>;
         using NoiseTransform3D = std::function<NoiseFunction3D(NoiseFunction3D)>;
 
-        inline NoiseFunction1D Billow1D(NoiseFunction1D noiseFun)
-        {
-            return [noiseFun](const float &p)
-            {
-                return std::abs(noiseFun(p));
-            };
-        }
-        inline NoiseFunction2D Billow2D(NoiseFunction2D noiseFun)
-        {
-            return [noiseFun](const Vector2 &p)
-            {
-                return std::abs(noiseFun(p));
-            };
-        }
-        inline NoiseFunction3D Billow3D(NoiseFunction3D noiseFun)
-        {
-            return [noiseFun](const Vector3 &p)
-            {
-                return std::abs(noiseFun(p));
-            };
-        }
+        NoiseFunction1D Billow1D(NoiseFunction1D noiseFun);
+        NoiseFunction2D Billow2D(NoiseFunction2D noiseFun);
+        NoiseFunction3D Billow3D(NoiseFunction3D noiseFun);
 
-        inline NoiseFunction1D Ridge1D(NoiseFunction1D noiseFun)
-        {
-            return [noiseFun](const float &p)
-            {
-                float n = (0.9f - std::abs(noiseFun(p)));
-                return n*n;
-            };
-        }
-        inline NoiseFunction2D Ridge2D(NoiseFunction2D noiseFun)
-        {
-            return [noiseFun](const Vector2 &p)
-            {
-                float n = (0.9f - std::abs(noiseFun(p)));
-                return n*n;
-            };
-        }
-        inline NoiseFunction3D Ridge3D(NoiseFunction3D noiseFun)
-        {
-            return [noiseFun](const Vector3 &p)
-            {
-                float n = (0.9f - std::abs(noiseFun(p)));
-                return n*n;
-            };
-        }
+        NoiseFunction1D Ridge1D(NoiseFunction1D noiseFun);
+        NoiseFunction2D Ridge2D(NoiseFunction2D noiseFun);
+        NoiseFunction3D Ridge3D(NoiseFunction3D noiseFun);
 
         inline NoiseTransform1D GetNoiseStyleTransform1D(NoiseStyleEnum noiseStyle)
         {
