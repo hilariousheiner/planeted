@@ -23,28 +23,12 @@ namespace Planeted
             Gradient = 3
         };
 
-        enum class NoiseStyleEnum
-        {
-            Plain = 0,
-            Billow = 1,
-            Ridge = 2
-        };
-
         using NoiseFunction1D = std::function<float(const float&)>;
         using NoiseFunction2D = std::function<float(const Vector2 &p)>;
         using NoiseFunction3D = std::function<float(const Vector3 &p)>;
 
-        using NoiseTransform1D = std::function<NoiseFunction1D(NoiseFunction1D)>;
-        using NoiseTransform2D = std::function<NoiseFunction2D(NoiseFunction2D)>;
-        using NoiseTransform3D = std::function<NoiseFunction3D(NoiseFunction3D)>;
-
         void SeedNoise(std::uint32_t seed);
         void SeedNoise(std::string seed);
-
-        void SetNumberOfOctaves(std::uint32_t numberOfOctaves);
-        void SetStartFrequency(float frequency);
-        void SetLacunarity(float lacunarity);
-        void SetPersistence(float persistence);
 
         void SetWhiteNoiseScale(float scale);
 
@@ -60,56 +44,6 @@ namespace Planeted
         float PerlinNoise2D(const Vector2 &p);
         float PerlinNoise3D(const Vector3 &p);
 
-        float FBM1D(const float &p, NoiseFunction1D noiseFun);
-        float FBM2D(const Vector2 &p, NoiseFunction2D noiseFun);
-        float FBM3D(const Vector3 &p, NoiseFunction3D noiseFun);
-
-        inline NoiseFunction1D Billow1D(NoiseFunction1D noiseFun)
-        {
-            return [noiseFun](const float &p)
-            {
-                return std::abs(noiseFun(p));
-            };
-        }
-        inline NoiseFunction2D Billow2D(NoiseFunction2D noiseFun)
-        {
-            return [noiseFun](const Vector2 &p)
-            {
-                return std::abs(noiseFun(p));
-            };
-        }
-        inline NoiseFunction3D Billow3D(NoiseFunction3D noiseFun)
-        {
-            return [noiseFun](const Vector3 &p)
-            {
-                return std::abs(noiseFun(p));
-            };
-        }
-
-        inline NoiseFunction1D Ridge1D(NoiseFunction1D noiseFun)
-        {
-            return [noiseFun](const float &p)
-            {
-                float n = (0.9f - std::abs(noiseFun(p)));
-                return n*n;
-            };
-        }
-        inline NoiseFunction2D Ridge2D(NoiseFunction2D noiseFun)
-        {
-            return [noiseFun](const Vector2 &p)
-            {
-                float n = (0.9f - std::abs(noiseFun(p)));
-                return n*n;
-            };
-        }
-        inline NoiseFunction3D Ridge3D(NoiseFunction3D noiseFun)
-        {
-            return [noiseFun](const Vector3 &p)
-            {
-                float n = (0.9f - std::abs(noiseFun(p)));
-                return n*n;
-            };
-        }
 
         inline NoiseFunction1D GetBaseNoiseFunction1D(NoiseTypeEnum noiseType)
         {
@@ -170,6 +104,73 @@ namespace Planeted
                 break;
             }
             return result;
+        }
+
+        void SetNumberOfOctaves(std::uint32_t numberOfOctaves);
+        void SetStartFrequency(float frequency);
+        void SetLacunarity(float lacunarity);
+        void SetPersistence(float persistence);
+
+        float FBM1D(const float &p, NoiseFunction1D noiseFun);
+        float FBM2D(const Vector2 &p, NoiseFunction2D noiseFun);
+        float FBM3D(const Vector3 &p, NoiseFunction3D noiseFun);
+
+        enum class NoiseStyleEnum
+        {
+            Plain = 0,
+            Billow = 1,
+            Ridge = 2
+        };
+
+        using NoiseTransform1D = std::function<NoiseFunction1D(NoiseFunction1D)>;
+        using NoiseTransform2D = std::function<NoiseFunction2D(NoiseFunction2D)>;
+        using NoiseTransform3D = std::function<NoiseFunction3D(NoiseFunction3D)>;
+
+        inline NoiseFunction1D Billow1D(NoiseFunction1D noiseFun)
+        {
+            return [noiseFun](const float &p)
+            {
+                return std::abs(noiseFun(p));
+            };
+        }
+        inline NoiseFunction2D Billow2D(NoiseFunction2D noiseFun)
+        {
+            return [noiseFun](const Vector2 &p)
+            {
+                return std::abs(noiseFun(p));
+            };
+        }
+        inline NoiseFunction3D Billow3D(NoiseFunction3D noiseFun)
+        {
+            return [noiseFun](const Vector3 &p)
+            {
+                return std::abs(noiseFun(p));
+            };
+        }
+
+        inline NoiseFunction1D Ridge1D(NoiseFunction1D noiseFun)
+        {
+            return [noiseFun](const float &p)
+            {
+                float n = (0.9f - std::abs(noiseFun(p)));
+                return n*n;
+            };
+        }
+        inline NoiseFunction2D Ridge2D(NoiseFunction2D noiseFun)
+        {
+            return [noiseFun](const Vector2 &p)
+            {
+                float n = (0.9f - std::abs(noiseFun(p)));
+                return n*n;
+            };
+        }
+        inline NoiseFunction3D Ridge3D(NoiseFunction3D noiseFun)
+        {
+            return [noiseFun](const Vector3 &p)
+            {
+                float n = (0.9f - std::abs(noiseFun(p)));
+                return n*n;
+            };
         }
 
         inline NoiseTransform1D GetNoiseStyleTransform1D(NoiseStyleEnum noiseStyle)

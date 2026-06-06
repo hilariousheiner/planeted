@@ -34,20 +34,6 @@ namespace Planeted
             212, 182, 136, 185, 110, 40 , 235, 21 , 222, 178, 174, 205, 68 , 90 , 171, 199
         };
 
-        /*
-        static PermutationTable computePermutationTable()
-        {
-            PermutationTable result;
-
-            for(std::size_t i = 0; i < PermutationSize; ++i)
-            {
-                result[i] = permutation[i];
-                result[i + PermutationSize] = permutation[i];
-            }
-            return result;
-        }
-        */
-
         static PermutationTable &permutationTable()
         {
             static PermutationTable result = MakePermutationTable(Random::permutation, Random::seed64);
