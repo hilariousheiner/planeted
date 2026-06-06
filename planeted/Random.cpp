@@ -535,5 +535,64 @@ namespace Planeted
                 return n*n;
             };
         }
+
+
+        NoiseTransform1D GetNoiseStyleTransform1D(NoiseStyleEnum noiseStyle)
+        {
+            NoiseTransform1D result = nullptr;
+
+            switch(noiseStyle)
+            {
+            case NoiseStyleEnum::Plain:
+                break;
+            case NoiseStyleEnum::Billow:
+                result = Billow1D;
+                break;
+            case NoiseStyleEnum::Ridge:
+                result = Ridge1D;
+                break;
+            default:
+                break;
+            }
+            return result;
+        }
+        NoiseTransform2D GetNoiseStyleTransform2D(NoiseStyleEnum noiseStyle)
+        {
+            NoiseTransform2D result = nullptr;
+
+            switch(noiseStyle)
+            {
+            case NoiseStyleEnum::Plain:
+                break;
+            case NoiseStyleEnum::Billow:
+                result = Billow2D;
+                break;
+            case NoiseStyleEnum::Ridge:
+                result = Ridge2D;
+                break;
+            default:
+                break;
+            }
+            return result;
+        }
+        NoiseTransform3D GetNoiseStyleTransform3D(NoiseStyleEnum noiseStyle)
+        {
+            NoiseTransform3D result = nullptr;
+
+            switch(noiseStyle)
+            {
+            case NoiseStyleEnum::Plain:
+                break;
+            case NoiseStyleEnum::Billow:
+                result = Billow3D;
+                break;
+            case NoiseStyleEnum::Ridge:
+                result = Ridge3D;
+                break;
+            default:
+                break;
+            }
+            return result;
+        }
     }
 }

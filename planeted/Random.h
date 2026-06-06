@@ -76,63 +76,9 @@ namespace Planeted
         NoiseFunction2D Ridge2D(NoiseFunction2D noiseFun);
         NoiseFunction3D Ridge3D(NoiseFunction3D noiseFun);
 
-        inline NoiseTransform1D GetNoiseStyleTransform1D(NoiseStyleEnum noiseStyle)
-        {
-            NoiseTransform1D result = nullptr;
-
-            switch(noiseStyle)
-            {
-            case NoiseStyleEnum::Plain:
-                break;
-            case NoiseStyleEnum::Billow:
-                result = Billow1D;
-                break;
-            case NoiseStyleEnum::Ridge:
-                result = Ridge1D;
-                break;
-            default:
-                break;
-            }
-            return result;
-        }
-        inline NoiseTransform2D GetNoiseStyleTransform2D(NoiseStyleEnum noiseStyle)
-        {
-            NoiseTransform2D result = nullptr;
-
-            switch(noiseStyle)
-            {
-            case NoiseStyleEnum::Plain:
-                break;
-            case NoiseStyleEnum::Billow:
-                result = Billow2D;
-                break;
-            case NoiseStyleEnum::Ridge:
-                result = Ridge2D;
-                break;
-            default:
-                break;
-            }
-            return result;
-        }
-        inline NoiseTransform3D GetNoiseStyleTransform3D(NoiseStyleEnum noiseStyle)
-        {
-            NoiseTransform3D result = nullptr;
-
-            switch(noiseStyle)
-            {
-            case NoiseStyleEnum::Plain:
-                break;
-            case NoiseStyleEnum::Billow:
-                result = Billow3D;
-                break;
-            case NoiseStyleEnum::Ridge:
-                result = Ridge3D;
-                break;
-            default:
-                break;
-            }
-            return result;
-        }
+        NoiseTransform1D GetNoiseStyleTransform1D(NoiseStyleEnum noiseStyle);
+        NoiseTransform2D GetNoiseStyleTransform2D(NoiseStyleEnum noiseStyle);
+        NoiseTransform3D GetNoiseStyleTransform3D(NoiseStyleEnum noiseStyle);
 
         inline NoiseFunction1D GetNoiseFunction1D(NoiseTypeEnum noiseType, NoiseStyleEnum noiseStyle)
         {
