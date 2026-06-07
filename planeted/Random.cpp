@@ -594,5 +594,40 @@ namespace Planeted
             }
             return result;
         }
+
+
+        NoiseFunction1D GetNoiseFunction1D(NoiseTypeEnum noiseType, NoiseStyleEnum noiseStyle)
+        {
+            NoiseFunction1D result = GetBaseNoiseFunction1D(noiseType);
+            NoiseTransform1D noiseTransform = GetNoiseStyleTransform1D(noiseStyle);
+
+            if(noiseTransform != nullptr)
+            {
+                result = noiseTransform(result);
+            }
+            return result;
+        }
+        NoiseFunction2D GetNoiseFunction2D(NoiseTypeEnum noiseType, NoiseStyleEnum noiseStyle)
+        {
+            NoiseFunction2D result = GetBaseNoiseFunction2D(noiseType);
+            NoiseTransform2D noiseTransform = GetNoiseStyleTransform2D(noiseStyle);
+
+            if(noiseTransform != nullptr)
+            {
+                result = noiseTransform(result);
+            }
+            return result;
+        }
+        NoiseFunction3D GetNoiseFunction3D(NoiseTypeEnum noiseType, NoiseStyleEnum noiseStyle)
+        {
+            NoiseFunction3D result = GetBaseNoiseFunction3D(noiseType);
+            NoiseTransform3D noiseTransform = GetNoiseStyleTransform3D(noiseStyle);
+
+            if(noiseTransform != nullptr)
+            {
+                result = noiseTransform(result);
+            }
+            return result;
+        }
     }
 }
