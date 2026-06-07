@@ -13,6 +13,7 @@ namespace Planeted
         static float lacunarity = 2.0f;
         static float persistence = 0.5f;
         static float startFrequency = 1.0f;
+        static bool normalizeFBM = false;
 
         static float whiteNoiseScale = 100.0f;
 
@@ -476,6 +477,11 @@ namespace Planeted
             Random::persistence = persistence;
         }
 
+        void SetNormalizeFBM(bool normalizeFBM)
+        {
+            Random::normalizeFBM = normalizeFBM;
+        }
+
         float FBM1D(const float &p, NoiseFunction1D noiseFun)
         {
             float result = 0.0f;
@@ -483,13 +489,22 @@ namespace Planeted
             float frequency = Random::startFrequency;
             float amplitude = 1.0f;
 
+            float t = 0.0f;
+
             for(std::uint32_t i = 0; i < Random::numberOfOctaves; ++i)
             {
                 result += amplitude*noiseFun(p*frequency);
 
+                t += amplitude;
                 frequency *= Random::lacunarity;
                 amplitude *= Random::persistence;
             }
+
+            if(Random::normalizeFBM)
+            {
+                result = result / t;
+            }
+
             return result;
         }
         float FBM2D(const Vector2 &p, NoiseFunction2D noiseFun)
@@ -499,13 +514,22 @@ namespace Planeted
             float frequency = Random::startFrequency;
             float amplitude = 1.0f;
 
+            float t = 0.0f;
+
             for(std::uint32_t i = 0; i < Random::numberOfOctaves; ++i)
             {
                 result += amplitude*noiseFun(p*frequency);
 
+                t += amplitude;
                 frequency *= Random::lacunarity;
                 amplitude *= Random::persistence;
             }
+
+            if(Random::normalizeFBM)
+            {
+                result = result / t;
+            }
+
             return result;
         }
         float FBM3D(const Vector3 &p, NoiseFunction3D noiseFun)
@@ -515,13 +539,22 @@ namespace Planeted
             float frequency = Random::startFrequency;
             float amplitude = 1.0f;
 
+            float t = 0.0f;
+
             for(std::uint32_t i = 0; i < Random::numberOfOctaves; ++i)
             {
                 result += amplitude*noiseFun(p*frequency);
 
+                t += amplitude;
                 frequency *= Random::lacunarity;
                 amplitude *= Random::persistence;
             }
+
+            if(Random::normalizeFBM)
+            {
+                result = result / t;
+            }
+
             return result;
         }
 
