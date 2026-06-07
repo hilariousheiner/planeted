@@ -3,7 +3,6 @@
 
 #include <algorithm>
 #include <array>
-#include <cmath> //for std::abs
 #include <functional>
 #include <string>
 
@@ -23,9 +22,20 @@ namespace Planeted
             Gradient = 3
         };
 
+        enum class NoiseStyleEnum
+        {
+            Plain = 0,
+            Billow = 1,
+            Ridge = 2
+        };
+
         using NoiseFunction1D = std::function<float(const float&)>;
         using NoiseFunction2D = std::function<float(const Vector2 &p)>;
         using NoiseFunction3D = std::function<float(const Vector3 &p)>;
+
+        NoiseFunction1D GetNoiseFunction1D(NoiseTypeEnum noiseType, NoiseStyleEnum noiseStyle);
+        NoiseFunction2D GetNoiseFunction2D(NoiseTypeEnum noiseType, NoiseStyleEnum noiseStyle);
+        NoiseFunction3D GetNoiseFunction3D(NoiseTypeEnum noiseType, NoiseStyleEnum noiseStyle);
 
         void SeedNoise(std::uint32_t seed);
         void SeedNoise(std::string seed);
@@ -57,13 +67,6 @@ namespace Planeted
         float FBM2D(const Vector2 &p, NoiseFunction2D noiseFun);
         float FBM3D(const Vector3 &p, NoiseFunction3D noiseFun);
 
-        enum class NoiseStyleEnum
-        {
-            Plain = 0,
-            Billow = 1,
-            Ridge = 2
-        };
-
         using NoiseTransform1D = std::function<NoiseFunction1D(NoiseFunction1D)>;
         using NoiseTransform2D = std::function<NoiseFunction2D(NoiseFunction2D)>;
         using NoiseTransform3D = std::function<NoiseFunction3D(NoiseFunction3D)>;
@@ -79,10 +82,6 @@ namespace Planeted
         NoiseTransform1D GetNoiseStyleTransform1D(NoiseStyleEnum noiseStyle);
         NoiseTransform2D GetNoiseStyleTransform2D(NoiseStyleEnum noiseStyle);
         NoiseTransform3D GetNoiseStyleTransform3D(NoiseStyleEnum noiseStyle);
-
-        NoiseFunction1D GetNoiseFunction1D(NoiseTypeEnum noiseType, NoiseStyleEnum noiseStyle);
-        NoiseFunction2D GetNoiseFunction2D(NoiseTypeEnum noiseType, NoiseStyleEnum noiseStyle);
-        NoiseFunction3D GetNoiseFunction3D(NoiseTypeEnum noiseType, NoiseStyleEnum noiseStyle);
     }
 }
 #endif // PLANETED_RANDOM_H

@@ -1,5 +1,7 @@
 #include "Random.h"
 
+#include <cmath> //for std::abs
+
 namespace Planeted
 {
     namespace Random
@@ -158,6 +160,40 @@ namespace Planeted
             return result;
         }
 
+        NoiseFunction1D GetNoiseFunction1D(NoiseTypeEnum noiseType, NoiseStyleEnum noiseStyle)
+        {
+            NoiseFunction1D result = GetBaseNoiseFunction1D(noiseType);
+            NoiseTransform1D noiseTransform = GetNoiseStyleTransform1D(noiseStyle);
+
+            if(noiseTransform != nullptr)
+            {
+                result = noiseTransform(result);
+            }
+            return result;
+        }
+        NoiseFunction2D GetNoiseFunction2D(NoiseTypeEnum noiseType, NoiseStyleEnum noiseStyle)
+        {
+            NoiseFunction2D result = GetBaseNoiseFunction2D(noiseType);
+            NoiseTransform2D noiseTransform = GetNoiseStyleTransform2D(noiseStyle);
+
+            if(noiseTransform != nullptr)
+            {
+                result = noiseTransform(result);
+            }
+            return result;
+        }
+        NoiseFunction3D GetNoiseFunction3D(NoiseTypeEnum noiseType, NoiseStyleEnum noiseStyle)
+        {
+            NoiseFunction3D result = GetBaseNoiseFunction3D(noiseType);
+            NoiseTransform3D noiseTransform = GetNoiseStyleTransform3D(noiseStyle);
+
+            if(noiseTransform != nullptr)
+            {
+                result = noiseTransform(result);
+            }
+            return result;
+        }
+
         void SeedNoise(std::uint32_t seed)
         {
             Random::seed = seed;
@@ -167,23 +203,6 @@ namespace Planeted
         {
             Random::seed = StringToSeed32(seed);
             Random::seed64 = StringToSeed64(seed);
-        }
-
-        void SetNumberOfOctaves(std::uint32_t numberOfOctaves)
-        {
-            Random::numberOfOctaves = numberOfOctaves;
-        }
-        void SetStartFrequency(float frequency)
-        {
-            Random::startFrequency = frequency;
-        }
-        void SetLacunarity(float lacunarity)
-        {
-            Random::lacunarity = lacunarity;
-        }
-        void SetPersistence(float persistence)
-        {
-            Random::persistence = persistence;
         }
 
         void SetWhiteNoiseScale(float scale)
@@ -440,6 +459,23 @@ namespace Planeted
             return result;
         }
 
+        void SetNumberOfOctaves(std::uint32_t numberOfOctaves)
+        {
+            Random::numberOfOctaves = numberOfOctaves;
+        }
+        void SetStartFrequency(float frequency)
+        {
+            Random::startFrequency = frequency;
+        }
+        void SetLacunarity(float lacunarity)
+        {
+            Random::lacunarity = lacunarity;
+        }
+        void SetPersistence(float persistence)
+        {
+            Random::persistence = persistence;
+        }
+
         float FBM1D(const float &p, NoiseFunction1D noiseFun)
         {
             float result = 0.0f;
@@ -591,41 +627,6 @@ namespace Planeted
                 break;
             default:
                 break;
-            }
-            return result;
-        }
-
-
-        NoiseFunction1D GetNoiseFunction1D(NoiseTypeEnum noiseType, NoiseStyleEnum noiseStyle)
-        {
-            NoiseFunction1D result = GetBaseNoiseFunction1D(noiseType);
-            NoiseTransform1D noiseTransform = GetNoiseStyleTransform1D(noiseStyle);
-
-            if(noiseTransform != nullptr)
-            {
-                result = noiseTransform(result);
-            }
-            return result;
-        }
-        NoiseFunction2D GetNoiseFunction2D(NoiseTypeEnum noiseType, NoiseStyleEnum noiseStyle)
-        {
-            NoiseFunction2D result = GetBaseNoiseFunction2D(noiseType);
-            NoiseTransform2D noiseTransform = GetNoiseStyleTransform2D(noiseStyle);
-
-            if(noiseTransform != nullptr)
-            {
-                result = noiseTransform(result);
-            }
-            return result;
-        }
-        NoiseFunction3D GetNoiseFunction3D(NoiseTypeEnum noiseType, NoiseStyleEnum noiseStyle)
-        {
-            NoiseFunction3D result = GetBaseNoiseFunction3D(noiseType);
-            NoiseTransform3D noiseTransform = GetNoiseStyleTransform3D(noiseStyle);
-
-            if(noiseTransform != nullptr)
-            {
-                result = noiseTransform(result);
             }
             return result;
         }
