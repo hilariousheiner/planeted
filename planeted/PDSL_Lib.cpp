@@ -216,6 +216,24 @@ namespace Planeted
             return Value::Null();
         }
 
+        Value builtin_setNormalizeFBM(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        {
+            if(args.size() != 1)
+            {
+                throw std::runtime_error("setNormalizeFBM expects one argument.");
+            }
+
+            if(args[0].GetValueType() == ValueTypeEnum::Bool)
+            {
+                Random::SetNormalizeFBM(args[0].GetBoolValue());
+            }
+            else
+            {
+                throw std::runtime_error("argument passed to setNormalizeFBM must be a bool.");
+            }
+            return Value::Null();
+        }
+
         Value builtin_setWhiteNoiseScale(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 1)
@@ -272,6 +290,7 @@ namespace Planeted
             runtime.InstallBuiltinFunction("setStartFrequency", builtin_setStartFrequency);
             runtime.InstallBuiltinFunction("setLacunarity", builtin_setLacunarity);
             runtime.InstallBuiltinFunction("setPersistence", builtin_setPersistence);
+            runtime.InstallBuiltinFunction("setNormalizeFBM", builtin_setNormalizeFBM);
 
             runtime.InstallBuiltinFunction("displace", builtin_displace);
         }
