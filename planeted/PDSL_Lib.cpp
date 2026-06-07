@@ -234,6 +234,24 @@ namespace Planeted
             return Value::Null();
         }
 
+        Value builtin_setExponent(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        {
+            if(args.size() != 1)
+            {
+                throw std::runtime_error("setExponent expects one argument.");
+            }
+
+            if(args[0].GetValueType() == ValueTypeEnum::Float)
+            {
+                Random::SetExponent(args[0].GetFloatValue());
+            }
+            else
+            {
+                throw std::runtime_error("argument passed to setExponent must be a float.");
+            }
+            return Value::Null();
+        }
+
         Value builtin_setWhiteNoiseScale(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 1)
@@ -291,6 +309,7 @@ namespace Planeted
             runtime.InstallBuiltinFunction("setLacunarity", builtin_setLacunarity);
             runtime.InstallBuiltinFunction("setPersistence", builtin_setPersistence);
             runtime.InstallBuiltinFunction("setNormalizeFBM", builtin_setNormalizeFBM);
+            runtime.InstallBuiltinFunction("setExponent", builtin_setExponent);
 
             runtime.InstallBuiltinFunction("displace", builtin_displace);
         }

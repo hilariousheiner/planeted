@@ -5,12 +5,24 @@ seedNoise("CLOUD");
 m = icosahedron("asteroid");
 m = subdivide(m, 4);
 
-setNoiseType(NOISE_TYPE_PERLIN);
-setNoiseStyle(NOISE_STYLE_RIDGE);
+setNoiseType(NOISE_TYPE_VALUE);
 
-setNumberOfOctaves(4);
-setStartFrequency(0.5);
+setNoiseStyle(NOISE_STYLE_PLAIN);
 setNormalizeFBM(true);
+setNumberOfOctaves(8);
+setLacunarity(1.0);
+setExponent(1.0);
+
+m = displace(m, 0.5);
+
+
+seedNoise("BETTY");
+
+setNoiseStyle(NOISE_STYLE_RIDGE);
+setNumberOfOctaves(2);
+setStartFrequency(4);
+setNormalizeFBM(true);
+setExponent(5.0);
 
 m = displace(m, 0.5);
 
@@ -18,8 +30,7 @@ m = displace(m, 0.5);
 setNoiseType(NOISE_TYPE_WHITE);
 setWhiteNoiseScale(1.0);
 setNumberOfOctaves(1);
-*/
 
 m = displace(m, 0.25);
-
+*/
 return m;
