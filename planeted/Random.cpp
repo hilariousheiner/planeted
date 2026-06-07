@@ -1,6 +1,6 @@
 #include "Random.h"
 
-#include <cmath> //for std::abs
+#include <cmath> //for std::abs and std::pow
 
 namespace Planeted
 {
@@ -14,6 +14,7 @@ namespace Planeted
         static float persistence = 0.5f;
         static float startFrequency = 1.0f;
         static bool normalizeFBM = false;
+        static float exponent = 1.0f;
 
         static float whiteNoiseScale = 100.0f;
 
@@ -481,6 +482,10 @@ namespace Planeted
         {
             Random::normalizeFBM = normalizeFBM;
         }
+        void SetExponent(float exponent)
+        {
+            Random::exponent = exponent;
+        }
 
         float FBM1D(const float &p, NoiseFunction1D noiseFun)
         {
@@ -505,7 +510,7 @@ namespace Planeted
                 result = result / t;
             }
 
-            return result;
+            return std::pow(result, Random::exponent);
         }
         float FBM2D(const Vector2 &p, NoiseFunction2D noiseFun)
         {
@@ -530,7 +535,7 @@ namespace Planeted
                 result = result / t;
             }
 
-            return result;
+            return std::pow(result, Random::exponent);
         }
         float FBM3D(const Vector3 &p, NoiseFunction3D noiseFun)
         {
@@ -555,7 +560,7 @@ namespace Planeted
                 result = result / t;
             }
 
-            return result;
+            return std::powf(result, Random::exponent);
         }
 
         NoiseFunction1D Billow1D(NoiseFunction1D noiseFun)

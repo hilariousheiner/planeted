@@ -8,8 +8,9 @@ m = subdivide(m, 4);
 setNoiseType(NOISE_TYPE_PERLIN);
 setNoiseStyle(NOISE_STYLE_RIDGE);
 
-setNumberOfOctaves(1);
+setNumberOfOctaves(4);
 setStartFrequency(0.5);
+setNormalizeFBM(true);
 
 m = displace(m, 0.5);
 

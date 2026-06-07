@@ -64,6 +64,7 @@ namespace Planeted
         void SetPersistence(float persistence);
 
         void SetNormalizeFBM(bool normalizeFBM);
+        void SetExponent(float exponent);
 
         float FBM1D(const float &p, NoiseFunction1D noiseFun);
         float FBM2D(const Vector2 &p, NoiseFunction2D noiseFun);
