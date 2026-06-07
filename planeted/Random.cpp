@@ -207,6 +207,19 @@ namespace Planeted
             Random::seed64 = StringToSeed64(seed);
         }
 
+        void ResetNoise()
+        {
+            Random::numberOfOctaves = 1;
+            Random::lacunarity = 2.0f;
+            Random::persistence = 0.5f;
+            Random::startFrequency = 1.0f;
+            Random::normalizeFBM = false;
+            Random::exponent = 1.0f;
+
+            Randdom::whiteNoiseScale = 100.0f;
+        }
+
+
         void SetWhiteNoiseScale(float scale)
         {
             Random::whiteNoiseScale = scale;

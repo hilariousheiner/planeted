@@ -40,6 +40,8 @@ namespace Planeted
         void SeedNoise(std::uint32_t seed);
         void SeedNoise(std::string seed);
 
+        void ResetNoise();
+
         void SetWhiteNoiseScale(float scale);
 
         float WhiteNoise1D(const float &p);
