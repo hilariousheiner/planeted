@@ -270,6 +270,12 @@ namespace Planeted
             return Value::Null();
         }
 
+        Value builtin_resetNoise(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        {
+            Random::ResetNoise();
+            return Value::Null();
+        }
+
         Value builtin_displace(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 2)
@@ -301,6 +307,7 @@ namespace Planeted
 
             runtime.InstallBuiltinFunction("setNoiseType", builtin_setNoiseType);
             runtime.InstallBuiltinFunction("setNoiseStyle", builtin_setNoiseStyle);
+            runtime.InstallBuiltinFunction("resetNoise", builtin_resetNoise);
 
             runtime.InstallBuiltinFunction("setWhiteNoiseScale", builtin_setWhiteNoiseScale);
 
