@@ -1,6 +1,7 @@
 #ifndef PLANETED_PRNG_H
 #define PLANETED_PRNG_H
 
+#include <array>
 #include <cmath>
 #include <cstdint>
 #include <string>

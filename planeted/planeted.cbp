@@ -59,6 +59,7 @@
 		<Unit filename="POV.h" />
 		<Unit filename="PPM.cpp" />
 		<Unit filename="PPM.h" />
+		<Unit filename="PRNG.cpp" />
 		<Unit filename="PRNG.h" />
 		<Unit filename="PixelMap.h" />
 		<Unit filename="PlOb.h" />
