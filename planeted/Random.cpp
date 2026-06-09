@@ -6,6 +6,16 @@ namespace Planeted
 {
     namespace Random
     {
+        FBMParameters::FBMParameters()
+        {
+            this->NumberOfOctaves = 1;
+            this->Lacunarity = 2.0f;
+            this->Persistence = 0.5f;
+            this->StartFrequency = 1.0f;
+            this->Normalize = false;
+            this->Exponent = 1.0f;
+        }
+
         static std::uint32_t seed = StringToSeed32("Planeted");
         static std::uint64_t seed64 = StringToSeed64("Planeted");
 
@@ -216,9 +226,8 @@ namespace Planeted
             Random::normalizeFBM = false;
             Random::exponent = 1.0f;
 
-            Randdom::whiteNoiseScale = 100.0f;
+            Random::whiteNoiseScale = 100.0f;
         }
-
 
         void SetWhiteNoiseScale(float scale)
         {
@@ -500,7 +509,7 @@ namespace Planeted
             Random::exponent = exponent;
         }
 
-        float FBM1D(const float &p, NoiseFunction1D noiseFun)
+        float FBM1D(const float &p, const FBMParameters &parameters, NoiseFunction1D noiseFun)
         {
             float result = 0.0f;
 
@@ -525,7 +534,7 @@ namespace Planeted
 
             return std::pow(result, Random::exponent);
         }
-        float FBM2D(const Vector2 &p, NoiseFunction2D noiseFun)
+        float FBM2D(const Vector2 &p, const FBMParameters &parameters, NoiseFunction2D noiseFun)
         {
             float result = 0.0f;
 
@@ -550,7 +559,7 @@ namespace Planeted
 
             return std::pow(result, Random::exponent);
         }
-        float FBM3D(const Vector3 &p, NoiseFunction3D noiseFun)
+        float FBM3D(const Vector3 &p, const FBMParameters &parameters, NoiseFunction3D noiseFun)
         {
             float result = 0.0f;
 

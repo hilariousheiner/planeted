@@ -12,6 +12,8 @@ namespace Planeted
         static Random::NoiseTypeEnum noiseType = Random::NoiseTypeEnum::Value;
         static Random::NoiseStyleEnum noiseStyle = Random::NoiseStyleEnum::Plain;
 
+        static Random::FBMParameters parameters;
+
         Random::NoiseTypeEnum toNoiseType(int type)
         {
             Random::NoiseTypeEnum result = Random::NoiseTypeEnum::Value;
@@ -289,7 +291,7 @@ namespace Planeted
             for(int id = 0; id < m->VertexCount(); ++id)
             {
                 Vector3 *vertex = m->GetVertex(id);
-                float scalar = 1 + a * Random::FBM3D(*vertex, PDSL_Lib::getCurrentNoise());
+                float scalar = 1 + a * Random::FBM3D(*vertex, parameters, PDSL_Lib::getCurrentNoise());
                 *vertex *= scalar;
             }
             m->CalculateNormals(NormalTypeEnum::PerVertex);

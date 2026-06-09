@@ -29,6 +29,18 @@ namespace Planeted
             Ridge = 2
         };
 
+        struct FBMParameters
+        {
+            FBMParameters();
+
+            std::uint32_t NumberOfOctaves;
+            float Lacunarity;
+            float Persistence;
+            float StartFrequency;
+            bool Normalize;
+            float Exponent;
+        };
+
         using NoiseFunction1D = std::function<float(const float&)>;
         using NoiseFunction2D = std::function<float(const Vector2 &p)>;
         using NoiseFunction3D = std::function<float(const Vector3 &p)>;
@@ -68,9 +80,9 @@ namespace Planeted
         void SetNormalizeFBM(bool normalizeFBM);
         void SetExponent(float exponent);
 
-        float FBM1D(const float &p, NoiseFunction1D noiseFun);
-        float FBM2D(const Vector2 &p, NoiseFunction2D noiseFun);
-        float FBM3D(const Vector3 &p, NoiseFunction3D noiseFun);
+        float FBM1D(const float &p, const FBMParameters &parameters, NoiseFunction1D noiseFun);
+        float FBM2D(const Vector2 &p, const FBMParameters &parameters, NoiseFunction2D noiseFun);
+        float FBM3D(const Vector3 &p, const FBMParameters &parameters, NoiseFunction3D noiseFun);
 
         using NoiseTransform1D = std::function<NoiseFunction1D(NoiseFunction1D)>;
         using NoiseTransform2D = std::function<NoiseFunction2D(NoiseFunction2D)>;
