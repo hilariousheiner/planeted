@@ -33,8 +33,6 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="Color.h" />
-		<Unit filename="IcoSphere.cpp" />
-		<Unit filename="IcoSphere.h" />
 		<Unit filename="Icosahedron.cpp" />
 		<Unit filename="Icosahedron.h" />
 		<Unit filename="Math.h" />
@@ -62,7 +60,6 @@
 		<Unit filename="PRNG.cpp" />
 		<Unit filename="PRNG.h" />
 		<Unit filename="PixelMap.h" />
-		<Unit filename="PlOb.h" />
 		<Unit filename="Random.cpp" />
 		<Unit filename="Random.h" />
 		<Unit filename="SCAD.cpp" />
