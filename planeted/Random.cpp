@@ -18,6 +18,12 @@ namespace Planeted
             this->Exponent = 1.0f;
         }
 
+        NoiseParameters::NoiseParameters()
+        {
+            this->seed = StringToSeed32("Planeted");
+            this->WhiteNoiseScale = 100.0f;
+        }
+
         static std::uint32_t seed = StringToSeed32("Planeted");
         static std::uint64_t seed64 = StringToSeed64("Planeted");
 
@@ -236,7 +242,7 @@ namespace Planeted
             Random::whiteNoiseScale = scale;
         }
 
-        float WhiteNoise1D(const float &p)
+        float WhiteNoise1D(const float &p, const NoiseParameters &params)
         {
             int pi = std::floor(p * Random::whiteNoiseScale);
 
@@ -244,7 +250,7 @@ namespace Planeted
 
             return HashToSigned(h);
         }
-        float WhiteNoise2D(const Vector2 &p)
+        float WhiteNoise2D(const Vector2 &p, const NoiseParameters &params)
         {
             int xi = std::floor(p.X * Random::whiteNoiseScale);
             int yi = std::floor(p.Y * Random::whiteNoiseScale);
@@ -253,7 +259,7 @@ namespace Planeted
 
             return HashToSigned(h);
         }
-        float WhiteNoise3D(const Vector3 &p)
+        float WhiteNoise3D(const Vector3 &p, const NoiseParameters &params)
         {
             int xi = std::floor(p.X * Random::whiteNoiseScale);
             int yi = std::floor(p.Y * Random::whiteNoiseScale);
@@ -264,7 +270,7 @@ namespace Planeted
             return HashToSigned(h);
         }
 
-        float ValueNoise1D(const float &p)
+        float ValueNoise1D(const float &p, const NoiseParameters &params)
         {
             int pi = FloorToInt(p);
 
@@ -276,7 +282,7 @@ namespace Planeted
 
             return SmoothStepUnclamped(c0, c1, p - pi);
         }
-        float ValueNoise2D(const Vector2 &p)
+        float ValueNoise2D(const Vector2 &p, const NoiseParameters &params)
         {
             int xi = FloorToInt(p.X);
             int yi = FloorToInt(p.Y);
@@ -300,9 +306,9 @@ namespace Planeted
 
             return SmoothStepUnclamped(u0, u1, ty);
         }
-        float ValueNoise3D(const Vector3 &p)
+        float ValueNoise3D(const Vector3 &p, const NoiseParameters &params)
         {
-             // calculate grid cell corner coordinates:
+            // calculate grid cell corner coordinates:
             int xi = FloorToInt(p.X);
             int yi = FloorToInt(p.Y);
             int zi = FloorToInt(p.Z);
@@ -343,7 +349,7 @@ namespace Planeted
             return SmoothStepUnclamped(v0, v1, tz);
         }
 
-        float PerlinNoise1D(const float &p)
+        float PerlinNoise1D(const float &p, const NoiseParameters &params)
         {
             int pi = FloorToInt(p);
 
@@ -357,7 +363,7 @@ namespace Planeted
 
             return SmoothStepUnclamped5(g0, g1, tp);
         }
-        float PerlinNoise2D(const Vector2 &p)
+        float PerlinNoise2D(const Vector2 &p, const NoiseParameters &params)
         {
             int xi = FloorToInt(p.X);
             int yi = FloorToInt(p.Y);
@@ -381,9 +387,9 @@ namespace Planeted
 
             return SmoothStepUnclamped5(u0, u1, ty);
         }
-        float PerlinNoise3D(const Vector3 &p)
+        float PerlinNoise3D(const Vector3 &p, const NoiseParameters &params)
         {
-             // calculate grid cell corner coordinates:
+            // calculate grid cell corner coordinates:
             int xi = FloorToInt(p.X);
             int yi = FloorToInt(p.Y);
             int zi = FloorToInt(p.Z);
@@ -511,7 +517,7 @@ namespace Planeted
             Random::exponent = exponent;
         }
 
-        float FBM1D(const float &p, const FBMParameters &parameters, NoiseFunction1D noiseFun)
+        float FBM1D(const float &p, const FBMParameters &parameters, const NoiseParameters &noiseParams, NoiseFunction1D noiseFun)
         {
             float result = 0.0f;
 
@@ -522,7 +528,7 @@ namespace Planeted
 
             for(std::uint32_t i = 0; i < Random::numberOfOctaves; ++i)
             {
-                result += amplitude*noiseFun(p*frequency);
+                result += amplitude*noiseFun(p*frequency, noiseParams);
 
                 t += amplitude;
                 frequency *= Random::lacunarity;
@@ -536,7 +542,7 @@ namespace Planeted
 
             return std::pow(result, Random::exponent);
         }
-        float FBM2D(const Vector2 &p, const FBMParameters &parameters, NoiseFunction2D noiseFun)
+        float FBM2D(const Vector2 &p, const FBMParameters &parameters, const NoiseParameters &params, NoiseFunction2D noiseFun)
         {
             float result = 0.0f;
 
@@ -547,7 +553,7 @@ namespace Planeted
 
             for(std::uint32_t i = 0; i < Random::numberOfOctaves; ++i)
             {
-                result += amplitude*noiseFun(p*frequency);
+                result += amplitude*noiseFun(p*frequency, params);
 
                 t += amplitude;
                 frequency *= Random::lacunarity;
@@ -561,7 +567,7 @@ namespace Planeted
 
             return std::pow(result, Random::exponent);
         }
-        float FBM3D(const Vector3 &p, const FBMParameters &parameters, NoiseFunction3D noiseFun)
+        float FBM3D(const Vector3 &p, const FBMParameters &parameters, const NoiseParameters &noiseParams, NoiseFunction3D noiseFun)
         {
             float result = 0.0f;
 
@@ -572,7 +578,7 @@ namespace Planeted
 
             for(std::uint32_t i = 0; i < Random::numberOfOctaves; ++i)
             {
-                result += amplitude*noiseFun(p*frequency);
+                result += amplitude*noiseFun(p*frequency, noiseParams);
 
                 t += amplitude;
                 frequency *= Random::lacunarity;
@@ -589,47 +595,47 @@ namespace Planeted
 
         NoiseFunction1D Billow1D(NoiseFunction1D noiseFun)
         {
-            return [noiseFun](const float &p)
+            return [noiseFun](const float &p, const NoiseParameters &params)
             {
-                return std::abs(noiseFun(p));
+                return std::abs(noiseFun(p, params));
             };
         }
         NoiseFunction2D Billow2D(NoiseFunction2D noiseFun)
         {
-            return [noiseFun](const Vector2 &p)
+            return [noiseFun](const Vector2 &p, const NoiseParameters &params)
             {
-                return std::abs(noiseFun(p));
+                return std::abs(noiseFun(p, params));
             };
         }
         NoiseFunction3D Billow3D(NoiseFunction3D noiseFun)
         {
-            return [noiseFun](const Vector3 &p)
+            return [noiseFun](const Vector3 &p, const NoiseParameters &params)
             {
-                return std::abs(noiseFun(p));
+                return std::abs(noiseFun(p, params));
             };
         }
 
         NoiseFunction1D Ridge1D(NoiseFunction1D noiseFun)
         {
-            return [noiseFun](const float &p)
+            return [noiseFun](const float &p, const NoiseParameters &params)
             {
-                float n = (0.9f - std::abs(noiseFun(p)));
+                float n = (0.9f - std::abs(noiseFun(p, params)));
                 return n*n;
             };
         }
         NoiseFunction2D Ridge2D(NoiseFunction2D noiseFun)
         {
-            return [noiseFun](const Vector2 &p)
+            return [noiseFun](const Vector2 &p, const NoiseParameters &params)
             {
-                float n = (0.9f - std::abs(noiseFun(p)));
+                float n = (0.9f - std::abs(noiseFun(p, params)));
                 return n*n;
             };
         }
         NoiseFunction3D Ridge3D(NoiseFunction3D noiseFun)
         {
-            return [noiseFun](const Vector3 &p)
+            return [noiseFun](const Vector3 &p, const NoiseParameters &params)
             {
-                float n = (0.9f - std::abs(noiseFun(p)));
+                float n = (0.9f - std::abs(noiseFun(p, params)));
                 return n*n;
             };
         }

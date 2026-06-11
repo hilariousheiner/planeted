@@ -41,9 +41,17 @@ namespace Planeted
             float Exponent;
         };
 
-        using NoiseFunction1D = std::function<float(const float&)>;
-        using NoiseFunction2D = std::function<float(const Vector2 &p)>;
-        using NoiseFunction3D = std::function<float(const Vector3 &p)>;
+        struct NoiseParameters
+        {
+            NoiseParameters();
+
+            std::uint32_t seed;
+            float WhiteNoiseScale;
+        };
+
+        using NoiseFunction1D = std::function<float(const float&, const NoiseParameters&)>;
+        using NoiseFunction2D = std::function<float(const Vector2 &p, const NoiseParameters&)>;
+        using NoiseFunction3D = std::function<float(const Vector3 &p, const NoiseParameters&)>;
 
         NoiseFunction1D GetNoiseFunction1D(NoiseTypeEnum noiseType, NoiseStyleEnum noiseStyle);
         NoiseFunction2D GetNoiseFunction2D(NoiseTypeEnum noiseType, NoiseStyleEnum noiseStyle);
@@ -56,17 +64,17 @@ namespace Planeted
 
         void SetWhiteNoiseScale(float scale);
 
-        float WhiteNoise1D(const float &p);
-        float WhiteNoise2D(const Vector2 &p);
-        float WhiteNoise3D(const Vector3 &p);
+        float WhiteNoise1D(const float &p, const NoiseParameters &params);
+        float WhiteNoise2D(const Vector2 &p, const NoiseParameters &params);
+        float WhiteNoise3D(const Vector3 &p, const NoiseParameters &params);
 
-        float ValueNoise1D(const float &p);
-        float ValueNoise2D(const Vector2 &p);
-        float ValueNoise3D(const Vector3 &p);
+        float ValueNoise1D(const float &p, const NoiseParameters &params);
+        float ValueNoise2D(const Vector2 &p, const NoiseParameters &params);
+        float ValueNoise3D(const Vector3 &p, const NoiseParameters &params);
 
-        float PerlinNoise1D(const float &p);
-        float PerlinNoise2D(const Vector2 &p);
-        float PerlinNoise3D(const Vector3 &p);
+        float PerlinNoise1D(const float &p, const NoiseParameters &params);
+        float PerlinNoise2D(const Vector2 &p, const NoiseParameters &params);
+        float PerlinNoise3D(const Vector3 &p, const NoiseParameters &params);
 
         NoiseFunction1D GetBaseNoiseFunction1D(NoiseTypeEnum noiseType);
         NoiseFunction2D GetBaseNoiseFunction2D(NoiseTypeEnum noiseType);
@@ -80,9 +88,9 @@ namespace Planeted
         void SetNormalizeFBM(bool normalizeFBM);
         void SetExponent(float exponent);
 
-        float FBM1D(const float &p, const FBMParameters &parameters, NoiseFunction1D noiseFun);
-        float FBM2D(const Vector2 &p, const FBMParameters &parameters, NoiseFunction2D noiseFun);
-        float FBM3D(const Vector3 &p, const FBMParameters &parameters, NoiseFunction3D noiseFun);
+        float FBM1D(const float &p, const FBMParameters &parameters, const NoiseParameters &noiseParams, NoiseFunction1D noiseFun);
+        float FBM2D(const Vector2 &p, const FBMParameters &parameters, const NoiseParameters &noiseParams, NoiseFunction2D noiseFun);
+        float FBM3D(const Vector3 &p, const FBMParameters &parameters, const NoiseParameters &noiseParams, NoiseFunction3D noiseFun);
 
         using NoiseTransform1D = std::function<NoiseFunction1D(NoiseFunction1D)>;
         using NoiseTransform2D = std::function<NoiseFunction2D(NoiseFunction2D)>;
