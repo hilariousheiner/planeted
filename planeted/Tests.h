@@ -15,13 +15,13 @@ namespace Planeted
         return ToUint8(SignedToUnitRange(noise));
     }
 
-    ColorFunction defaultColorFunction = [](const int x, const int y) { return 0; };
+    static ColorFunction defaultColorFunction = [](const int x, const int y) { return 0; };
 
-    Random::NoiseFunction1D zeroFun1D = [](const float &p, const Random::NoiseParameters&)   { return 0.0f; };
-    Random::NoiseFunction2D zeroFun2D = [](const Vector2 &p, const Random::NoiseParameters&) { return 0.0f; };
-    Random::NoiseFunction3D zeroFun3D = [](const Vector3 &p, const Random::NoiseParameters&) { return 0.0f; };
+    static Random::NoiseFunction1D zeroFun1D = [](const float &p, const Random::NoiseParameters&)   { return 0.0f; };
+    static Random::NoiseFunction2D zeroFun2D = [](const Vector2 &p, const Random::NoiseParameters&) { return 0.0f; };
+    static Random::NoiseFunction3D zeroFun3D = [](const Vector3 &p, const Random::NoiseParameters&) { return 0.0f; };
 
-    ColorFunction ToColorFunction(Random::FBMParameters &fbmParams, Random::NoiseParameters &noiseParams, Random::NoiseFunction1D noiseFun)
+    inline ColorFunction ToColorFunction(Random::FBMParameters &fbmParams, Random::NoiseParameters &noiseParams, Random::NoiseFunction1D noiseFun)
     {
         return [fbmParams, noiseParams, noiseFun](const int x, const int y)
         {
@@ -29,7 +29,7 @@ namespace Planeted
             return NoiseToGrayScale(Random::FBM1D(nx, fbmParams, noiseParams, noiseFun));
         };
     }
-    ColorFunction ToColorFunction(Random::FBMParameters &fbmParams, Random::NoiseParameters &noiseParams, Random::NoiseFunction2D noiseFun)
+    inline ColorFunction ToColorFunction(Random::FBMParameters &fbmParams, Random::NoiseParameters &noiseParams, Random::NoiseFunction2D noiseFun)
     {
         return [fbmParams, noiseParams, noiseFun](const int x, const int y)
         {
@@ -38,7 +38,7 @@ namespace Planeted
             return NoiseToGrayScale(Random::FBM2D({nx, ny}, fbmParams, noiseParams, noiseFun));
         };
     }
-    ColorFunction ToColorFunction(Random::FBMParameters &fbmParams, Random::NoiseParameters noiseParams, Random::NoiseFunction3D noiseFun)
+    inline ColorFunction ToColorFunction(Random::FBMParameters &fbmParams, Random::NoiseParameters noiseParams, Random::NoiseFunction3D noiseFun)
     {
         return [fbmParams, noiseParams, noiseFun](const int x, const int y)
         {
