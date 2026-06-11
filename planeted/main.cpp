@@ -3,7 +3,6 @@
 #include <fstream>
 #include <string>
 #include <unistd.h>
-#include <getopt.h>
 #include <cstdlib>
 
 #include "Icosahedron.h"
@@ -110,43 +109,21 @@ int main(int argc, char **argv)
 
 bool readargs(int argc, char **argv)
 {
-    int opt;
-    bool ifound = false;
-    bool ofound = false;
-
-    while( (opt = getopt(argc, argv, "i:o:")) != -1)
+    if(argc < 2)
     {
-        switch(opt)
-        {
-            case 'i':
-                infile = std::string(optarg);
-                ifound = true;
-                break;
-            case 'o':
-                outfile = splitFilename(optarg);
-                if(outfile.extension == "obj")
-                {
-                    objOutput = true;
-                }
-                else if(outfile.extension== "stl")
-                {
-                    stlOutput = true;
-                }
-                else if(outfile.extension == "scad")
-                {
-                    scadOutput = true;
-                }
-                ofound = true;
-                break;
-            default:
-                break;
-        }
+        return false;
     }
-    return ifound && ofound;
+
+    infile = std::string(argv[1]);
+    outfile = splitFilename((infile));
+    outfile.extension = "obj";
+    objOutput = true;
+
+    return true;
 }
 
 void usage()
 {
-    std::cout << "usage: planeted -i infile -o outfile\n\n";
+    std::cout << "usage: planeted file\n\n";
     std::cout << "\t A cli tool for procedurally creating 3D models of asteroids, moons and minor planets." << std::endl;
 }
