@@ -13,6 +13,7 @@ namespace Planeted
     // d is number of subdivisions
     Mesh *MakeIcosphere(std::string name, int d);
 
+    /*
     class IcoSphere : public PlOb
     {
     public:
@@ -22,6 +23,6 @@ namespace Planeted
         Mesh& GenerateMesh() override;
     private:
         Mesh *mesh;
-    };
+    };*/
 }
 #endif // PLANETED_ICOSPHERE_H

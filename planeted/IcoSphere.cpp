@@ -19,6 +19,7 @@ namespace Planeted
         return result;
     }
 
+    /*
     IcoSphere::IcoSphere(std::string name)
     {
         this->mesh = MakeIcosphere(name, 2);
@@ -32,5 +33,5 @@ namespace Planeted
     Mesh& IcoSphere::GenerateMesh()
     {
         return *(this->mesh);
-    }
+    }*/
 }
