@@ -1,24 +1,13 @@
-#include "Tests.h"
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <string>
-#include <unistd.h>
-#include <cstdlib>
 
-#include "Icosahedron.h"
-#include "Vector3.h"
-#include "Math.h"
-#include "Mesh.h"
-#include "POV.h"
-#include "PPM.h"
-#include "PDSL.h"
-#include "PDSL_Lib.h"
 #include "OBJ.h"
-#include "Color.h"
-#include "PixelMap.h"
+#include "POV.h"
+#include "PDSL_Lib.h"
 #include "SCAD.h"
 #include "STL.h"
-#include "Utils.h"
+#include "Tests.h"
 
 using namespace Planeted;
 
