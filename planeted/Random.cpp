@@ -517,7 +517,7 @@ namespace Planeted
             Random::exponent = exponent;
         }
 
-        float FBM1D(const float &p, const FBMParameters &parameters, const NoiseParameters &noiseParams, NoiseFunction1D noiseFun)
+        float FBM1D(const float &p, const FBMParameters &fbmParams, const NoiseParameters &noiseParams, NoiseFunction1D noiseFun)
         {
             float result = 0.0f;
 
@@ -542,7 +542,7 @@ namespace Planeted
 
             return std::pow(result, Random::exponent);
         }
-        float FBM2D(const Vector2 &p, const FBMParameters &parameters, const NoiseParameters &params, NoiseFunction2D noiseFun)
+        float FBM2D(const Vector2 &p, const FBMParameters &fbmParams, const NoiseParameters &params, NoiseFunction2D noiseFun)
         {
             float result = 0.0f;
 
@@ -567,7 +567,7 @@ namespace Planeted
 
             return std::pow(result, Random::exponent);
         }
-        float FBM3D(const Vector3 &p, const FBMParameters &parameters, const NoiseParameters &noiseParams, NoiseFunction3D noiseFun)
+        float FBM3D(const Vector3 &p, const FBMParameters &fbmParams, const NoiseParameters &noiseParams, NoiseFunction3D noiseFun)
         {
             float result = 0.0f;
 

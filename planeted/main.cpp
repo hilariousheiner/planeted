@@ -100,10 +100,10 @@ int main(int argc, char **argv)
     Random::SetNumberOfOctaves(6);
     Random::SetExponent(10.0f);
 
-    Random::FBMParameters parameters;
+    Random::FBMParameters fbmParams;
     Random::NoiseParameters noiseParams;
 
-    NoiseTest3D(parameters, noiseParams, Random::NoiseTypeEnum::Value, Random::NoiseStyleEnum::Ridge);
+    NoiseTest3D(fbmParams, noiseParams, Random::NoiseTypeEnum::Value, Random::NoiseStyleEnum::Ridge);
 
     return EXIT_SUCCESS;
 }

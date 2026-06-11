@@ -88,9 +88,9 @@ namespace Planeted
         void SetNormalizeFBM(bool normalizeFBM);
         void SetExponent(float exponent);
 
-        float FBM1D(const float &p, const FBMParameters &parameters, const NoiseParameters &noiseParams, NoiseFunction1D noiseFun);
-        float FBM2D(const Vector2 &p, const FBMParameters &parameters, const NoiseParameters &noiseParams, NoiseFunction2D noiseFun);
-        float FBM3D(const Vector3 &p, const FBMParameters &parameters, const NoiseParameters &noiseParams, NoiseFunction3D noiseFun);
+        float FBM1D(const float &p, const FBMParameters &fbmParams, const NoiseParameters &noiseParams, NoiseFunction1D noiseFun);
+        float FBM2D(const Vector2 &p, const FBMParameters &fbmParams, const NoiseParameters &noiseParams, NoiseFunction2D noiseFun);
+        float FBM3D(const Vector3 &p, const FBMParameters &fbmParams, const NoiseParameters &noiseParams, NoiseFunction3D noiseFun);
 
         using NoiseTransform1D = std::function<NoiseFunction1D(NoiseFunction1D)>;
         using NoiseTransform2D = std::function<NoiseFunction2D(NoiseFunction2D)>;

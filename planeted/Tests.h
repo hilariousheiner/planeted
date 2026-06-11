@@ -21,30 +21,30 @@ namespace Planeted
     Random::NoiseFunction2D zeroFun2D = [](const Vector2 &p, const Random::NoiseParameters&) { return 0.0f; };
     Random::NoiseFunction3D zeroFun3D = [](const Vector3 &p, const Random::NoiseParameters&) { return 0.0f; };
 
-    ColorFunction ToColorFunction(Random::FBMParameters &parameters, Random::NoiseParameters &noiseParams, Random::NoiseFunction1D noiseFun)
+    ColorFunction ToColorFunction(Random::FBMParameters &fbmParams, Random::NoiseParameters &noiseParams, Random::NoiseFunction1D noiseFun)
     {
-        return [parameters, noiseParams, noiseFun](const int x, const int y)
+        return [fbmParams, noiseParams, noiseFun](const int x, const int y)
         {
             float nx = x/512.0f -0.5f;
-            return NoiseToGrayScale(Random::FBM1D(nx, parameters, noiseParams, noiseFun));
+            return NoiseToGrayScale(Random::FBM1D(nx, fbmParams, noiseParams, noiseFun));
         };
     }
-    ColorFunction ToColorFunction(Random::FBMParameters &parameters, Random::NoiseParameters &noiseParams, Random::NoiseFunction2D noiseFun)
+    ColorFunction ToColorFunction(Random::FBMParameters &fbmParams, Random::NoiseParameters &noiseParams, Random::NoiseFunction2D noiseFun)
     {
-        return [parameters, noiseParams, noiseFun](const int x, const int y)
+        return [fbmParams, noiseParams, noiseFun](const int x, const int y)
         {
             float nx = x/512.0f -0.5f;
             float ny = y/512.0f -0.5f;
-            return NoiseToGrayScale(Random::FBM2D({nx, ny}, parameters, noiseParams, noiseFun));
+            return NoiseToGrayScale(Random::FBM2D({nx, ny}, fbmParams, noiseParams, noiseFun));
         };
     }
-    ColorFunction ToColorFunction(Random::FBMParameters &parameters, Random::NoiseParameters noiseParams, Random::NoiseFunction3D noiseFun)
+    ColorFunction ToColorFunction(Random::FBMParameters &fbmParams, Random::NoiseParameters noiseParams, Random::NoiseFunction3D noiseFun)
     {
-        return [parameters, noiseParams, noiseFun](const int x, const int y)
+        return [fbmParams, noiseParams, noiseFun](const int x, const int y)
         {
             float nx = x/512.0f -0.5f;
             float ny = y/512.0f -0.5f;
-            return NoiseToGrayScale(Random::FBM3D({nx, ny, 1.0f}, parameters, noiseParams, noiseFun));
+            return NoiseToGrayScale(Random::FBM3D({nx, ny, 1.0f}, fbmParams, noiseParams, noiseFun));
         };
     }
 
@@ -62,7 +62,7 @@ namespace Planeted
         std::cout << "done." << std::endl;
     }
 
-    inline void NoiseTest1D(Random::FBMParameters &parameters, Random::NoiseParameters &noiseParams, Random::NoiseTypeEnum noiseType, Random::NoiseStyleEnum noiseStyle)
+    inline void NoiseTest1D(Random::FBMParameters &fbmParams, Random::NoiseParameters &noiseParams, Random::NoiseTypeEnum noiseType, Random::NoiseStyleEnum noiseStyle)
     {
         Random::NoiseFunction1D noiseFun = Random::GetNoiseFunction1D(noiseType, noiseStyle);
         if(noiseFun == nullptr)
@@ -70,11 +70,11 @@ namespace Planeted
             noiseFun = zeroFun1D;
         }
 
-        ColorFunction fn = ToColorFunction(parameters, noiseParams, noiseFun);
+        ColorFunction fn = ToColorFunction(fbmParams, noiseParams, noiseFun);
 
         noiseTest("Noise 1D", "noiseTest1D.ppm", fn);
     }
-    inline void NoiseTest2D(Random::FBMParameters &parameters, Random::NoiseParameters &noiseParams, Random::NoiseTypeEnum noiseType, Random::NoiseStyleEnum noiseStyle)
+    inline void NoiseTest2D(Random::FBMParameters &fbmParams, Random::NoiseParameters &noiseParams, Random::NoiseTypeEnum noiseType, Random::NoiseStyleEnum noiseStyle)
     {
         Random::NoiseFunction2D noiseFun = Random::GetNoiseFunction2D(noiseType, noiseStyle);
         if(noiseFun == nullptr)
@@ -82,11 +82,11 @@ namespace Planeted
             noiseFun = zeroFun2D;
         }
 
-        ColorFunction fn = ToColorFunction(parameters, noiseParams, noiseFun);
+        ColorFunction fn = ToColorFunction(fbmParams, noiseParams, noiseFun);
 
         noiseTest("Noise 2D", "noiseTest2D.ppm", fn);
     }
-    inline void NoiseTest3D(Random::FBMParameters &parameters, Random::NoiseParameters &noiseParams, Random::NoiseTypeEnum noiseType, Random::NoiseStyleEnum noiseStyle)
+    inline void NoiseTest3D(Random::FBMParameters &fbmParams, Random::NoiseParameters &noiseParams, Random::NoiseTypeEnum noiseType, Random::NoiseStyleEnum noiseStyle)
     {
         Random::NoiseFunction3D noiseFun = zeroFun3D;
 
@@ -96,7 +96,7 @@ namespace Planeted
             noiseFun = zeroFun3D;
         }
 
-        ColorFunction fn = ToColorFunction(parameters, noiseParams, noiseFun);
+        ColorFunction fn = ToColorFunction(fbmParams, noiseParams, noiseFun);
 
         noiseTest("Noise 3D", "noiseTest3D.ppm", fn);
     }
