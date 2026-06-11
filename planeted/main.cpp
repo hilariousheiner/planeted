@@ -20,7 +20,6 @@
 #include "SCAD.h"
 #include "STL.h"
 #include "Utils.h"
-#include "IcoSphere.h"
 
 using namespace Planeted;
 
