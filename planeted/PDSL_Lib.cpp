@@ -4,6 +4,7 @@
 
 #include "MeshSubdivider.h"
 #include "Random.h"
+#include "Tests.h"
 
 namespace Planeted
 {
@@ -300,6 +301,24 @@ namespace Planeted
             return Value(m);
         }
 
+        Value builtin_noiseTest(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        {
+            if(args.size() != 1)
+            {
+                throw std::runtime_error("noiseTest expects one argument.");
+            }
+
+            if(args[0].GetValueType() == ValueTypeEnum::String)
+            {
+                NoiseTest3D(args[0].GetStringValue(), fbmParams, noiseParams, PDSL_Lib::getCurrentNoise());
+            }
+            else
+            {
+                throw std::runtime_error("argument passed to noiseTest must be a string.");
+            }
+            return Value::Null();
+        }
+
         void Load(PDSL_Runtime &runtime)
         {
             runtime.InstallBuiltinFunction("icosahedron", builtin_icosahedron);
@@ -322,6 +341,8 @@ namespace Planeted
             runtime.InstallBuiltinFunction("setExponent", builtin_setExponent);
 
             runtime.InstallBuiltinFunction("displace", builtin_displace);
+
+            runtime.InstallBuiltinFunction("noiseTest", builtin_noiseTest);
         }
     }
 }
