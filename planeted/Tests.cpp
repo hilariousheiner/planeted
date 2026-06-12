@@ -1,5 +1,10 @@
 #include "Tests.h"
 
+#include <fstream>
+
+#include "PixelMap.h"
+#include "PPM.h"
+
 namespace Planeted
 {
     static Random::NoiseFunction1D zeroFun1D = [](const float &p, const Random::NoiseParameters&)   { return 0.0f; };

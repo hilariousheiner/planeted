@@ -1,11 +1,6 @@
 #ifndef PLANETED_TESTS_H
 #define PLANETED_TESTS_H
 
-#include <fstream>
-#include <iostream>
-
-#include "PixelMap.h"
-#include "PPM.h"
 #include "Random.h"
 
 namespace Planeted
