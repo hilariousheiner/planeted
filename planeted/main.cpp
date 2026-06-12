@@ -38,13 +38,9 @@ int main(int argc, char **argv)
 
     if(!runtime.Result.IsNull())
     {
-        std::cout << "program returned: " << runtime.Result.ToString() << "\n";
-
         Mesh &mesh = *runtime.Result.GetMeshValue();
-
-        std::cout << "done (" << mesh.VertexCount() << " vertices and " << mesh.TriangleCount() << " triangles).\n";
-
-        std::cout << "Writing mesh to \"" << outfile << "\"...\n";
+        std::cout << "created mesh: " << mesh.GetName() << " (" << mesh.VertexCount() << " vertices and " << mesh.TriangleCount() << " triangles)\n";
+        std::cout << "writing to \"" << outfile << "\n";
         std::ofstream meshfile(outfile.ToString());
 
         if(objOutput == true)
@@ -67,7 +63,7 @@ int main(int argc, char **argv)
                 {
                     meshfile << POV::MeshToPOVMesh2(mesh);
 
-                    std::cout << "Writing scene file...\n";
+                    std::cout << "writing scene file\n";
                     std::ofstream scenefile("scene.pov");
 
                     scenefile << POV::POVSceneFile(outfile.ToString().c_str());
@@ -79,7 +75,7 @@ int main(int argc, char **argv)
     }
     else
     {
-        std::cout << "no output written.\n";
+        std::cout << "program did not create an output mesh\n";
     }
     std::cout << "done." << std::endl;
 
@@ -104,5 +100,5 @@ bool readargs(int argc, char **argv)
 void usage()
 {
     std::cout << "usage: planeted file\n\n";
-    std::cout << "\t A cli tool for procedurally creating 3D models of asteroids, moons and minor planets." << std::endl;
+    std::cout << "A cli tool and scripting language for procedurally creating 3D models of asteroids, moons and minor planets." << std::endl;
 }
