@@ -83,18 +83,6 @@ int main(int argc, char **argv)
     }
     std::cout << "done." << std::endl;
 
-    Random::SetNormalizeFBM(false);
-    Random::SetStartFrequency(4);
-    Random::SetNumberOfOctaves(6);
-    Random::SetExponent(10.0f);
-
-    Random::FBMParameters fbmParams;
-    Random::NoiseParameters noiseParams;
-
-    Random::NoiseFunction3D noiseFun = Random::GetNoiseFunction3D(Random::NoiseTypeEnum::Value, Random::NoiseStyleEnum::Ridge);
-
-    NoiseTest3D("noiseTest3D", fbmParams, noiseParams, noiseFun);
-
     return EXIT_SUCCESS;
 }
 
