@@ -1,0 +1,13 @@
+import "stdlib.pdsl" 
+
+seedNoise("BETTY");
+
+setNormalizeFBM(false);
+setStartFrequency(4.0);
+setNumberOfOctaves(6);
+setExponent(10.0);
+
+setNoiseType(NOISE_TYPE_VALUE);
+setNoiseStyle(NOISE_STYLE_RIDGE);
+
+noiseTest("test_ValueRidge3D");
