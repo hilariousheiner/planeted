@@ -91,7 +91,9 @@ int main(int argc, char **argv)
     Random::FBMParameters fbmParams;
     Random::NoiseParameters noiseParams;
 
-    NoiseTest3D("noiseTest3D", fbmParams, noiseParams, Random::NoiseTypeEnum::Value, Random::NoiseStyleEnum::Ridge);
+    Random::NoiseFunction3D noiseFun = Random::GetNoiseFunction3D(Random::NoiseTypeEnum::Value, Random::NoiseStyleEnum::Ridge);
+
+    NoiseTest3D("noiseTest3D", fbmParams, noiseParams, noiseFun);
 
     return EXIT_SUCCESS;
 }
