@@ -91,7 +91,7 @@ int main(int argc, char **argv)
     Random::FBMParameters fbmParams;
     Random::NoiseParameters noiseParams;
 
-    NoiseTest3D(fbmParams, noiseParams, Random::NoiseTypeEnum::Value, Random::NoiseStyleEnum::Ridge);
+    NoiseTest3D("noiseTest3D", fbmParams, noiseParams, Random::NoiseTypeEnum::Value, Random::NoiseStyleEnum::Ridge);
 
     return EXIT_SUCCESS;
 }
