@@ -64,6 +64,14 @@ namespace Planeted
         {
             return Random::GetNoiseFunction3D(PDSL_Lib::noiseType, PDSL_Lib::noiseStyle);
         }
+        Random::NoiseFunction2D getCurrentNoise2D()
+        {
+            return Random::GetNoiseFunction2D(PDSL_Lib::noiseType, PDSL_Lib::noiseStyle);
+        }
+        Random::NoiseFunction1D getCurrentNoise1D()
+        {
+            return Random::GetNoiseFunction1D(PDSL_Lib::noiseType, PDSL_Lib::noiseStyle);
+        }
 
         Value builtin_icosahedron(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
@@ -318,6 +326,40 @@ namespace Planeted
             }
             return Value::Null();
         }
+        Value builtin_noiseTest2D(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        {
+            if(args.size() != 1)
+            {
+                throw std::runtime_error("noiseTest2D expects one argument.");
+            }
+
+            if(args[0].GetValueType() == ValueTypeEnum::String)
+            {
+                NoiseTest2D(args[0].GetStringValue(), fbmParams, noiseParams, PDSL_Lib::getCurrentNoise2D());
+            }
+            else
+            {
+                throw std::runtime_error("argument passed to noiseTest2D must be a string.");
+            }
+            return Value::Null();
+        }
+        Value builtin_noiseTest1D(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        {
+            if(args.size() != 1)
+            {
+                throw std::runtime_error("noiseTest1D expects one argument.");
+            }
+
+            if(args[0].GetValueType() == ValueTypeEnum::String)
+            {
+                NoiseTest1D(args[0].GetStringValue(), fbmParams, noiseParams, PDSL_Lib::getCurrentNoise1D());
+            }
+            else
+            {
+                throw std::runtime_error("argument passed to noiseTest1D must be a string.");
+            }
+            return Value::Null();
+        }
 
         void Load(PDSL_Runtime &runtime)
         {
@@ -343,6 +385,8 @@ namespace Planeted
             runtime.InstallBuiltinFunction("displace", builtin_displace);
 
             runtime.InstallBuiltinFunction("noiseTest", builtin_noiseTest);
+            runtime.InstallBuiltinFunction("noiseTest2D", builtin_noiseTest2D);
+            runtime.InstallBuiltinFunction("noiseTest1D", builtin_noiseTest1D);
         }
     }
 }
