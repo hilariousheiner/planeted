@@ -1,0 +1,18 @@
+import "stdlib.pdsl" 
+
+seedNoise("Amphitrite-29");
+
+setNormalizeFBM(false);
+setStartFrequency(1.0);
+setLacunarity(1.0);
+setNumberOfOctaves(6);
+setExponent(1.5);
+
+setNoiseType(NOISE_TYPE_VALUE);
+setNoiseStyle(NOISE_STYLE_BILLOW);
+
+noiseTest("test_ValueBillow3D");
+noiseTest2D("test_ValueBillow2D");
+noiseTest1D("test_ValueBillow1D");
+
+return displace(subdivide(icosahedron("test_ValueBillow"), 4), 0.25);

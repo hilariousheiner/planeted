@@ -1,0 +1,18 @@
+import "stdlib.pdsl" 
+
+seedNoise("11836-Eileen");
+
+setNormalizeFBM(true);
+setStartFrequency(1.0);
+setLacunarity(2.0);
+setNumberOfOctaves(6);
+setExponent(1.0);
+
+setNoiseType(NOISE_TYPE_PERLIN);
+setNoiseStyle(NOISE_STYLE_PLAIN);
+
+noiseTest("test_PerlinPlain3D");
+noiseTest2D("test_PerlinPlain2D");
+noiseTest1D("test_PerlinPlain1D");
+
+return displace(subdivide(icosahedron("test_PerlinPlain"), 4), 0.25);

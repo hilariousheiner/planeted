@@ -1,0 +1,18 @@
+import "stdlib.pdsl" 
+
+seedNoise("Amphitrite-29");
+
+setNormalizeFBM(false);
+setStartFrequency(1.0);
+setLacunarity(1.0);
+setNumberOfOctaves(6);
+setExponent(1.5);
+
+setNoiseType(NOISE_TYPE_PERLIN);
+setNoiseStyle(NOISE_STYLE_BILLOW);
+
+noiseTest("test_PerlinBillow3D");
+noiseTest2D("test_PerlinBillow2D");
+noiseTest1D("test_PerlinBillow1D");
+
+return displace(subdivide(icosahedron("test_PerlinBillow"), 4), 0.25);

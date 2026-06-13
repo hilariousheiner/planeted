@@ -1,0 +1,20 @@
+import "stdlib.pdsl" 
+
+seedNoise("Diomedes-1437");
+
+setNormalizeFBM(false);
+setStartFrequency(1.0);
+setLacunarity(1.0);
+setNumberOfOctaves(1);
+setExponent(1.0);
+
+setWhiteNoiseScale(3.0);
+
+setNoiseType(NOISE_TYPE_WHITE);
+setNoiseStyle(NOISE_STYLE_PLAIN);
+
+noiseTest("test_WhiteNoise3_3D");
+noiseTest2D("test_WhiteNoise3_2D");
+noiseTest1D("test_WhiteNoise3_1D");
+
+return displace(subdivide(icosahedron("test_WhiteNoise_1"), 4), 0.25);

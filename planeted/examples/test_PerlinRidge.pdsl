@@ -1,0 +1,17 @@
+import "stdlib.pdsl" 
+
+seedNoise("NERIXI");
+
+setNormalizeFBM(false);
+setStartFrequency(4.0);
+setNumberOfOctaves(6);
+setExponent(10.0);
+
+setNoiseType(NOISE_TYPE_PERLIN);
+setNoiseStyle(NOISE_STYLE_RIDGE);
+
+noiseTest("test_PerlinRidge3D");
+noiseTest2D("test_PerlinRidge2D");
+noiseTest1D("test_PerlinRidge1D");
+
+return displace(subdivide(icosahedron("test_PerlinRidge"), 4), 0.05);
