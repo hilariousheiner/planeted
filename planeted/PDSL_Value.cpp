@@ -131,7 +131,7 @@ namespace Planeted
             result = "null";
             break;
         case ValueTypeEnum::Tuple:
-            result = "tuple";
+            result = "tuple: " + std::get<Tuple*>(this->data)->ToString();
             break;
         case ValueTypeEnum::Mesh:
             result = "mesh: " + std::get<Mesh*>(this->data)->GetName();

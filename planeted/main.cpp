@@ -87,9 +87,11 @@ int main(int argc, char **argv)
 
     Value v(testTuple);
 
+    std::cout << v.ToString() << "\n";
+
     const Tuple& t = v.GetTupleValue();
 
-    std::cout <<"tuple: " << t.ToString();
+    std::cout << "tuple: " << t.ToString();
 
     return EXIT_SUCCESS;
 }
