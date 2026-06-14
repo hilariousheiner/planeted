@@ -2,6 +2,7 @@
 #define PLANETED_PDSL_VALUE_H
 
 #include <variant>
+#include <vector>
 
 #include "Mesh.h"
 
@@ -14,7 +15,17 @@ namespace Planeted
         Bool,
         String,
         Null,
+        Tuple,
         Mesh
+    };
+
+    class Value;
+
+    struct Tuple
+    {
+        std::vector<Value> elements;
+
+        std::string ToString() const;
     };
 
     class Value
@@ -25,6 +36,8 @@ namespace Planeted
         Value(float floatValue);
         Value(bool boolValue);
         Value(std::string stringValue);
+
+        Value(Tuple *tupleValue);
         Value(Mesh *meshValue);
 
         bool IsNull() const;
@@ -36,13 +49,14 @@ namespace Planeted
         std::string GetStringValue() const;
 
         Mesh *GetMeshValue() const;
+        Tuple &GetTupleValue() const;
 
         ValueTypeEnum GetValueType() const;
 
         std::string ToString() const;
 
     private:
-        std::variant<std::monostate, int, float, bool, std::string, Mesh*> data;
+        std::variant<std::monostate, int, float, bool, std::string, Tuple*, Mesh*> data;
     };
 }
 #endif // PLANETED_PDSL_VALUE_H

@@ -1,7 +1,13 @@
 #include "PDSL_Value.h"
+#include "Utils.h"
 
 namespace Planeted
 {
+    std::string Tuple::ToString() const
+    {
+        return "(" + listToString<Value>(this->elements, [](const Value &v) {return v.ToString();}) + ")";
+    }
+
     Value::Value()
         : data(std::monostate{})
     {}
@@ -24,6 +30,10 @@ namespace Planeted
 
     Value::Value(Mesh *meshValue)
         : data(meshValue)
+    {}
+
+    Value::Value(Tuple *tupleValue)
+        : data(tupleValue)
     {}
 
     bool Value::IsNull() const
@@ -53,6 +63,11 @@ namespace Planeted
     {
         return std::get<std::string>(this->data);
     }
+
+    Tuple &Value::GetTupleValue() const
+    {
+        return *std::get<Tuple*>(this->data);
+    }
     Mesh *Value::GetMeshValue() const
     {
         return std::get<Mesh*>(this->data);
@@ -81,6 +96,12 @@ namespace Planeted
         {
             return ValueTypeEnum::Null;
         }
+
+        if(std::holds_alternative<Tuple*>(this->data))
+        {
+            return ValueTypeEnum::Tuple;
+        }
+
         if(std::holds_alternative<Mesh*>(this->data))
         {
             return ValueTypeEnum::Mesh;
@@ -108,6 +129,9 @@ namespace Planeted
             break;
         case ValueTypeEnum::Null:
             result = "null";
+            break;
+        case ValueTypeEnum::Tuple:
+            result = "tuple";
             break;
         case ValueTypeEnum::Mesh:
             result = "mesh: " + std::get<Mesh*>(this->data)->GetName();
