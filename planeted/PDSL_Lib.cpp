@@ -16,7 +16,7 @@ namespace Planeted
         static Random::FBMParameters fbmParams;
         static Random::NoiseParameters noiseParams;
 
-        Random::NoiseTypeEnum toNoiseType(int type)
+        static Random::NoiseTypeEnum toNoiseType(int type)
         {
             Random::NoiseTypeEnum result = Random::NoiseTypeEnum::Value;
 
@@ -39,7 +39,7 @@ namespace Planeted
             }
             return result;
         }
-        Random::NoiseStyleEnum toNoiseStyle(int style)
+        static Random::NoiseStyleEnum toNoiseStyle(int style)
         {
             Random::NoiseStyleEnum result = Random::NoiseStyleEnum::Plain;
 
@@ -60,20 +60,20 @@ namespace Planeted
             return result;
         }
 
-        Random::NoiseFunction3D getCurrentNoise()
+        static Random::NoiseFunction3D getCurrentNoise()
         {
             return Random::GetNoiseFunction3D(PDSL_Lib::noiseType, PDSL_Lib::noiseStyle);
         }
-        Random::NoiseFunction2D getCurrentNoise2D()
+        static Random::NoiseFunction2D getCurrentNoise2D()
         {
             return Random::GetNoiseFunction2D(PDSL_Lib::noiseType, PDSL_Lib::noiseStyle);
         }
-        Random::NoiseFunction1D getCurrentNoise1D()
+        static Random::NoiseFunction1D getCurrentNoise1D()
         {
             return Random::GetNoiseFunction1D(PDSL_Lib::noiseType, PDSL_Lib::noiseStyle);
         }
 
-        Value builtin_icosahedron(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        static Value builtin_icosahedron(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 1)
             {
@@ -82,7 +82,7 @@ namespace Planeted
             return Value(MakeIcosahedron(args[0].ToString()));
         }
 
-        Value builtin_subdivide(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        static Value builtin_subdivide(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 2)
             {
@@ -106,7 +106,7 @@ namespace Planeted
             return Value(m);
         }
 
-        Value builtin_seedNoise(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        static Value builtin_seedNoise(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 1)
             {
@@ -130,7 +130,7 @@ namespace Planeted
             return Value::Null();
         }
 
-        Value builtin_setNoiseType(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        static Value builtin_setNoiseType(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 1)
             {
@@ -147,7 +147,7 @@ namespace Planeted
             }
             return Value::Null();
         }
-        Value builtin_setNoiseStyle(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        static Value builtin_setNoiseStyle(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 1)
             {
@@ -165,7 +165,7 @@ namespace Planeted
             return Value::Null();
         }
 
-        Value builtin_setNumberOfOctaves(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        static Value builtin_setNumberOfOctaves(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 1)
             {
@@ -178,7 +178,7 @@ namespace Planeted
             }
             return Value::Null();
         }
-        Value builtin_setStartFrequency(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        static Value builtin_setStartFrequency(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 1)
             {
@@ -192,7 +192,7 @@ namespace Planeted
             return Value::Null();
         }
 
-        Value builtin_setLacunarity(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        static Value builtin_setLacunarity(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 1)
             {
@@ -210,7 +210,7 @@ namespace Planeted
             return Value::Null();
         }
 
-        Value builtin_setPersistence(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        static Value builtin_setPersistence(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 1)
             {
@@ -228,7 +228,7 @@ namespace Planeted
             return Value::Null();
         }
 
-        Value builtin_setNormalizeFBM(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        static Value builtin_setNormalizeFBM(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 1)
             {
@@ -246,7 +246,7 @@ namespace Planeted
             return Value::Null();
         }
 
-        Value builtin_setExponent(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        static Value builtin_setExponent(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 1)
             {
@@ -264,7 +264,7 @@ namespace Planeted
             return Value::Null();
         }
 
-        Value builtin_setWhiteNoiseScale(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        static Value builtin_setWhiteNoiseScale(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 1)
             {
@@ -282,13 +282,13 @@ namespace Planeted
             return Value::Null();
         }
 
-        Value builtin_resetNoise(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        static Value builtin_resetNoise(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             Random::ResetNoise();
             return Value::Null();
         }
 
-        Value builtin_displace(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        static Value builtin_displace(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 2)
             {
@@ -309,7 +309,7 @@ namespace Planeted
             return Value(m);
         }
 
-        Value builtin_noiseTest(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        static Value builtin_noiseTest(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 1)
             {
@@ -326,7 +326,7 @@ namespace Planeted
             }
             return Value::Null();
         }
-        Value builtin_noiseTest2D(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        static Value builtin_noiseTest2D(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 1)
             {
@@ -343,7 +343,7 @@ namespace Planeted
             }
             return Value::Null();
         }
-        Value builtin_noiseTest1D(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        static Value builtin_noiseTest1D(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 1)
             {
