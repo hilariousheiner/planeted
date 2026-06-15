@@ -53,6 +53,8 @@ namespace Planeted
             return {TokenTypeEnum::RBrack, "]"};
         case ',':
             return {TokenTypeEnum::Comma, ","};
+        case '-':
+            return {TokenTypeEnum::Minus, "-"};
         default:
             throw std::runtime_error("unexpected character: " + c);
             break;

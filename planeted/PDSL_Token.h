@@ -25,6 +25,7 @@ namespace Planeted
         LBrack,
         RBrack,
         Comma,
+        Minus,
 
         End
     };
@@ -84,6 +85,9 @@ namespace Planeted
             break;
         case TokenTypeEnum::Comma:
             result = ",";
+            break;
+        case TokenTypeEnum::Minus:
+            result = "-";
             break;
         case TokenTypeEnum::End:
             result = "End";
