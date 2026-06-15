@@ -52,6 +52,21 @@ namespace Planeted
         return Value(tupleValue);
     }
 
+    ListExpression::ListExpression(std::vector<std::unique_ptr<Expression>> elements)
+        : elements(std::move(elements))
+    {}
+
+    Value ListExpression::eval(PDSL_Runtime &runtime)
+    {
+        List *listValue = new List();
+
+        for(const auto &expr : this->elements)
+        {
+            listValue->elements.push_back(expr->eval(runtime));
+        }
+        return Value(listValue);
+    }
+
     // Statements:
 
     AssignmentStatement::AssignmentStatement(std::string name, std::unique_ptr<Expression> expression)

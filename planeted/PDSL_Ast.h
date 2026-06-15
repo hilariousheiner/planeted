@@ -53,6 +53,15 @@ namespace Planeted
         std::vector<std::unique_ptr<Expression>> elements;
     };
 
+    struct ListExpression : Expression
+    {
+        ListExpression(std::vector<std::unique_ptr<Expression>> elements);
+
+        Value eval(PDSL_Runtime& runtime) override;
+
+        std::vector<std::unique_ptr<Expression>> elements;
+    };
+
     // Statements:
 
     struct Statement
