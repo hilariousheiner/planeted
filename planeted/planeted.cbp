@@ -44,6 +44,7 @@
 		<Unit filename="OBJ.h" />
 		<Unit filename="PDSL.cpp" />
 		<Unit filename="PDSL.h" />
+		<Unit filename="PDSL_Ast.cpp" />
 		<Unit filename="PDSL_Ast.h" />
 		<Unit filename="PDSL_Lexer.cpp" />
 		<Unit filename="PDSL_Lexer.h" />
