@@ -48,7 +48,7 @@ namespace Planeted
     {
         TupleExpression(std::vector<std::unique_ptr<Expression>> elements);
 
-        Value eval(PDSL_Runtime& runtime) override;
+        Value eval(PDSL_Runtime &runtime) override;
 
         std::vector<std::unique_ptr<Expression>> elements;
     };
@@ -57,9 +57,19 @@ namespace Planeted
     {
         ListExpression(std::vector<std::unique_ptr<Expression>> elements);
 
-        Value eval(PDSL_Runtime& runtime) override;
+        Value eval(PDSL_Runtime &runtime) override;
 
         std::vector<std::unique_ptr<Expression>> elements;
+    };
+
+    struct UnaryExpression : Expression
+    {
+        UnaryExpression(TokenTypeEnum op, std::unique_ptr<Expression> operand);
+
+        Value eval(PDSL_Runtime &runtime) override;
+
+        TokenTypeEnum op;
+        std::unique_ptr<Expression> operand;
     };
 
     // Statements:

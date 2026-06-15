@@ -67,6 +67,26 @@ namespace Planeted
         return Value(listValue);
     }
 
+    UnaryExpression::UnaryExpression(TokenTypeEnum op, std::unique_ptr<Expression> operand)
+        : op(op), operand(std::move(operand))
+    {}
+
+    Value UnaryExpression::eval(PDSL_Runtime &runtime)
+    {
+        Value val = this->operand->eval(runtime);
+        Value result;
+
+        switch(this->op)
+        {
+        case TokenTypeEnum::Minus:
+            result = val.Negate();
+        default:
+            throw std::runtime_error("unknown unary operator");
+            break;
+        }
+        return result;
+    }
+
     // Statements:
 
     AssignmentStatement::AssignmentStatement(std::string name, std::unique_ptr<Expression> expression)
