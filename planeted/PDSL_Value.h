@@ -15,13 +15,22 @@ namespace Planeted
         Bool,
         String,
         Null,
+
         Tuple,
+        List,
         Mesh
     };
 
     class Value;
 
     struct Tuple
+    {
+        std::vector<Value> elements;
+
+        std::string ToString() const;
+    };
+
+    struct List
     {
         std::vector<Value> elements;
 
@@ -38,6 +47,7 @@ namespace Planeted
         Value(std::string stringValue);
 
         Value(Tuple *tupleValue);
+        Value(List *listValue);
         Value(Mesh *meshValue);
 
         bool IsNull() const;
@@ -48,15 +58,16 @@ namespace Planeted
         bool GetBoolValue() const;
         std::string GetStringValue() const;
 
-        Mesh *GetMeshValue() const;
         Tuple &GetTupleValue() const;
+        List &GetListValue() const;
+        Mesh *GetMeshValue() const;
 
         ValueTypeEnum GetValueType() const;
 
         std::string ToString() const;
 
     private:
-        std::variant<std::monostate, int, float, bool, std::string, Tuple*, Mesh*> data;
+        std::variant<std::monostate, int, float, bool, std::string, Tuple*, List*, Mesh*> data;
     };
 }
 #endif // PLANETED_PDSL_VALUE_H

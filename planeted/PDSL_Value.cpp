@@ -8,6 +8,11 @@ namespace Planeted
         return "(" + listToString<Value>(this->elements, [](const Value &v) {return v.ToString();}) + ")";
     }
 
+    std::string List::ToString() const
+    {
+        return "[" + listToString<Value>(this->elements, [](const Value &v) {return v.ToString();}) + "]";
+    }
+
     Value::Value()
         : data(std::monostate{})
     {}
@@ -28,12 +33,16 @@ namespace Planeted
         : data(stringValue)
     {}
 
-    Value::Value(Mesh *meshValue)
-        : data(meshValue)
-    {}
-
     Value::Value(Tuple *tupleValue)
         : data(tupleValue)
+    {}
+
+    Value::Value(List *listValue)
+        : data(listValue)
+    {}
+
+    Value::Value(Mesh *meshValue)
+        : data(meshValue)
     {}
 
     bool Value::IsNull() const
@@ -68,6 +77,10 @@ namespace Planeted
     {
         return *std::get<Tuple*>(this->data);
     }
+    List &Value::GetListValue() const
+    {
+        return *std::get<List*>(this->data);
+    }
     Mesh *Value::GetMeshValue() const
     {
         return std::get<Mesh*>(this->data);
@@ -101,7 +114,10 @@ namespace Planeted
         {
             return ValueTypeEnum::Tuple;
         }
-
+        if(std::holds_alternative<List*>(this->data))
+        {
+            return ValueTypeEnum::List;
+        }
         if(std::holds_alternative<Mesh*>(this->data))
         {
             return ValueTypeEnum::Mesh;
@@ -132,6 +148,9 @@ namespace Planeted
             break;
         case ValueTypeEnum::Tuple:
             result = "tuple: " + std::get<Tuple*>(this->data)->ToString();
+            break;
+        case ValueTypeEnum::List:
+            result = "list: " + std::get<List*>(this->data)->ToString();
             break;
         case ValueTypeEnum::Mesh:
             result = "mesh: " + std::get<Mesh*>(this->data)->GetName();

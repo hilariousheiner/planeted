@@ -79,6 +79,20 @@ int main(int argc, char **argv)
     }
     std::cout << "done." << std::endl;
 
+    // List test:
+    List *testList = new List();
+    testList->elements.push_back(Value(1));
+    testList->elements.push_back(Value(2));
+    testList->elements.push_back(Value(3));
+
+    Value v(testList);
+
+    std::cout << v.ToString() << "\n";
+
+    const List& l = v.GetListValue();
+
+    std::cout << l.ToString();
+
     return EXIT_SUCCESS;
 }
 
