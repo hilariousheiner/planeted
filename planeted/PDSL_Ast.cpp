@@ -2,6 +2,8 @@
 
 namespace Planeted
 {
+    // Expressions:
+
     ConstantExpression::ConstantExpression(Value value)
         : value(value)
     {}
@@ -28,13 +30,29 @@ namespace Planeted
     {
         std::vector<Value> evaluatedArgs;
 
-        for(const auto & arg : this->args)
+        for(const auto &arg : this->args)
         {
             evaluatedArgs.push_back(arg->eval(runtime));
         }
         return runtime.CallFunction(this->name, evaluatedArgs);
     }
 
+    TupleExpression::TupleExpression(std::vector<std::unique_ptr<Expression>> elements)
+        : elements(std::move(elements))
+    {}
+
+    Value TupleExpression::eval(PDSL_Runtime &runtime)
+    {
+        Tuple *tupleValue = new Tuple();
+
+        for(const auto &expr : this->elements)
+        {
+            tupleValue->elements.push_back(expr->eval(runtime));
+        }
+        return Value(tupleValue);
+    }
+
+    // Statements:
 
     AssignmentStatement::AssignmentStatement(std::string name, std::unique_ptr<Expression> expression)
         : name(name), expression(std::move(expression))

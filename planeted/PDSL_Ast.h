@@ -7,12 +7,7 @@
 
 namespace Planeted
 {
-    struct Statement
-    {
-        virtual ~Statement() {}
-
-        virtual void execute(PDSL_Runtime &runtime) = 0;
-    };
+    // Expressions:
 
     struct Expression
     {
@@ -47,6 +42,24 @@ namespace Planeted
 
         std::string name;
         std::vector<std::unique_ptr<Expression>> args;
+    };
+
+    struct TupleExpression : Expression
+    {
+        TupleExpression(std::vector<std::unique_ptr<Expression>> elements);
+
+        Value eval(PDSL_Runtime& runtime) override;
+
+        std::vector<std::unique_ptr<Expression>> elements;
+    };
+
+    // Statements:
+
+    struct Statement
+    {
+        virtual ~Statement() {}
+
+        virtual void execute(PDSL_Runtime &runtime) = 0;
     };
 
     struct AssignmentStatement : Statement
@@ -85,6 +98,5 @@ namespace Planeted
 
         std::unique_ptr<Expression> expression;
     };
-
 }
 #endif // PLANETED_PDSL_AST_H
