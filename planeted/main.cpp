@@ -36,9 +36,9 @@ int main(int argc, char **argv)
 
     PDSL_RunFile(infile, runtime);
 
-    if(runtime.Result.GetValueType() == ValueTypeEnum::Mesh)
+    if(runtime.Result.GetValueType() == ValueTypeEnum::Mesh || runtime.Result.GetValueType() == ValueTypeEnum::Tuple)
     {
-        Mesh &mesh = *runtime.Result.GetMeshValue();
+        Mesh &mesh = *runtime.Result.ToMesh();
         std::cout << "created mesh: " << mesh.GetName() << " (" << mesh.VertexCount() << " vertices and " << mesh.TriangleCount() << " triangles)\n";
         std::cout << "writing to \"" << outfile << "\n";
         std::ofstream meshfile(outfile.ToString());
