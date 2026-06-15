@@ -40,6 +40,8 @@ namespace Planeted
 
         std::unique_ptr<TupleExpression> parseTupleExpression();
 
+        std::unique_ptr<ListExpression> parseListExpression();
+
         void advance();
 
         Token expect(TokenTypeEnum tokenType);
