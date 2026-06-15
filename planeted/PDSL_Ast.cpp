@@ -2,5 +2,73 @@
 
 namespace Planeted
 {
+    ConstantExpression::ConstantExpression(Value value)
+        : value(value)
+    {}
 
+    Value ConstantExpression::eval(PDSL_Runtime &runtime)
+    {
+        return value;
+    }
+
+    VariableExpression::VariableExpression(std::string identifier)
+        : Identifier(identifier)
+    {}
+
+    Value VariableExpression::eval(PDSL_Runtime &runtime)
+    {
+        return runtime.GetVariableValue(this->Identifier);
+    }
+
+    CallExpression::CallExpression(std::string name, std::vector<std::unique_ptr<Expression>> args)
+        : name(name), args(std::move(args))
+    {}
+
+    Value CallExpression::eval(PDSL_Runtime &runtime)
+    {
+        std::vector<Value> evaluatedArgs;
+
+        for(const auto & arg : this->args)
+        {
+            evaluatedArgs.push_back(arg->eval(runtime));
+        }
+        return runtime.CallFunction(this->name, evaluatedArgs);
+    }
+
+
+    AssignmentStatement::AssignmentStatement(std::string name, std::unique_ptr<Expression> expression)
+        : name(name), expression(std::move(expression))
+    {}
+
+    void AssignmentStatement::execute(PDSL_Runtime &runtime)
+    {
+        runtime.SetVariableValue(this->name, this->expression->eval(runtime));
+    }
+
+    ImportStatement::ImportStatement(std::string path)
+        : path(path)
+    {}
+
+    void ImportStatement::execute(PDSL_Runtime &runtime)
+    {
+        PDSL_Run(ReadFile(this->path), runtime);
+    }
+
+    ReturnStatement::ReturnStatement(std::unique_ptr<Expression> expression)
+        : expression(std::move(expression))
+    {}
+
+    void ReturnStatement::execute(PDSL_Runtime &runtime)
+    {
+        runtime.Result = this->expression->eval(runtime);
+    }
+
+    ExpressionStatement::ExpressionStatement(std::unique_ptr<Expression> expression)
+        : expression(std::move(expression))
+    {}
+
+    void ExpressionStatement::execute(PDSL_Runtime &runtime)
+    {
+        this->expression->eval(runtime);
+    }
 }
