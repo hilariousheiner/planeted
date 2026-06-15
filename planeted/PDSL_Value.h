@@ -64,6 +64,12 @@ namespace Planeted
 
         ValueTypeEnum GetValueType() const;
 
+        // Conversions:
+        float ToFloat() const;
+        Mesh *ToMesh() const;
+        TriangleIndices ToTriangle() const;
+        Vector3 ToVector3() const;
+
         Value Negate() const;
         std::string ToString() const;
 

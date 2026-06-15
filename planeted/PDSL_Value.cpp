@@ -125,6 +125,88 @@ namespace Planeted
         return ValueTypeEnum::Null; // Todo: maybe throw an exception here?
     }
 
+    // Conversions:
+    float Value::ToFloat() const
+    {
+        float result;
+        switch(this->GetValueType())
+        {
+        case ValueTypeEnum::Int:
+            result = static_cast<float>(this->GetIntValue());
+            break;
+        case ValueTypeEnum::Float:
+            result = this->GetFloatValue();
+            break;
+        default:
+            throw std::runtime_error("cannot convert value to float.");
+            break;
+        }
+        return result;
+    }
+
+    Mesh *Value::ToMesh() const
+    {
+        if(this->GetValueType() == ValueTypeEnum::Mesh)
+        {
+            return this->GetMeshValue();
+        }
+        if(this->GetValueType() == ValueTypeEnum::Tuple)
+        {
+            const Tuple &t = this->GetTupleValue();
+            if(t.elements.size() == 2)
+            {
+                if(t.elements[0].GetValueType() == ValueTypeEnum::List && t.elements[1].GetValueType() == ValueTypeEnum::List)
+                {
+                    const List &vertexList = t.elements[0].GetListValue();
+                    const List &triangleList = t.elements[1].GetListValue();
+
+                    Mesh *mesh = new Mesh();
+
+                    for(const Value &v : vertexList.elements)
+                    {
+                        Vector3 vertex = v.ToVector3();
+                        mesh->AddVertex(vertex.X, vertex.Y, vertex.Z);
+                    }
+                    for(const Value &t : triangleList.elements)
+                    {
+                        TriangleIndices tri = t.ToTriangle();
+                        mesh->AddTriangle(tri.V0, tri.V1, tri.V2);
+                    }
+                    return mesh;
+                }
+            }
+        }
+        throw std::runtime_error("mesh must be a pair (vertexList, triangleList).");
+    }
+    TriangleIndices Value::ToTriangle() const
+    {
+        if(this->GetValueType() == ValueTypeEnum::Tuple)
+        {
+            const Tuple &t = this->GetTupleValue();
+
+            if(t.elements.size() != 3)
+            {
+                throw std::runtime_error("triangle tuple must have 3 elements.");
+            }
+            return TriangleIndices {t.elements[0].GetIntValue(), t.elements[1].GetIntValue(), t.elements[2].GetIntValue()};
+        }
+        throw std::runtime_error("triangle must be an integer tuple.");
+    }
+    Vector3 Value::ToVector3() const
+    {
+        if(this->GetValueType() == ValueTypeEnum::Tuple)
+        {
+            const Tuple &t = this->GetTupleValue();
+
+            if(t.elements.size() != 3)
+            {
+                throw std::runtime_error("vector must have 3 elements.");
+            }
+            return Vector3(t.elements[0].ToFloat(), t.elements[1].ToFloat(), t.elements[2].ToFloat());
+        }
+        throw std::runtime_error("vector must be a float tuple.");
+    }
+
     Value Value::Negate() const
     {
         Value result;
@@ -138,7 +220,7 @@ namespace Planeted
             result = Value(-this->GetIntValue());
             break;
         default:
-            throw std::runtime_error("cannot negate value");
+            throw std::runtime_error("cannot negate value.");
             break;
         }
         return result;
