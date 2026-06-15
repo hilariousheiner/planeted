@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 
     PDSL_RunFile(infile, runtime);
 
-    if(!runtime.Result.IsNull())
+    if(runtime.Result.GetValueType() == ValueTypeEnum::Mesh)
     {
         Mesh &mesh = *runtime.Result.GetMeshValue();
         std::cout << "created mesh: " << mesh.GetName() << " (" << mesh.VertexCount() << " vertices and " << mesh.TriangleCount() << " triangles)\n";
