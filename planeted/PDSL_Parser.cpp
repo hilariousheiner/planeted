@@ -112,6 +112,10 @@ namespace Planeted
             this->advance();
             return std::make_unique<VariableExpression>(identifier);
         }
+        if(this->current.type == TokenTypeEnum::LParen)
+        {
+            return this->parseTupleExpression();
+        }
         return this->parseLiteral();
     }
 
@@ -174,6 +178,32 @@ namespace Planeted
 
         this->expect(TokenTypeEnum::RParen);
         return std::make_unique<CallExpression>(name, std::move(args));
+    }
+
+    std::unique_ptr<TupleExpression> Parser::parseTupleExpression()
+    {
+        // (
+        this->expect(TokenTypeEnum::LParen);
+
+        std::vector<std::unique_ptr<Expression>> args;
+
+        if(this->current.type != TokenTypeEnum::RParen)
+        {
+            while(true)
+            {
+                args.push_back(this->parseExpression());
+                if(this->current.type == TokenTypeEnum::Comma)
+                {
+                    this->advance();
+                    continue;
+                }
+                break;
+            }
+        }
+        // )
+
+        this->expect(TokenTypeEnum::RParen);
+        return std::make_unique<TupleExpression>(std::move(args));
     }
 
     void Parser::advance()
