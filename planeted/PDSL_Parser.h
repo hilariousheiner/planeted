@@ -34,6 +34,10 @@ namespace Planeted
 
         std::unique_ptr<Expression> parseExpression();
 
+        std::unique_ptr<Expression> parseUnaryExpression();
+
+        std::unique_ptr<Expression> parsePrimaryExpression();
+
         std::unique_ptr<ConstantExpression> parseLiteral();
 
         std::unique_ptr<CallExpression> parseCallExpression();

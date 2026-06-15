@@ -102,6 +102,23 @@ namespace Planeted
 
     std::unique_ptr<Expression> Parser::parseExpression()
     {
+        return this->parseUnaryExpression();
+    }
+
+    std::unique_ptr<Expression> Parser::parseUnaryExpression()
+    {
+        if(this->current.type == TokenTypeEnum::Minus)
+        {
+            this->advance();
+
+            std::unique_ptr<Expression> operand = this->parseUnaryExpression();
+            return std::make_unique<UnaryExpression>(TokenTypeEnum::Minus, std::move(operand));
+        }
+        return this->parsePrimaryExpression();
+    }
+
+    std::unique_ptr<Expression> Parser::parsePrimaryExpression()
+    {
         if(this->current.type == TokenTypeEnum::Identifier)
         {
             if(this->next.type == TokenTypeEnum::LParen)
