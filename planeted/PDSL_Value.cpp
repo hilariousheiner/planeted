@@ -125,6 +125,26 @@ namespace Planeted
         return ValueTypeEnum::Null; // Todo: maybe throw an exception here?
     }
 
+    Value Value::Negate() const
+    {
+        Value result;
+
+        switch(this->GetValueType())
+        {
+        case ValueTypeEnum::Float:
+            result = Value(-this->GetFloatValue());
+            break;
+        case ValueTypeEnum::Int:
+            result = Value(-this->GetIntValue());
+            break;
+        default:
+            throw std::runtime_error("cannot negate value");
+            break;
+        }
+        return result;
+    }
+
+
     std::string Value::ToString() const
     {
         std::string result = "";

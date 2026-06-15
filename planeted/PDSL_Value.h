@@ -64,6 +64,7 @@ namespace Planeted
 
         ValueTypeEnum GetValueType() const;
 
+        Value Negate() const;
         std::string ToString() const;
 
     private:
