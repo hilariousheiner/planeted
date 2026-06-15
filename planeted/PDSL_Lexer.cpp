@@ -47,6 +47,10 @@ namespace Planeted
             return {TokenTypeEnum::LParen, "("};
         case ')':
             return {TokenTypeEnum::RParen, ")"};
+        case '[':
+            return {TokenTypeEnum::LBrack, "["};
+        case ']':
+            return {TokenTypeEnum::RBrack, "]"};
         case ',':
             return {TokenTypeEnum::Comma, ","};
         default:

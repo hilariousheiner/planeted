@@ -22,6 +22,8 @@ namespace Planeted
         Semicolon,
         LParen,
         RParen,
+        LBrack,
+        RBrack,
         Comma,
 
         End
@@ -73,6 +75,12 @@ namespace Planeted
             break;
         case TokenTypeEnum::RParen:
             result = ")";
+            break;
+        case TokenTypeEnum::LBrack:
+            result = "[";
+            break;
+        case TokenTypeEnum::RBrack:
+            result = "]";
             break;
         case TokenTypeEnum::Comma:
             result = ",";
