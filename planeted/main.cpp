@@ -79,20 +79,6 @@ int main(int argc, char **argv)
     }
     std::cout << "done." << std::endl;
 
-    // Tuple test:
-    Tuple *testTuple = new Tuple();
-    testTuple->elements.push_back(Value(1));
-    testTuple->elements.push_back(Value(2));
-    testTuple->elements.push_back(Value(3));
-
-    Value v(testTuple);
-
-    std::cout << v.ToString() << "\n";
-
-    const Tuple& t = v.GetTupleValue();
-
-    std::cout << "tuple: " << t.ToString();
-
     return EXIT_SUCCESS;
 }
 
