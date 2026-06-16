@@ -25,92 +25,26 @@ namespace Planeted
 
     using BuiltinFunction = std::function<Value(PDSL_Runtime&, const std::vector<Value>&)>;
 
+    void PDSL_Run(const std::string &code, PDSL_Runtime &runtime);
+    void PDSL_RunFile(const std::string &filename, PDSL_Runtime &runtime);
+
     struct PDSL_Runtime
     {
+        PDSL_Runtime();
+
+        Value GetVariableValue(const std::string &name) const;
+        void SetVariableValue(std::string name, Value value);
+
+        void InstallBuiltinFunction(std::string name, BuiltinFunction fn);
+        Value CallFunction(std::string &name, std::vector<Value> &args);
+
+        void DumpEnvironment();
+
         std::unordered_map<std::string, Value> Environment;
         std::unordered_map<std::string, BuiltinFunction> BuiltinFunctionsTable;
 
         Value Result;
         bool DebugFlag = false;
-
-        PDSL_Runtime()
-        {
-            this->InstallBuiltinFunction("setDebugFlag",
-                [](PDSL_Runtime &runtime, const std::vector<Value> &args)
-            {
-                if(args.size() != 1)
-                {
-                    throw std::runtime_error("setDebugFlag expects one argument.");
-                }
-                runtime.DebugFlag = args[0].GetBoolValue();
-                return Value::Null();
-            });
-
-            this->InstallBuiltinFunction("log",
-                [](PDSL_Runtime &runtime, const std::vector<Value> &args)
-            {
-                if(args.size() != 1)
-                {
-                    throw std::runtime_error("log expects exactly one argument.");
-                }
-                std::cout << args[0].ToString() << "\n";
-                return Value::Null();
-            });
-        }
-
-        Value GetVariableValue(const std::string &name) const
-        {
-            std::unordered_map<std::string, Value>::const_iterator it = this->Environment.find(name);
-            if(it == this->Environment.end())
-            {
-                throw std::runtime_error("Undefined variable: " + name);
-            }
-            return it->second;
-        }
-
-        void SetVariableValue(std::string name, Value value)
-        {
-            this->Environment[name] = value;
-        }
-
-        Value CallFunction(std::string &name, std::vector<Value> &args)
-        {
-            auto it = this->BuiltinFunctionsTable.find(name);
-            if(it == this->BuiltinFunctionsTable.end())
-            {
-                throw std::runtime_error("Unknown function: " + name);
-            }
-
-            return it->second(*this, args);
-        }
-
-        void InstallBuiltinFunction(std::string name, BuiltinFunction fn)
-        {
-            this->BuiltinFunctionsTable[name] = fn;
-        }
-
-        void DumpEnvironment()
-        {
-            std::cout << "environment: \n";
-            for(auto &v : this->Environment)
-            {
-                std::cout << v.first << "\n";
-            }
-        }
     };
-
-    void PDSL_Run(const std::string &filename, PDSL_Runtime &runtime);
-
-    inline void PDSL_RunFile(const std::string &filename, PDSL_Runtime &runtime)
-    {
-        std::cout << "running file: " << filename << "\n";
-
-        PDSL_Run(ReadFile(filename), runtime);
-
-        if(runtime.DebugFlag)
-        {
-            runtime.DumpEnvironment();
-        }
-    }
 }
 #endif
