@@ -28,6 +28,8 @@ namespace Planeted
     void PDSL_Run(const std::string &code, PDSL_Runtime &runtime);
     void PDSL_RunFile(const std::string &filename, PDSL_Runtime &runtime);
 
+    Value PDSL_Load(const std::string &filename);
+
     struct PDSL_Runtime
     {
         PDSL_Runtime();

@@ -30,15 +30,11 @@ int main(int argc, char **argv)
         return EXIT_FAILURE; //error;
     }
 
-    PDSL_Runtime runtime;
+    Value result = PDSL_Load(infile);
 
-    PDSL_Lib::Load(runtime);
-
-    PDSL_RunFile(infile, runtime);
-
-    if(runtime.Result.GetValueType() == ValueTypeEnum::Mesh || runtime.Result.GetValueType() == ValueTypeEnum::Tuple)
+    if(result.GetValueType() == ValueTypeEnum::Mesh || result.GetValueType() == ValueTypeEnum::Tuple)
     {
-        Mesh &mesh = *runtime.Result.ToMesh();
+        Mesh &mesh = *result.ToMesh();
         std::cout << "created mesh: " << mesh.GetName() << " (" << mesh.VertexCount() << " vertices and " << mesh.TriangleCount() << " triangles)\n";
         std::cout << "writing to \"" << outfile << "\n";
         std::ofstream meshfile(outfile.ToString());

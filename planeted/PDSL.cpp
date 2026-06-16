@@ -2,6 +2,7 @@
 
 #include <memory>
 
+#include "PDSL_Lib.h"
 #include "PDSL_Parser.h"
 
 namespace Planeted
@@ -95,5 +96,16 @@ namespace Planeted
         {
             runtime.DumpEnvironment();
         }
+    }
+
+    Value PDSL_Load(const std::string &filename)
+    {
+        PDSL_Runtime runtime;
+
+        PDSL_Lib::Load(runtime);
+
+        PDSL_RunFile(filename, runtime);
+
+        return runtime.Result;
     }
 }
