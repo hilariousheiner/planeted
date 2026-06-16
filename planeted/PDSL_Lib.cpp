@@ -89,7 +89,7 @@ namespace Planeted
                 throw std::runtime_error("subdivide expects two arguments.");
             }
 
-            Mesh *m = args[0].GetMeshValue();
+            Mesh *m = args[0].ToMesh();
             int d = args[1].GetIntValue();
 
             MeshSubdivider subdivider(m);
@@ -295,7 +295,7 @@ namespace Planeted
                 throw std::runtime_error("displace expects two arguments.");
             }
 
-            Mesh *m = args[0].GetMeshValue();
+            Mesh *m = args[0].ToMesh();
             float a = args[1].GetFloatValue();
 
             for(int id = 0; id < m->VertexCount(); ++id)
