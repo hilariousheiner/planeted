@@ -14,4 +14,4 @@ noiseTest("test_ValueRidge3D");
 noiseTest2D("test_ValueRidge2D");
 noiseTest1D("test_ValueRidge1D");
 
-return displace(subdivide(icosahedron("test_ValueRidge"), 4), 0.05);
+return displace(subdivide(load("icosahedron.pdsl"), 4), 0.05);

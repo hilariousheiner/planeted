@@ -15,4 +15,4 @@ noiseTest("test_ValuePlain3D");
 noiseTest2D("test_ValuePlain2D");
 noiseTest1D("test_ValuePlain1D");
 
-return displace(subdivide(icosahedron("test_ValuePlain"), 4), 1.0);
+return displace(subdivide(load("icosahedron.pdsl"), 4), 1.0);

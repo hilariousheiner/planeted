@@ -73,15 +73,6 @@ namespace Planeted
             return Random::GetNoiseFunction1D(PDSL_Lib::noiseType, PDSL_Lib::noiseStyle);
         }
 
-        static Value builtin_icosahedron(PDSL_Runtime &runtime, const std::vector<Value> &args)
-        {
-            if(args.size() != 1)
-            {
-                throw std::runtime_error("icosahedron expects exactly one argument.");
-            }
-            return Value(MakeIcosahedron(args[0].ToString()));
-        }
-
         static Value builtin_subdivide(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 2)
@@ -363,8 +354,6 @@ namespace Planeted
 
         void Load(PDSL_Runtime &runtime)
         {
-            runtime.InstallBuiltinFunction("icosahedron", builtin_icosahedron);
-
             runtime.InstallBuiltinFunction("subdivide", builtin_subdivide);
 
             runtime.InstallBuiltinFunction("seedNoise", builtin_seedNoise);

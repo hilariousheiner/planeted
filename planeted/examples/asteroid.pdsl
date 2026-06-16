@@ -2,7 +2,7 @@ import "stdlib.pdsl"
 
 seedNoise("CLOUD");
 
-m = icosahedron("asteroid");
+m = load("icosahedron.pdsl");
 m = subdivide(m, 4);
 
 setNoiseType(NOISE_TYPE_VALUE);
