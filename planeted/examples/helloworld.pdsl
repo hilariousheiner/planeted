@@ -1,1 +1,4 @@
-log("hello, world");
+setDebugFlag(true);
+
+text = "hello, world!";
+log(text);
