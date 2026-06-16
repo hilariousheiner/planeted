@@ -25,11 +25,20 @@ namespace Planeted
         std::cout << args[0].ToString() << "\n";
         return Value::Null();
     }
+    static Value builtin_load(PDSL_Runtime &runtime, const std::vector<Value> &args)
+    {
+        if(args.size() != 1)
+        {
+            throw std::runtime_error("load expects exactly one argument.");
+        }
+        return PDSL_Load(args[0].ToString());
+    }
 
     PDSL_Runtime::PDSL_Runtime()
     {
         this->InstallBuiltinFunction("setDebugFlag", builtin_setDebugFlag);
         this->InstallBuiltinFunction("log", builtin_log);
+        this->InstallBuiltinFunction("load", builtin_load);
     }
 
     Value PDSL_Runtime::GetVariableValue(const std::string &name) const
