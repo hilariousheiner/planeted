@@ -33,8 +33,6 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="Color.h" />
-		<Unit filename="Icosahedron.cpp" />
-		<Unit filename="Icosahedron.h" />
 		<Unit filename="Math.h" />
 		<Unit filename="Mesh.cpp" />
 		<Unit filename="Mesh.h" />

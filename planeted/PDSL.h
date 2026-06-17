@@ -8,7 +8,6 @@
 #include <unordered_map>
 #include <vector>
 
-#include "Icosahedron.h"
 #include "Utils.h"
 
 #include "PDSL_Lexer.h"
