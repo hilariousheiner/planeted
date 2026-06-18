@@ -73,30 +73,6 @@ namespace Planeted
             return Random::GetNoiseFunction1D(PDSL_Lib::noiseType, PDSL_Lib::noiseStyle);
         }
 
-        static Value builtin_subdivide(PDSL_Runtime &runtime, const std::vector<Value> &args)
-        {
-            if(args.size() != 2)
-            {
-                throw std::runtime_error("subdivide expects two arguments.");
-            }
-
-            Mesh *m = args[0].ToMesh();
-            int d = args[1].GetIntValue();
-
-            MeshSubdivider subdivider(m);
-
-            int i = 0;
-            while(i < d)
-            {
-                subdivider.Subdivide();
-                ++i;
-            }
-
-            m->ProjectToUnitSphere();
-
-            return Value(m);
-        }
-
         static Value builtin_seedNoise(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 1)
@@ -279,27 +255,6 @@ namespace Planeted
             return Value::Null();
         }
 
-        static Value builtin_displace(PDSL_Runtime &runtime, const std::vector<Value> &args)
-        {
-            if(args.size() != 2)
-            {
-                throw std::runtime_error("displace expects two arguments.");
-            }
-
-            Mesh *m = args[0].ToMesh();
-            float a = args[1].GetFloatValue();
-
-            for(int id = 0; id < m->VertexCount(); ++id)
-            {
-                Vector3 *vertex = m->GetVertex(id);
-                float scalar = 1 + a * Random::FBM3D(*vertex, fbmParams, noiseParams, PDSL_Lib::getCurrentNoise());
-                *vertex *= scalar;
-            }
-            m->CalculateNormals(NormalTypeEnum::PerVertex);
-
-            return Value(m);
-        }
-
         static Value builtin_noiseTest(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 1)
@@ -352,10 +307,61 @@ namespace Planeted
             return Value::Null();
         }
 
+        static Value builtin_subdivide(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        {
+            if(args.size() != 2)
+            {
+                throw std::runtime_error("subdivide expects two arguments.");
+            }
+
+            Mesh *m = args[0].ToMesh();
+            int d = args[1].GetIntValue();
+
+            MeshSubdivider subdivider(m);
+
+            int i = 0;
+            while(i < d)
+            {
+                subdivider.Subdivide();
+                ++i;
+            }
+            return Value(m);
+        }
+        static Value builtin_projectToUnitSphere(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        {
+            if(args.size() != 1)
+            {
+                throw std::runtime_error("projectToUnitSphere expects an argument.");
+            }
+
+            Mesh *m = args[0].ToMesh();
+            m->ProjectToUnitSphere();
+
+            return Value(m);
+        }
+        static Value builtin_displace(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        {
+            if(args.size() != 2)
+            {
+                throw std::runtime_error("displace expects two arguments.");
+            }
+
+            Mesh *m = args[0].ToMesh();
+            float a = args[1].GetFloatValue();
+
+            for(int id = 0; id < m->VertexCount(); ++id)
+            {
+                Vector3 *vertex = m->GetVertex(id);
+                float scalar = 1 + a * Random::FBM3D(*vertex, fbmParams, noiseParams, PDSL_Lib::getCurrentNoise());
+                *vertex *= scalar;
+            }
+            m->CalculateNormals(NormalTypeEnum::PerVertex);
+
+            return Value(m);
+        }
+
         void Load(PDSL_Runtime &runtime)
         {
-            runtime.InstallBuiltinFunction("subdivide", builtin_subdivide);
-
             runtime.InstallBuiltinFunction("seedNoise", builtin_seedNoise);
 
             runtime.InstallBuiltinFunction("setNoiseType", builtin_setNoiseType);
@@ -371,6 +377,8 @@ namespace Planeted
             runtime.InstallBuiltinFunction("setNormalizeFBM", builtin_setNormalizeFBM);
             runtime.InstallBuiltinFunction("setExponent", builtin_setExponent);
 
+            runtime.InstallBuiltinFunction("subdivide", builtin_subdivide);
+            runtime.InstallBuiltinFunction("projectToUnitSphere", builtin_projectToUnitSphere);
             runtime.InstallBuiltinFunction("displace", builtin_displace);
 
             runtime.InstallBuiltinFunction("noiseTest", builtin_noiseTest);
