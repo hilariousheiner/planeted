@@ -1,0 +1,4 @@
+m = load("icosahedron.pdsl");
+m = subdivide(m, 4);
+m = projectToUnitSphere(m);
+return m;

@@ -15,4 +15,4 @@ noiseTest("test_PerlinBillow3D");
 noiseTest2D("test_PerlinBillow2D");
 noiseTest1D("test_PerlinBillow1D");
 
-return displace(subdivide(load("icosahedron.pdsl"), 4), 0.25);
+return displace(load("icosphere2.pdsl"), 0.25);

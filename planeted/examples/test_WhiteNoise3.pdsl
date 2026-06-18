@@ -17,4 +17,4 @@ noiseTest("test_WhiteNoise3_3D");
 noiseTest2D("test_WhiteNoise3_2D");
 noiseTest1D("test_WhiteNoise3_1D");
 
-return displace(subdivide(load("icosahedron.pdsl"), 4), 0.25);
+return displace(load("icosphere2.pdsl"), 0.25);
