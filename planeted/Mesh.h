@@ -46,6 +46,7 @@ namespace Planeted
 
         // normals
         void CalculateNormals(NormalTypeEnum normalType);
+        void CalculateNormals();
         NormalTypeEnum GetNormalType() const;
 
         const Vector3 &GetNormal(size_t id) const;

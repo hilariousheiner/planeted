@@ -93,13 +93,34 @@ namespace Planeted
         }
     }
 
+    inline Vector3 calculateNormal(TriangleIndices i, std::vector<Vector3> &vertices);
+
+    void Mesh::CalculateNormals()
+    {
+        this->normals.resize(this->vertices.size());
+        this->normals.clear();
+
+        for(TriangleIndices &i : this->triangles)
+        {
+            Vector3 normal = calculateNormal(i, this->vertices);
+
+            this->normals[i.V0] += normal;
+            this->normals[i.V1] += normal;
+            this->normals[i.V2] += normal;
+        }
+
+        for(Vector3 &normal : this->normals)
+        {
+            normal.Normalize();
+        }
+    }
+
     NormalTypeEnum Mesh::GetNormalType() const
     {
         return this->normalType;
     }
 
     int addNormal(Vector3 n, std::vector<Vector3> &normals);
-    inline Vector3 calculateNormal(TriangleIndices i, std::vector<Vector3> &vertices);
 
     void Mesh::CalculateNormals(NormalTypeEnum normalType)
     {
