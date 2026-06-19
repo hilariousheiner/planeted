@@ -339,6 +339,18 @@ namespace Planeted
 
             return Value(m);
         }
+        static Value builtin_calculateNormals(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        {
+            if(args.size() != 1)
+            {
+                throw std::runtime_error("calculateNormals expects an argument.");
+            }
+
+            Mesh *m = args[0].ToMesh();
+            m->CalculateNormals();
+
+            return Value(m);
+        }
         static Value builtin_displace(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 2)
@@ -379,6 +391,7 @@ namespace Planeted
 
             runtime.InstallBuiltinFunction("subdivide", builtin_subdivide);
             runtime.InstallBuiltinFunction("projectToUnitSphere", builtin_projectToUnitSphere);
+            runtime.InstallBuiltinFunction("calculateNormals", builtin_calculateNormals);
             runtime.InstallBuiltinFunction("displace", builtin_displace);
 
             runtime.InstallBuiltinFunction("noiseTest", builtin_noiseTest);
