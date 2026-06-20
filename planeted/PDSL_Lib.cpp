@@ -367,7 +367,6 @@ namespace Planeted
                 float scalar = 1 + a * Random::FBM3D(*vertex, fbmParams, noiseParams, PDSL_Lib::getCurrentNoise());
                 *vertex *= scalar;
             }
-            m->CalculateNormals(NormalTypeEnum::PerVertex);
 
             return Value(m);
         }
