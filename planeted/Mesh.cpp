@@ -4,11 +4,11 @@
 namespace Planeted
 {
     Mesh::Mesh()
-      : name("mesh"), normalType(NormalTypeEnum::None)
+      : name("mesh"), normalType(NormalTypeEnum::PerVertex)
     {}
 
     Mesh::Mesh(std::string name)
-        : name(name), normalType(NormalTypeEnum::None)
+        : name(name), normalType(NormalTypeEnum::PerVertex)
     {}
 
     int Mesh::AddVertex(float x, float y, float z)
@@ -98,7 +98,6 @@ namespace Planeted
     void Mesh::CalculateNormals()
     {
         this->normals.resize(this->vertices.size());
-        this->normals.clear();
 
         for(TriangleIndices &i : this->triangles)
         {
