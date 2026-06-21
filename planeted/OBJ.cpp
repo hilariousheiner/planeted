@@ -18,6 +18,7 @@ namespace Planeted
             return stream.str();
         }
 
+        /*
         std::string normalToOBJ(const Vector3 &normal)
         {
             std::stringstream stream;
@@ -27,13 +28,18 @@ namespace Planeted
 
             return stream.str();
         }
+        */
 
         std::string triangleIndicesToOBJ(const TriangleIndices &indices, NormalTypeEnum normalType)
         {
             std::stringstream stream;
 
             stream << "f ";
+            stream << indices.V0 + 1 << " ";
+            stream << indices.V1 + 1 << " ";
+            stream << indices.V2 + 1;
 
+            /*
             switch(normalType)
             {
                 case NormalTypeEnum::PerFace:
@@ -53,6 +59,7 @@ namespace Planeted
                     stream << indices.V2 + 1;
                     break;
             }
+            */
             return stream.str();
         }
 
@@ -66,11 +73,13 @@ namespace Planeted
             }
             stream << "\n";
 
+            /*
             for(Vector3 n : mesh.Normals())
             {
                 stream << normalToOBJ(n) << "\n";
             }
             stream << "\n";
+            */
 
             for(TriangleIndices i : mesh.Triangles())
             {
