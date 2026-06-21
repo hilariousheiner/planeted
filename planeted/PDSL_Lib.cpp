@@ -10,11 +10,35 @@ namespace Planeted
 {
     namespace PDSL_Lib
     {
+        enum class DisplacementTypeEnum
+        {
+            Vertex = 0,
+            Normal = 1
+        };
+
         static Random::NoiseTypeEnum noiseType = Random::NoiseTypeEnum::Value;
         static Random::NoiseStyleEnum noiseStyle = Random::NoiseStyleEnum::Plain;
 
         static Random::FBMParameters fbmParams;
         static Random::NoiseParameters noiseParams;
+
+        static DisplacementTypeEnum toDisplacementType(int type)
+        {
+            DisplacementTypeEnum result = DisplacementTypeEnum::Vertex;
+
+            switch(type)
+            {
+            case 0:
+                result = DisplacementTypeEnum::Vertex;
+                break;
+            case 1:
+                result = DisplacementTypeEnum::Normal;
+                break;
+            default:
+                break;
+            }
+            return result;
+        }
 
         static Random::NoiseTypeEnum toNoiseType(int type)
         {
@@ -353,21 +377,38 @@ namespace Planeted
         }
         static Value builtin_displace(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            if(args.size() != 2)
+            if(args.size() < 2)
             {
-                throw std::runtime_error("displace expects two arguments.");
+                throw std::runtime_error("displace expects at least two arguments.");
             }
 
             Mesh *m = args[0].ToMesh();
             float a = args[1].GetFloatValue();
 
+            DisplacementTypeEnum displacementType = DisplacementTypeEnum::Normal;
+            if(args.size() == 3)
+            {
+                displacementType = toDisplacementType(args[2].GetIntValue());
+            }
+
             for(int id = 0; id < m->VertexCount(); ++id)
             {
                 Vector3 *vertex = m->GetVertex(id);
-                float scalar = 1 + a * Random::FBM3D(*vertex, fbmParams, noiseParams, PDSL_Lib::getCurrentNoise());
-                *vertex *= scalar;
-            }
 
+                float scalar = a * Random::FBM3D(*vertex, fbmParams, noiseParams, PDSL_Lib::getCurrentNoise());
+
+                switch(displacementType)
+                {
+                case DisplacementTypeEnum::Vertex:
+                    *vertex += (*vertex * scalar);
+                    break;
+                case DisplacementTypeEnum::Normal:
+                    *vertex += (m->GetNormal(id) * scalar);
+                    break;
+                default:
+                    break;
+                }
+            }
             return Value(m);
         }
 
