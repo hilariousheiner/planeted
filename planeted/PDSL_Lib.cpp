@@ -9,12 +9,6 @@ namespace Planeted
 {
     namespace PDSL_Lib
     {
-        enum class DisplacementTypeEnum
-        {
-            Vertex = 0,
-            Normal = 1
-        };
-
         static Random::NoiseTypeEnum noiseType = Random::NoiseTypeEnum::Value;
         static Random::NoiseStyleEnum noiseStyle = Random::NoiseStyleEnum::Plain;
 
@@ -372,6 +366,11 @@ namespace Planeted
 
             return Value(m);
         }
+
+        static float displaceFun(const Vector3 &v)
+        {
+            return Random::FBM3D(v, fbmParams, noiseParams, PDSL_Lib::getCurrentNoise());
+        }
         static Value builtin_displace(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() < 2)
@@ -388,26 +387,7 @@ namespace Planeted
                 displacementType = toDisplacementType(args[2].GetIntValue());
             }
 
-            for(size_t id = 0; id < m->VertexCount(); ++id)
-            {
-                Vector3 t;
-
-                switch(displacementType)
-                {
-                case DisplacementTypeEnum::Vertex:
-                    t = m->GetVertex(id);
-                    break;
-                case DisplacementTypeEnum::Normal:
-                    t = m->GetNormal(id);
-                    break;
-                default:
-                    break;
-                }
-
-                float scalar = a * Random::FBM3D(m->GetVertex(id), fbmParams, noiseParams, PDSL_Lib::getCurrentNoise());
-                t *= scalar;
-                m->TranslateVertex(id, t);
-            }
+            m->Displace(displaceFun, a, displacementType);
             return Value(m);
         }
 

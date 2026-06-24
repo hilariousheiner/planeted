@@ -1,6 +1,7 @@
 #ifndef PLANETED_MESH_H
 #define PLANETED_MESH_H
 
+#include <functional>
 #include <map>
 #include <string>
 #include <vector>
@@ -15,6 +16,14 @@ namespace Planeted
         size_t V1;
         size_t V2;
     };
+
+    enum class DisplacementTypeEnum
+    {
+        Vertex = 0,
+        Normal = 1
+    };
+
+    using DisplacementFunction = std::function<float(const Vector3 &)>;
 
     class Mesh
     {
@@ -54,6 +63,7 @@ namespace Planeted
         void ProjectToUnitSphere();
         size_t AddMiddlePoint(size_t v1, size_t v2);
         void Subdivide();
+        void Displace(DisplacementFunction fun, float amp, DisplacementTypeEnum displacementType);
 
     private:
         std::string name;

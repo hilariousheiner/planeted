@@ -177,4 +177,27 @@ namespace Planeted
         this->SetTriangles(this->newTris);
         this->newTris.clear();
     }
+
+    void Mesh::Displace(DisplacementFunction fun, float amp, DisplacementTypeEnum displacementType)
+    {
+        for(size_t id = 0; id < this->VertexCount(); ++id)
+        {
+            Vector3 t;
+
+            switch(displacementType)
+            {
+            case DisplacementTypeEnum::Vertex:
+                t = this->GetVertex(id);
+                break;
+            case DisplacementTypeEnum::Normal:
+                t = this->GetNormal(id);
+                break;
+            default:
+                break;
+            }
+
+            t *= amp * fun(this->GetVertex(id));
+            this->TranslateVertex(id, t);
+        }
+    }
 }
