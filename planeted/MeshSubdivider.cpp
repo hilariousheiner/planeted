@@ -10,11 +10,11 @@ namespace Planeted
         Mesh *mesh;
 
         std::vector<TriangleIndices> newTris;
-        std::map<std::pair<int, int>, int> middlePointIndexCache;
+        std::map<std::pair<size_t, size_t>, size_t> middlePointIndexCache;
 
-        int GetMiddlePoint(int p1, int p2)
+        size_t GetMiddlePoint(size_t p1, size_t p2)
         {
-            std::pair<int, int> entry;
+            std::pair<size_t, size_t> entry;
             if(p1 <= p2)
             {
                 entry = {p1, p2};
