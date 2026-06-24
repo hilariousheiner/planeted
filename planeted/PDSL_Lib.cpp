@@ -341,12 +341,12 @@ namespace Planeted
             Mesh *m = args[0].ToMesh();
             int d = args[1].GetIntValue();
 
-            MeshSubdivider subdivider(m);
+            //MeshSubdivider subdivider(m);
 
             int i = 0;
             while(i < d)
             {
-                subdivider.Subdivide();
+                m->Subdivide();
                 ++i;
             }
             return Value(m);

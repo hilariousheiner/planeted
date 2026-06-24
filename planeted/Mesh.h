@@ -1,8 +1,10 @@
 #ifndef PLANETED_MESH_H
 #define PLANETED_MESH_H
 
+#include <map>
 #include <string>
 #include <vector>
+
 #include "Vector3.h"
 
 namespace Planeted
@@ -50,12 +52,16 @@ namespace Planeted
 
         // misc:
         void ProjectToUnitSphere();
+        size_t AddMiddlePoint(size_t v1, size_t v2);
+        void Subdivide();
 
     private:
         std::string name;
         std::vector<Vector3> vertices;
         std::vector<TriangleIndices> triangles;
         std::vector<Vector3> normals;
+        std::vector<TriangleIndices> newTris;
+        std::map<std::pair<size_t, size_t>, size_t> middlePointIndexCache;
     };
 }
 #endif
