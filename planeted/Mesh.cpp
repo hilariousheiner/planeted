@@ -119,50 +119,6 @@ namespace Planeted
         return this->normalType;
     }
 
-    int addNormal(Vector3 n, std::vector<Vector3> &normals);
-
-    void Mesh::CalculateNormals(NormalTypeEnum normalType)
-    {
-        this->normalType = normalType;
-
-        switch(normalType)
-        {
-            case NormalTypeEnum::PerFace:
-
-                this->normals.resize(this->triangles.size());
-
-                for(TriangleIndices &i : this->triangles)
-                {
-                    Vector3 normal = calculateNormal(i, this->vertices);
-                    i.N = addNormal(normal, this->normals);
-                }
-                break;
-            case NormalTypeEnum::PerVertex:
-
-                this->normals.resize(this->vertices.size());
-
-                for(TriangleIndices &i : this->triangles)
-                {
-                    Vector3 normal = calculateNormal(i, this->vertices);
-
-                    this->normals[i.V0] += normal;
-                    this->normals[i.V1] += normal;
-                    this->normals[i.V2] += normal;
-                }
-
-                break;
-            case NormalTypeEnum::None:
-            default:
-                this->normals.clear();
-                break;
-        }
-
-        for(Vector3 &normal : this->normals)
-        {
-            normal.Normalize();
-        }
-    }
-
     inline Vector3 calculateNormal(TriangleIndices i, std::vector<Vector3> &vertices)
     {
         const Vector3 &v0 = vertices[i.V0];
@@ -175,15 +131,6 @@ namespace Planeted
         Vector3 normal = edge1.Cross(edge2);
 
         return normal;
-    }
-
-    int addNormal(Vector3 n, std::vector<Vector3> &normals)
-    {
-        int result = normals.size();
-
-        normals.push_back(n);
-
-        return result;
     }
 
     const std::string &Mesh::GetName() const

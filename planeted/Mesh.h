@@ -45,7 +45,6 @@ namespace Planeted
         const std::vector<TriangleIndices> &Triangles() const;
 
         // normals
-        void CalculateNormals(NormalTypeEnum normalType);
         void CalculateNormals();
         NormalTypeEnum GetNormalType() const;
 
