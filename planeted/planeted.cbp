@@ -36,8 +36,6 @@
 		<Unit filename="Math.h" />
 		<Unit filename="Mesh.cpp" />
 		<Unit filename="Mesh.h" />
-		<Unit filename="MeshSubdivider.cpp" />
-		<Unit filename="MeshSubdivider.h" />
 		<Unit filename="OBJ.cpp" />
 		<Unit filename="OBJ.h" />
 		<Unit filename="PDSL.cpp" />

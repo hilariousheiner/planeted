@@ -341,8 +341,6 @@ namespace Planeted
             Mesh *m = args[0].ToMesh();
             int d = args[1].GetIntValue();
 
-            //MeshSubdivider subdivider(m);
-
             int i = 0;
             while(i < d)
             {
