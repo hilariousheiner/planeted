@@ -20,6 +20,11 @@ namespace Planeted
         return result;
     }
 
+    void Mesh::TranslateVertex(size_t id, const Vector3 &t)
+    {
+        this->vertices[id] += t;
+    }
+
     const Vector3 &Mesh::GetVertex(size_t id) const
     {
         if(id >= this->vertices.size())
@@ -27,15 +32,6 @@ namespace Planeted
             throw std::out_of_range("Index out of bounds");
         }
         return this->vertices[id];
-    }
-
-    Vector3 *Mesh::GetVertex(size_t id)
-    {
-        if(id >= this->vertices.size())
-        {
-            throw std::out_of_range("Index out of bounds");
-        }
-        return &this->vertices[id];
     }
 
     const Vector3 &Mesh::GetNormal(size_t id) const

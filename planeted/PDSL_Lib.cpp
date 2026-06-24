@@ -393,21 +393,23 @@ namespace Planeted
 
             for(int id = 0; id < m->VertexCount(); ++id)
             {
-                Vector3 *vertex = m->GetVertex(id);
-
-                float scalar = a * Random::FBM3D(*vertex, fbmParams, noiseParams, PDSL_Lib::getCurrentNoise());
+                Vector3 t;
 
                 switch(displacementType)
                 {
                 case DisplacementTypeEnum::Vertex:
-                    *vertex += (*vertex * scalar);
+                    t = m->GetVertex(id);
                     break;
                 case DisplacementTypeEnum::Normal:
-                    *vertex += (m->GetNormal(id) * scalar);
+                    t = m->GetNormal(id);
                     break;
                 default:
                     break;
                 }
+
+                float scalar = a * Random::FBM3D(m->GetVertex(id), fbmParams, noiseParams, PDSL_Lib::getCurrentNoise());
+                t *= scalar;
+                m->TranslateVertex(id, t);
             }
             return Value(m);
         }

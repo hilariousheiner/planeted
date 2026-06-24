@@ -23,7 +23,8 @@ namespace Planeted
         // vertices:
         int AddVertex(float x, float y, float z);
 
-        Vector3 *GetVertex(size_t id);
+        void TranslateVertex(size_t id, const Vector3 &t);
+
         const Vector3 &GetVertex(size_t id) const;
 
         int VertexCount() const;
@@ -46,6 +47,7 @@ namespace Planeted
         // misc:
         void ProjectToUnitSphere();
         const std::string &GetName() const;
+
     private:
         std::string name;
         std::vector<Vector3> vertices;
