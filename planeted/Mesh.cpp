@@ -178,6 +178,16 @@ namespace Planeted
         this->newTris.clear();
     }
 
+    void Mesh::Subdivide(int d)
+    {
+        int i = 0;
+        while(i < d)
+        {
+            this->Subdivide();
+            ++i;
+        }
+    }
+
     void Mesh::Displace(DisplacementFunction fun, float amp, DisplacementTypeEnum displacementType)
     {
         for(size_t id = 0; id < this->VertexCount(); ++id)

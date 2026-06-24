@@ -334,12 +334,8 @@ namespace Planeted
             Mesh *m = args[0].ToMesh();
             int d = args[1].GetIntValue();
 
-            int i = 0;
-            while(i < d)
-            {
-                m->Subdivide();
-                ++i;
-            }
+            m->Subdivide(d);
+
             return Value(m);
         }
         static Value builtin_projectToUnitSphere(PDSL_Runtime &runtime, const std::vector<Value> &args)
