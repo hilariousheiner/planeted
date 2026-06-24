@@ -8,8 +8,17 @@ namespace Planeted
     {}
 
     Mesh::Mesh(std::string name)
-        : name(name)
+        : name(std::move(name))
     {}
+
+    const std::string &Mesh::GetName() const
+    {
+        return this->name;
+    }
+    void Mesh::SetName(std::string name)
+    {
+        this->name = std::move(name);
+    }
 
     size_t Mesh::AddVertex(float x, float y, float z)
     {
@@ -120,10 +129,5 @@ namespace Planeted
         Vector3 normal = edge1.Cross(edge2);
 
         return normal;
-    }
-
-    const std::string &Mesh::GetName() const
-    {
-        return this->name;
     }
 }

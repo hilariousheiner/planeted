@@ -20,6 +20,10 @@ namespace Planeted
         Mesh();
         Mesh(std::string name);
 
+        // name:
+        void SetName(std::string name);
+        const std::string &GetName() const;
+
         // vertices:
         size_t AddVertex(float x, float y, float z);
 
@@ -46,7 +50,6 @@ namespace Planeted
 
         // misc:
         void ProjectToUnitSphere();
-        const std::string &GetName() const;
 
     private:
         std::string name;
