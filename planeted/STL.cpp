@@ -26,7 +26,7 @@ namespace Planeted
 
             for(TriangleIndices tri : mesh.Triangles())
             {
-                stream << "\t facet normal " << vector3ToSTL(mesh.GetNormal(tri.N)) << "\n";
+                stream << "\t facet normal " << vector3ToSTL(mesh.CalculateNormal(tri)) << "\n";
 
                 stream << "\t\t outer loop\n";
                 stream << "\t\t\t vertex " << vector3ToSTL(mesh.GetVertex(tri.V0)) << "\n";

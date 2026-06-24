@@ -12,7 +12,6 @@ namespace Planeted
         int V0;
         int V1;
         int V2;
-        int N;
     };
 
     class Mesh
@@ -39,6 +38,7 @@ namespace Planeted
 
         // normals
         void CalculateNormals();
+        Vector3 CalculateNormal(TriangleIndices &tri) const;
 
         const Vector3 &GetNormal(size_t id) const;
         const std::vector<Vector3> &Normals() const;

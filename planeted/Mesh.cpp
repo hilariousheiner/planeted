@@ -93,15 +93,13 @@ namespace Planeted
         }
     }
 
-    inline Vector3 calculateNormal(TriangleIndices i, std::vector<Vector3> &vertices);
-
     void Mesh::CalculateNormals()
     {
         this->normals.resize(this->vertices.size());
 
         for(TriangleIndices &i : this->triangles)
         {
-            Vector3 normal = calculateNormal(i, this->vertices);
+            Vector3 normal = this->CalculateNormal(i);
 
             this->normals[i.V0] += normal;
             this->normals[i.V1] += normal;
@@ -114,11 +112,11 @@ namespace Planeted
         }
     }
 
-    inline Vector3 calculateNormal(TriangleIndices i, std::vector<Vector3> &vertices)
+    Vector3 Mesh::CalculateNormal(TriangleIndices &tri) const
     {
-        const Vector3 &v0 = vertices[i.V0];
-        const Vector3 &v1 = vertices[i.V1];
-        const Vector3 &v2 = vertices[i.V2];
+        const Vector3 &v0 = this->vertices[tri.V0];
+        const Vector3 &v1 = this->vertices[tri.V1];
+        const Vector3 &v2 = this->vertices[tri.V2];
 
         Vector3 edge1 = v1 - v0;
         Vector3 edge2 = v2 - v0;
