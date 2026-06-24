@@ -391,7 +391,7 @@ namespace Planeted
                 displacementType = toDisplacementType(args[2].GetIntValue());
             }
 
-            for(int id = 0; id < m->VertexCount(); ++id)
+            for(size_t id = 0; id < m->VertexCount(); ++id)
             {
                 Vector3 t;
 

@@ -9,13 +9,13 @@ namespace Planeted
 {
     class MeshSubdivider
     {
-    private:
-        struct Impl;
-        std::unique_ptr<Impl> pImpl;
     public:
         MeshSubdivider(Mesh *mesh);
         ~MeshSubdivider();
         void Subdivide();
+    private:
+        struct Impl;
+        std::unique_ptr<Impl> pImpl;
     };
 }
 #endif // PLANETED_MESHSUBDIVIDER_H

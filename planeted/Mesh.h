@@ -9,9 +9,9 @@ namespace Planeted
 {
     struct TriangleIndices
     {
-        int V0;
-        int V1;
-        int V2;
+        size_t V0;
+        size_t V1;
+        size_t V2;
     };
 
     class Mesh
@@ -21,17 +21,17 @@ namespace Planeted
         Mesh(std::string name);
 
         // vertices:
-        int AddVertex(float x, float y, float z);
+        size_t AddVertex(float x, float y, float z);
 
         void TranslateVertex(size_t id, const Vector3 &t);
 
         const Vector3 &GetVertex(size_t id) const;
 
-        int VertexCount() const;
+        size_t VertexCount() const;
         const std::vector<Vector3> &Vertices() const;
 
         // triangles:
-        void AddTriangle(int a, int b, int c);
+        void AddTriangle(size_t a, size_t b, size_t c);
         void SetTriangles(std::vector<TriangleIndices> tris);
 
         int TriangleCount() const;

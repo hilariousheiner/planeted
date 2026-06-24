@@ -11,7 +11,7 @@ namespace Planeted
         : name(name)
     {}
 
-    int Mesh::AddVertex(float x, float y, float z)
+    size_t Mesh::AddVertex(float x, float y, float z)
     {
         int result = this->vertices.size();
 
@@ -43,7 +43,7 @@ namespace Planeted
         return this->normals[id];
     }
 
-    void Mesh::AddTriangle(int a, int b, int c)
+    void Mesh::AddTriangle(size_t a, size_t b, size_t c)
     {
         this->triangles.push_back(TriangleIndices {a, b, c});
     }
@@ -57,7 +57,7 @@ namespace Planeted
         }
     }
 
-    int Mesh::VertexCount() const
+    size_t Mesh::VertexCount() const
     {
         return this->vertices.size();
     }

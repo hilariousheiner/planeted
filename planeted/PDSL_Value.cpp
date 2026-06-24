@@ -188,7 +188,13 @@ namespace Planeted
             {
                 throw std::runtime_error("triangle tuple must have 3 elements.");
             }
-            return TriangleIndices {t.elements[0].GetIntValue(), t.elements[1].GetIntValue(), t.elements[2].GetIntValue()};
+
+            return TriangleIndices
+            {
+                static_cast<size_t>(t.elements[0].GetIntValue()),
+                static_cast<size_t>(t.elements[1].GetIntValue()),
+                static_cast<size_t>(t.elements[2].GetIntValue())
+            };
         }
         throw std::runtime_error("triangle must be an integer tuple.");
     }
