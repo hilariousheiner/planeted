@@ -18,7 +18,7 @@ namespace Planeted
             return stream.str();
         }
 
-        std::string triangleIndicesToOBJ(const TriangleIndices &indices, NormalTypeEnum normalType)
+        std::string triangleIndicesToOBJ(const TriangleIndices &indices)
         {
             std::stringstream stream;
 
@@ -42,7 +42,7 @@ namespace Planeted
 
             for(TriangleIndices i : mesh.Triangles())
             {
-                stream << triangleIndicesToOBJ(i, mesh.GetNormalType()) << "\n";
+                stream << triangleIndicesToOBJ(i) << "\n";
             }
             return stream.str();
         }

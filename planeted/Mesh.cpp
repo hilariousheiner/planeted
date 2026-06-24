@@ -4,11 +4,11 @@
 namespace Planeted
 {
     Mesh::Mesh()
-      : name("mesh"), normalType(NormalTypeEnum::PerVertex)
+      : name("mesh")
     {}
 
     Mesh::Mesh(std::string name)
-        : name(name), normalType(NormalTypeEnum::PerVertex)
+        : name(name)
     {}
 
     int Mesh::AddVertex(float x, float y, float z)
@@ -112,11 +112,6 @@ namespace Planeted
         {
             normal.Normalize();
         }
-    }
-
-    NormalTypeEnum Mesh::GetNormalType() const
-    {
-        return this->normalType;
     }
 
     inline Vector3 calculateNormal(TriangleIndices i, std::vector<Vector3> &vertices)

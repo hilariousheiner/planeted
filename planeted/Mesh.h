@@ -15,13 +15,6 @@ namespace Planeted
         int N;
     };
 
-    enum class NormalTypeEnum
-    {
-        None,
-        PerFace,
-        PerVertex
-    };
-
     class Mesh
     {
     public:
@@ -46,7 +39,6 @@ namespace Planeted
 
         // normals
         void CalculateNormals();
-        NormalTypeEnum GetNormalType() const;
 
         const Vector3 &GetNormal(size_t id) const;
         const std::vector<Vector3> &Normals() const;
@@ -59,7 +51,6 @@ namespace Planeted
         std::vector<Vector3> vertices;
         std::vector<TriangleIndices> triangles;
         std::vector<Vector3> normals;
-        NormalTypeEnum normalType;
     };
 }
 #endif
