@@ -57,7 +57,6 @@ namespace Planeted
         return *this;
     }
 
-
     Vector3& Vector3::operator+=(const Vector3& other)
     {
         this->X += other.X;

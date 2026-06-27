@@ -64,17 +64,21 @@ namespace Planeted
         size_t AddMiddlePoint(size_t v1, size_t v2);
         void Subdivide();
         void Subdivide(int n);
-        void Tessellate(int n);
+        void Tessellate(size_t n);
         void Displace(DisplacementFunction fun, float amp, DisplacementTypeEnum displacementType);
 
     private:
 
         void tessellateEdge(size_t v1, size_t v2, size_t n);
+        size_t getTessellatorVertexIndex(TriangleIndices &tri, size_t offset, size_t n, size_t row, size_t col);
+        size_t getTessellatorEdgeVertex(size_t v1, size_t v2, size_t i, size_t n);
+        size_t getTessellatorVertexIndex(size_t row, size_t col);
 
         std::string name;
         std::vector<Vector3> vertices;
         std::vector<TriangleIndices> triangles;
         std::vector<Vector3> normals;
+
         std::vector<TriangleIndices> newTris;
         std::map<std::pair<size_t, size_t>, size_t> middlePointIndexCache;
         std::map<std::pair<size_t, size_t>, std::vector<size_t>> tessellationPointCache;

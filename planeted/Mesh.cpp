@@ -160,33 +160,6 @@ namespace Planeted
         return this->middlePointIndexCache[key];
     }
 
-    void Mesh::tessellateEdge(size_t v1, size_t v2, size_t n)
-    {
-        std::pair<size_t, size_t> key;
-        if(v1 <= v2)
-        {
-            key = {v1, v2};
-        }
-        else
-        {
-            key= {v2, v1};
-        }
-
-        if(this->tessellationPointCache.find(key) == this->tessellationPointCache.end())
-        {
-            Vector3 va = this->GetVertex(key.first);
-            Vector3 vb = this->GetVertex(key.second);
-            Vector3 d = (vb - va);
-
-            for (size_t i = 1; i < n; ++i)
-            {
-                float s = static_cast<float>(i) / static_cast<float>(n);
-                Vector3 v = va + d * s;
-                this->tessellationPointCache[key].push_back(this->AddVertex(v.X, v.Y, v.Z));
-            }
-        }
-    }
-
     void Mesh::Subdivide()
     {
         this->middlePointIndexCache.clear();
@@ -216,9 +189,144 @@ namespace Planeted
         }
     }
 
-    void Mesh::Tessellate(int n)
+    void Mesh::tessellateEdge(size_t v1, size_t v2, size_t n)
     {
-        std::cout << "Tesellate: " << n << "\n";
+        std::pair<size_t, size_t> key;
+        if(v1 <= v2)
+        {
+            key = {v1, v2};
+        }
+        else
+        {
+            key= {v2, v1};
+        }
+
+        if(this->tessellationPointCache.find(key) == this->tessellationPointCache.end())
+        {
+            Vector3 va = this->GetVertex(key.first);
+            Vector3 vb = this->GetVertex(key.second);
+            Vector3 d = (vb - va);
+
+            for (size_t i = 1; i < n; ++i)
+            {
+                float s = static_cast<float>(i) / static_cast<float>(n);
+                Vector3 v = va + d * s;
+                this->tessellationPointCache[key].push_back(this->AddVertex(v.X, v.Y, v.Z));
+            }
+        }
+    }
+
+    size_t Mesh::getTessellatorEdgeVertex(size_t v1, size_t v2, size_t i, size_t n)
+    {
+        std::pair<size_t, size_t> key;
+        int j;
+
+        if(v1 <= v2)
+        {
+            key = {v1, v2};
+            j = i;
+        }
+        else
+        {
+            key = {v2, v1};
+            j = n - 2 - i;
+        }
+        return this->tessellationPointCache[key][j];
+    }
+
+    size_t Mesh::getTessellatorVertexIndex(size_t row, size_t col)
+    {
+        return row * (row + 1) / 2 + col;
+    }
+
+    size_t Mesh::getTessellatorVertexIndex(TriangleIndices &tri, size_t offset, size_t n, size_t row, size_t col)
+    {
+        if (col == 0)
+        {
+            // on A - B edge
+            if (row == 0)
+            {
+                return tri.V0;
+            }
+            if (row == n)
+            {
+                return tri.V1;
+            }
+            return this->getTessellatorEdgeVertex(tri.V0, tri.V1, row - 1, n);
+        }
+        if(col == row)
+        {
+            // On A - C edge
+            if ((row == n))
+            {
+                return tri.V2;
+            }
+            return this->getTessellatorEdgeVertex(tri.V0, tri.V2, row - 1, n);
+        }
+        if(row == n)
+        {
+            // On B - C edge
+            return this->getTessellatorEdgeVertex(tri.V1, tri.V2, col - 1, n);
+        }
+        return offset + this->getTessellatorVertexIndex(row, col) - 2 * row;
+    }
+
+    void Mesh::Tessellate(size_t n)
+    {
+        std::cout << "Tessellate: " << n << "\n";
+
+        this->newTris.clear();
+        this->tessellationPointCache.clear();
+
+        for(TriangleIndices &tri : this->triangles)
+        {
+            Vector3 A = this->GetVertex(tri.V0);
+            Vector3 B = this->GetVertex(tri.V1);
+            Vector3 C = this->GetVertex(tri.V2);
+
+            Vector3 Y = (B - A) / static_cast<float>(n);
+            Vector3 X = (C - B) / static_cast<float>(n);
+
+            // generate edge vertices:
+
+            this->tessellateEdge(tri.V0, tri.V1, n);
+            this->tessellateEdge(tri.V0, tri.V2, n);
+            this->tessellateEdge(tri.V1, tri.V2, n);
+
+            size_t offset = this->vertices.size();
+
+            // generate inner vertices:
+            for(size_t row = 1; row < n; ++row)
+            {
+                for(size_t col = 1; col < row; ++col)
+                {
+                    this->vertices.push_back(A + row * Y + col * X);
+                }
+            }
+
+            // generate triangles:
+            for(size_t row = 0; row < n; ++row)
+            {
+                for(size_t col = 0; col <= row; ++col)
+                {
+                    size_t a = this->getTessellatorVertexIndex(tri, offset, n, row, col);
+                    size_t b = this->getTessellatorVertexIndex(tri, offset, n, row + 1, col);
+                    size_t c = this->getTessellatorVertexIndex(tri, offset, n, row + 1, col + 1);
+
+                    // upward triangle
+                    this->newTris.push_back({a, b, c});
+
+                    // downward triangle
+                    if (col < row)
+                    {
+                        size_t d = this->getTessellatorVertexIndex(tri, offset, n, row, col + 1);
+
+                        this->newTris.push_back({a, c, d});
+                    }
+                }
+            }
+        }
+        this->SetTriangles(this->newTris);
     }
 
     void Mesh::Displace(DisplacementFunction fun, float amp, DisplacementTypeEnum displacementType)
