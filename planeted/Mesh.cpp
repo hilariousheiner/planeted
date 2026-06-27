@@ -134,17 +134,17 @@ namespace Planeted
 
     size_t Mesh::AddMiddlePoint(size_t v1, size_t v2)
     {
-        std::pair<size_t, size_t> entry;
+        std::pair<size_t, size_t> key;
         if(v1 <= v2)
         {
-            entry = {v1, v2};
+            key = {v1, v2};
         }
         else
         {
-            entry = {v2, v1};
+            key= {v2, v1};
         }
 
-        if(this->middlePointIndexCache.find(entry) == this->middlePointIndexCache.end())
+        if(this->middlePointIndexCache.find(key) == this->middlePointIndexCache.end())
         {
             const Vector3 &vertex1 = this->GetVertex(v1);
             const Vector3 &vertex2 = this->GetVertex(v2);
@@ -155,9 +155,36 @@ namespace Planeted
 
             int i = this->AddVertex(middleX, middleY, middleZ);
 
-            this->middlePointIndexCache[entry] = i;
+            this->middlePointIndexCache[key] = i;
         }
-        return this->middlePointIndexCache[entry];
+        return this->middlePointIndexCache[key];
+    }
+
+    void Mesh::tessellateEdge(size_t v1, size_t v2, size_t n)
+    {
+        std::pair<size_t, size_t> key;
+        if(v1 <= v2)
+        {
+            key = {v1, v2};
+        }
+        else
+        {
+            key= {v2, v1};
+        }
+
+        if(this->tessellationPointCache.find(key) == this->tessellationPointCache.end())
+        {
+            Vector3 va = this->GetVertex(key.first);
+            Vector3 vb = this->GetVertex(key.second);
+            Vector3 d = (vb - va);
+
+            for (size_t i = 1; i < n; ++i)
+            {
+                float s = static_cast<float>(i) / static_cast<float>(n);
+                Vector3 v = va + d * s;
+                this->tessellationPointCache[key].push_back(this->AddVertex(v.X, v.Y, v.Z));
+            }
+        }
     }
 
     void Mesh::Subdivide()

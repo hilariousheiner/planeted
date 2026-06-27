@@ -68,12 +68,16 @@ namespace Planeted
         void Displace(DisplacementFunction fun, float amp, DisplacementTypeEnum displacementType);
 
     private:
+
+        void tessellateEdge(size_t v1, size_t v2, size_t n);
+
         std::string name;
         std::vector<Vector3> vertices;
         std::vector<TriangleIndices> triangles;
         std::vector<Vector3> normals;
         std::vector<TriangleIndices> newTris;
         std::map<std::pair<size_t, size_t>, size_t> middlePointIndexCache;
+        std::map<std::pair<size_t, size_t>, std::vector<size_t>> tessellationPointCache;
     };
 }
 #endif
