@@ -29,4 +29,4 @@ m =
 		(D, W, S)
     ]
 );
-return m;
+return tessellate(m, 2);

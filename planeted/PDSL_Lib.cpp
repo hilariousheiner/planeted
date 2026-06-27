@@ -338,6 +338,20 @@ namespace Planeted
 
             return Value(m);
         }
+        static Value builtin_tessellate(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        {
+            if(args.size() != 2)
+            {
+                throw std::runtime_error("tessellate expects two arguments.");
+            }
+
+            Mesh *m = args[0].ToMesh();
+            int n = args[1].GetIntValue();
+
+            m->Tessellate(n);
+
+            return Value(m);
+        }
         static Value builtin_projectToUnitSphere(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 1)
@@ -405,6 +419,7 @@ namespace Planeted
             runtime.InstallBuiltinFunction("setExponent", builtin_setExponent);
 
             runtime.InstallBuiltinFunction("subdivide", builtin_subdivide);
+            runtime.InstallBuiltinFunction("tessellate", builtin_tessellate);
             runtime.InstallBuiltinFunction("projectToUnitSphere", builtin_projectToUnitSphere);
             runtime.InstallBuiltinFunction("calculateNormals", builtin_calculateNormals);
             runtime.InstallBuiltinFunction("displace", builtin_displace);

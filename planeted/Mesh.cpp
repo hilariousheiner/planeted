@@ -1,4 +1,5 @@
 #include "Mesh.h"
+#include <iostream>
 #include <stdexcept>
 
 namespace Planeted
@@ -178,14 +179,19 @@ namespace Planeted
         this->newTris.clear();
     }
 
-    void Mesh::Subdivide(int d)
+    void Mesh::Subdivide(int n)
     {
         int i = 0;
-        while(i < d)
+        while(i < n)
         {
             this->Subdivide();
             ++i;
         }
+    }
+
+    void Mesh::Tessellate(int n)
+    {
+        std::cout << "Tesellate: " << n << "\n";
     }
 
     void Mesh::Displace(DisplacementFunction fun, float amp, DisplacementTypeEnum displacementType)

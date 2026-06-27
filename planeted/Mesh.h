@@ -64,6 +64,7 @@ namespace Planeted
         size_t AddMiddlePoint(size_t v1, size_t v2);
         void Subdivide();
         void Subdivide(int n);
+        void Tessellate(int n);
         void Displace(DisplacementFunction fun, float amp, DisplacementTypeEnum displacementType);
 
     private:
