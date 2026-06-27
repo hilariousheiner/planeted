@@ -20,16 +20,6 @@ namespace Planeted
         this->Z = z;
     }
 
-    Vector3 Vector3::operator*(float scalar) const
-    {
-        return
-        {
-            this->X * scalar,
-            this->Y * scalar,
-            this->Z * scalar
-        };
-    }
-
     Vector3 Vector3::operator-(const Vector3& other) const
     {
         return
