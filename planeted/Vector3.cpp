@@ -48,6 +48,16 @@ namespace Planeted
         return *this;
     }
 
+    Vector3& Vector3::operator/=(float scalar)
+    {
+        float inv = 1.0f / scalar;
+        this->X *= inv;
+        this->Y *= inv;
+        this->Z *= inv;
+        return *this;
+    }
+
+
     Vector3& Vector3::operator+=(const Vector3& other)
     {
         this->X += other.X;

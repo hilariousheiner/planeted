@@ -14,6 +14,7 @@ namespace Planeted
 
         Vector3 operator-(const Vector3& other) const;
         Vector3& operator*=(float scalar);
+        Vector3& operator/=(float scalar);
         Vector3& operator+=(const Vector3& other);
 
         Vector3 Cross(const Vector3& other) const;
@@ -28,10 +29,19 @@ namespace Planeted
         lhs *= scalar;
         return lhs;
     }
-
     inline Vector3 operator*(float scalar, Vector3 rhs)
     {
         return rhs * scalar;
+    }
+
+    inline Vector3 operator/(Vector3 lhs, float scalar)
+    {
+        return lhs /= scalar;
+        return lhs;
+    }
+    inline Vector3 operator/(float scalar, Vector3 rhs)
+    {
+        return rhs / scalar;
     }
 
     inline Vector3 operator+(Vector3 lhs, Vector3 rhs)
