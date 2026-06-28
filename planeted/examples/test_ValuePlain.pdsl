@@ -15,4 +15,6 @@ noiseTest("test_ValuePlain3D");
 noiseTest2D("test_ValuePlain2D");
 noiseTest1D("test_ValuePlain1D");
 
-return displace(load("icosphere2.pdsl"), 1.0);
+m = load("icosphere2.pdsl");
+m = calculateNormals(m);
+return displace(m, 1.0);

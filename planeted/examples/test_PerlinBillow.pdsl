@@ -15,4 +15,6 @@ noiseTest("test_PerlinBillow3D");
 noiseTest2D("test_PerlinBillow2D");
 noiseTest1D("test_PerlinBillow1D");
 
-return displace(load("icosphere2.pdsl"), 0.25);
+m = load("icosphere2.pdsl");
+m = calculateNormals(m);
+return displace(m, 0.25);

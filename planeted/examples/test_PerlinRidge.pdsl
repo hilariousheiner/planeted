@@ -14,4 +14,6 @@ noiseTest("test_PerlinRidge3D");
 noiseTest2D("test_PerlinRidge2D");
 noiseTest1D("test_PerlinRidge1D");
 
-return displace(load("icosphere2.pdsl"), 0.05);
+m = load("icosphere2.pdsl");
+m = calculateNormals(m);
+return displace(m, 0.05);
