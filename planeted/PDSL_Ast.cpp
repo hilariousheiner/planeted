@@ -105,7 +105,7 @@ namespace Planeted
 
     void ImportStatement::execute(PDSL_Runtime &runtime)
     {
-        PDSL_Run(ReadFile(this->path), runtime);
+        PDSL_RunFile(this->path, runtime);
     }
 
     ReturnStatement::ReturnStatement(std::unique_ptr<Expression> expression)
