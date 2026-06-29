@@ -30,7 +30,8 @@ int main(int argc, char **argv)
         return EXIT_FAILURE; //error;
     }
 
-    Value result = PDSL_Load(infile);
+    PDSL_Runtime runtime;
+    Value result = PDSL_Load(infile, runtime);
 
     if(result.GetValueType() == ValueTypeEnum::Mesh || result.GetValueType() == ValueTypeEnum::Tuple)
     {

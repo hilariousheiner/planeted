@@ -75,5 +75,64 @@ namespace Planeted
 
         return buffer.str();
     }
+
+   inline std::string NormalizePath(const std::string& path)
+    {
+        std::vector<std::string> stack;
+        std::string component;
+
+        auto FlushComponent = [&]()
+        {
+            if (component.empty() || component == ".")
+            {
+                component.clear();
+                return;
+            }
+
+            if (component == "..")
+            {
+                if (!stack.empty() &&
+                    stack.back() != "..")
+                {
+                    stack.pop_back();
+                }
+                else
+                {
+                    // Preserve leading ".."
+                    stack.push_back("..");
+                }
+            }
+            else
+            {
+                stack.push_back(component);
+            }
+            component.clear();
+        };
+
+        for (char c : path)
+        {
+            if (c == '/' || c == '\\')
+            {
+                FlushComponent();
+            }
+            else
+            {
+                component += c;
+            }
+        }
+
+        FlushComponent();
+
+        std::string result;
+
+        for (size_t i = 0; i < stack.size(); ++i)
+        {
+            if (i > 0)
+                result += '/';
+
+            result += stack[i];
+        }
+        return result;
+    }
 }
 #endif // PLANETED_UTILS_H

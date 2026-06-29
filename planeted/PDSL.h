@@ -27,7 +27,7 @@ namespace Planeted
     void PDSL_Run(const std::string &code, PDSL_Runtime &runtime);
     void PDSL_RunFile(const std::string &filename, PDSL_Runtime &runtime);
 
-    Value PDSL_Load(const std::string &filename);
+    Value PDSL_Load(const std::string &filename, PDSL_Runtime &runtime);
 
     struct PDSL_Runtime
     {
@@ -41,8 +41,12 @@ namespace Planeted
 
         void DumpEnvironment();
 
+        std::string ResolvePath(const std::string &filename) const;
+
         std::unordered_map<std::string, Value> Environment;
         std::unordered_map<std::string, BuiltinFunction> BuiltinFunctionsTable;
+
+        std::vector<std::string> FileStack;
 
         Value Result;
         bool DebugFlag = false;

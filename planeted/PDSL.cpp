@@ -31,7 +31,7 @@ namespace Planeted
         {
             throw std::runtime_error("load expects exactly one argument.");
         }
-        return PDSL_Load(args[0].ToString());
+        return PDSL_Load(args[0].ToString(), runtime);
     }
 
     PDSL_Runtime::PDSL_Runtime()
@@ -79,6 +79,28 @@ namespace Planeted
         }
     }
 
+    std::string PDSL_Runtime::ResolvePath(const std::string &filename) const
+    {
+        std::string current;
+
+        if (!FileStack.empty())
+        {
+            current = FileStack.back();
+        }
+
+        // If no current file, treat as working directory case
+        if (current.empty())
+        {
+            return filename;
+        }
+
+        // strip file name keep directory
+        size_t pos = current.find_last_of("/\\");
+        std::string dir = (pos == std::string::npos) ? "" : current.substr(0, pos + 1);
+
+        return NormalizePath(dir + filename);
+    }
+
     static void run(const Program &program, PDSL_Runtime &runtime)
     {
         for(const std::unique_ptr<Statement> &stmt : program.statements)
@@ -97,24 +119,29 @@ namespace Planeted
 
     void PDSL_RunFile(const std::string &filename, PDSL_Runtime &runtime)
     {
-        std::cout << "running file: " << filename << "\n";
+        std::string resolved = runtime.ResolvePath(filename);
+        std::cout << "running file: " << resolved << "\n";
 
-        PDSL_Run(ReadFile(filename), runtime);
+        runtime.FileStack.push_back(resolved);
+
+        PDSL_Run(ReadFile(resolved), runtime);
 
         if(runtime.DebugFlag)
         {
             runtime.DumpEnvironment();
         }
+
+        runtime.FileStack.pop_back();
     }
 
-    Value PDSL_Load(const std::string &filename)
+    Value PDSL_Load(const std::string &filename, PDSL_Runtime &runtime)
     {
-        PDSL_Runtime runtime;
+        PDSL_Runtime new_runtime;
 
-        PDSL_Lib::Load(runtime);
+        PDSL_Lib::Load(new_runtime);
 
-        PDSL_RunFile(filename, runtime);
+        PDSL_RunFile(runtime.ResolvePath(filename), new_runtime);
 
-        return runtime.Result;
+        return new_runtime.Result;
     }
 }
