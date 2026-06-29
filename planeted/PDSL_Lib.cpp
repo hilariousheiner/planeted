@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+#include "Noise.h"
 #include "Random.h"
 #include "Tests.h"
 
