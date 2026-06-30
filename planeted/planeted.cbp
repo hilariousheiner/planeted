@@ -72,6 +72,7 @@
 		<Unit filename="Vector2.h" />
 		<Unit filename="Vector3.cpp" />
 		<Unit filename="Vector3.h" />
+		<Unit filename="Version.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

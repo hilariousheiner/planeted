@@ -8,6 +8,7 @@
 #include "SCAD.h"
 #include "STL.h"
 #include "Tests.h"
+#include "Version.h"
 
 using namespace Planeted;
 
@@ -17,6 +18,8 @@ std::string infile;
 bool objOutput = false;
 bool stlOutput = false;
 bool scadOutput = false;
+
+bool printVersion = false;
 
 bool readargs(int argc, char** argv);
 
@@ -28,6 +31,12 @@ int main(int argc, char **argv)
     {
         usage();
         return EXIT_FAILURE; //error;
+    }
+
+    if(printVersion)
+    {
+        std::cout << "version: " << Version::VersionString << "\n";
+        return EXIT_SUCCESS;
     }
 
     PDSL_Runtime runtime;
@@ -86,7 +95,14 @@ bool readargs(int argc, char **argv)
         return false;
     }
 
-    infile = std::string(argv[1]);
+    std::string arg1 = std::string(argv[1]);
+    if(arg1 == "--version")
+    {
+        printVersion = true;
+        return true;
+    }
+
+    infile = arg1;
     outfile = splitFilename((infile));
     outfile.extension = "obj";
     objOutput = true;
