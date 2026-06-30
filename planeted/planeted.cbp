@@ -36,6 +36,7 @@
 		<Unit filename="Math.h" />
 		<Unit filename="Mesh.cpp" />
 		<Unit filename="Mesh.h" />
+		<Unit filename="Noise.cpp" />
 		<Unit filename="Noise.h" />
 		<Unit filename="OBJ.cpp" />
 		<Unit filename="OBJ.h" />
