@@ -282,7 +282,8 @@ namespace Planeted
 
             if(args[0].GetValueType() == ValueTypeEnum::String)
             {
-                NoiseTest3D(args[0].GetStringValue(), fbmParams, noiseParams, PDSL_Lib::getCurrentNoise());
+                std::string filename = runtime.ResolvePath(args[0].GetStringValue());
+                NoiseTest3D(filename, fbmParams, noiseParams, PDSL_Lib::getCurrentNoise());
             }
             else
             {
@@ -299,7 +300,8 @@ namespace Planeted
 
             if(args[0].GetValueType() == ValueTypeEnum::String)
             {
-                NoiseTest2D(args[0].GetStringValue(), fbmParams, noiseParams, PDSL_Lib::getCurrentNoise2D());
+                std::string filename = runtime.ResolvePath(args[0].GetStringValue());
+                NoiseTest2D(filename, fbmParams, noiseParams, PDSL_Lib::getCurrentNoise2D());
             }
             else
             {
@@ -316,7 +318,8 @@ namespace Planeted
 
             if(args[0].GetValueType() == ValueTypeEnum::String)
             {
-                NoiseTest1D(args[0].GetStringValue(), fbmParams, noiseParams, PDSL_Lib::getCurrentNoise1D());
+                std::string filename = runtime.ResolvePath(args[0].GetStringValue());
+                NoiseTest1D(filename, fbmParams, noiseParams, PDSL_Lib::getCurrentNoise1D());
             }
             else
             {
