@@ -39,6 +39,7 @@
 		<Unit filename="Noise.h" />
 		<Unit filename="OBJ.cpp" />
 		<Unit filename="OBJ.h" />
+		<Unit filename="PBM.cpp" />
 		<Unit filename="PBM.h" />
 		<Unit filename="PDSL.cpp" />
 		<Unit filename="PDSL.h" />
