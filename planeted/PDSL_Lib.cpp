@@ -10,11 +10,7 @@ namespace Planeted
 {
     namespace PDSL_Lib
     {
-        static Random::NoiseTypeEnum noiseType = Random::NoiseTypeEnum::Value;
-        static Random::NoiseStyleEnum noiseStyle = Random::NoiseStyleEnum::Plain;
-
-        static Random::FBMParameters fbmParams;
-        static Random::NoiseParameters noiseParams;
+        static Noise noise;
 
         static DisplacementTypeEnum toDisplacementType(int type)
         {
@@ -80,15 +76,15 @@ namespace Planeted
 
         static Random::NoiseFunction3D getCurrentNoise()
         {
-            return Random::GetNoiseFunction3D(PDSL_Lib::noiseType, PDSL_Lib::noiseStyle);
+            return Random::GetNoiseFunction3D(noise.noiseType, noise.noiseStyle);
         }
         static Random::NoiseFunction2D getCurrentNoise2D()
         {
-            return Random::GetNoiseFunction2D(PDSL_Lib::noiseType, PDSL_Lib::noiseStyle);
+            return Random::GetNoiseFunction2D(noise.noiseType, noise.noiseStyle);
         }
         static Random::NoiseFunction1D getCurrentNoise1D()
         {
-            return Random::GetNoiseFunction1D(PDSL_Lib::noiseType, PDSL_Lib::noiseStyle);
+            return Random::GetNoiseFunction1D(noise.noiseType, noise.noiseStyle);
         }
 
         static Value builtin_seedNoise(PDSL_Runtime &runtime, const std::vector<Value> &args)
@@ -124,7 +120,7 @@ namespace Planeted
 
             if(args[0].GetValueType() == ValueTypeEnum::Int)
             {
-                PDSL_Lib::noiseType = toNoiseType(args[0].GetIntValue());
+                noise.noiseType = toNoiseType(args[0].GetIntValue());
             }
             else
             {
@@ -141,7 +137,7 @@ namespace Planeted
 
             if(args[0].GetValueType() == ValueTypeEnum::Int)
             {
-                PDSL_Lib::noiseStyle = toNoiseStyle(args[0].GetIntValue());
+                noise.noiseStyle = toNoiseStyle(args[0].GetIntValue());
             }
             else
             {
@@ -283,7 +279,7 @@ namespace Planeted
             if(args[0].GetValueType() == ValueTypeEnum::String)
             {
                 std::string filename = NormalizePath(runtime.OutPath + args[0].GetStringValue());
-                NoiseTest3D(filename, fbmParams, noiseParams, PDSL_Lib::getCurrentNoise());
+                NoiseTest3D(filename, noise.fbmParams, noise.noiseParams, PDSL_Lib::getCurrentNoise());
             }
             else
             {
@@ -301,7 +297,7 @@ namespace Planeted
             if(args[0].GetValueType() == ValueTypeEnum::String)
             {
                 std::string filename = NormalizePath(runtime.OutPath + args[0].GetStringValue());
-                NoiseTest2D(filename, fbmParams, noiseParams, PDSL_Lib::getCurrentNoise2D());
+                NoiseTest2D(filename, noise.fbmParams, noise.noiseParams, PDSL_Lib::getCurrentNoise2D());
             }
             else
             {
@@ -319,7 +315,7 @@ namespace Planeted
             if(args[0].GetValueType() == ValueTypeEnum::String)
             {
                 std::string filename = NormalizePath(runtime.OutPath + args[0].GetStringValue());
-                NoiseTest1D(filename, fbmParams, noiseParams, PDSL_Lib::getCurrentNoise1D());
+                NoiseTest1D(filename, noise.fbmParams, noise.noiseParams, PDSL_Lib::getCurrentNoise1D());
             }
             else
             {
@@ -383,7 +379,7 @@ namespace Planeted
 
         static float displaceFun(const Vector3 &v)
         {
-            return Random::FBM3D(v, fbmParams, noiseParams, PDSL_Lib::getCurrentNoise());
+            return Random::FBM3D(v, noise.fbmParams, noise.noiseParams, PDSL_Lib::getCurrentNoise());
         }
         static Value builtin_displace(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
