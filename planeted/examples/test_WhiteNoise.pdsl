@@ -1,4 +1,4 @@
-import "stdlib.pdsl" 
+import "../lib/stdlib.pdsl" 
 
 seedNoise("Diomedes-1437");
 
@@ -17,6 +17,6 @@ noiseTest("test_WhiteNoise3D");
 noiseTest2D("test_WhiteNoise2D");
 noiseTest1D("test_WhiteNoise1D");
 
-m = load("icosphere2.pdsl");
+m = load("../lib/icosphere2.pdsl");
 m = calculateNormals(m);
 return displace(m, 0.25);

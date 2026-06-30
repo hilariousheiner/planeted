@@ -1,8 +1,8 @@
-import "stdlib.pdsl" 
+import "../lib/stdlib.pdsl" 
 
 seedNoise("CLOUD");
 
-m = load("icosphere2.pdsl");
+m = load("../lib/icosphere2.pdsl");
 m = calculateNormals(m);
 
 setNoiseType(NOISE_TYPE_VALUE);
