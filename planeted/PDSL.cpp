@@ -140,6 +140,8 @@ namespace Planeted
 
         PDSL_Lib::Load(new_runtime);
 
+        new_runtime.OutPath = runtime.OutPath;
+
         PDSL_RunFile(runtime.ResolvePath(filename), new_runtime);
 
         return new_runtime.Result;

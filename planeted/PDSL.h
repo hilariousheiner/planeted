@@ -48,6 +48,8 @@ namespace Planeted
 
         std::vector<std::string> FileStack;
 
+        std::string OutPath;
+
         Value Result;
         bool DebugFlag = false;
     };

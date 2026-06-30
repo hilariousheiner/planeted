@@ -14,6 +14,7 @@ using namespace Planeted;
 
 filename_t outfile;
 std::string infile;
+std::string outPath;
 
 bool objOutput = false;
 bool stlOutput = false;
@@ -39,7 +40,10 @@ int main(int argc, char **argv)
         return EXIT_SUCCESS;
     }
 
+    std::cout << "outpath: " << outPath << "\n";
+
     PDSL_Runtime runtime;
+    runtime.OutPath = outPath;
     Value result = PDSL_Load(infile, runtime);
 
     if(result.GetValueType() == ValueTypeEnum::Mesh || result.GetValueType() == ValueTypeEnum::Tuple)
@@ -47,7 +51,8 @@ int main(int argc, char **argv)
         Mesh &mesh = *result.ToMesh();
         std::cout << "created mesh: " << mesh.GetName() << " (" << mesh.VertexCount() << " vertices and " << mesh.TriangleCount() << " triangles)\n";
         std::cout << "writing to \"" << outfile << "\n";
-        std::ofstream meshfile(outfile.ToString());
+
+        std::ofstream meshfile(NormalizePath(outPath + outfile.ToString()));
 
         if(objOutput == true)
         {
@@ -103,9 +108,16 @@ bool readargs(int argc, char **argv)
     }
 
     infile = arg1;
-    outfile = splitFilename((infile));
+    outfile = SplitFilename(GetFilename(infile));
     outfile.extension = "obj";
     objOutput = true;
+
+    outPath = "./";
+
+    if(argc == 3)
+    {
+        outPath = std::string(argv[2]);
+    }
 
     return true;
 }
