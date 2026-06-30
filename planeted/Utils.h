@@ -37,7 +37,7 @@ namespace Planeted
         }
     };
 
-    inline filename_t splitFilename(const std::string &filename)
+    inline filename_t SplitFilename(const std::string &filename)
     {
         filename_t result = {filename, ""};
 
@@ -61,6 +61,16 @@ namespace Planeted
         return os;
     }
 
+    inline std::string GetFilename(const std::string& path)
+    {
+        size_t pos = path.find_last_of("/\\");
+        if (pos == std::string::npos)
+        {
+            return path; // no path, already a filename
+        }
+        return path.substr(pos + 1);
+    }
+
     inline std::string ReadFile(const std::string &path)
     {
         std::ifstream file(path);
@@ -76,7 +86,7 @@ namespace Planeted
         return buffer.str();
     }
 
-   inline std::string NormalizePath(const std::string& path)
+   inline std::string NormalizePath(const std::string &path)
     {
         std::vector<std::string> stack;
         std::string component;
