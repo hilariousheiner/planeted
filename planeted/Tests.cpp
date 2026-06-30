@@ -4,9 +4,12 @@
 
 #include "PixelMap.h"
 #include "PPM.h"
+#include "PGM.h"
 
 namespace Planeted
 {
+    static uint16_t sample_size = 256;
+
     static std::uint8_t NoiseToGrayScale(float noise)
     {
         return ToUint8(SignedToUnitRange(noise));
@@ -16,7 +19,7 @@ namespace Planeted
     {
         return [fbmParams, noiseParams, noiseFun](const int x, const int y)
         {
-            float nx = x/512.0f -0.5f;
+            float nx = x/static_cast<float>(sample_size) - 0.5f;
             return NoiseToGrayScale(Random::FBM1D(nx, fbmParams, noiseParams, noiseFun));
         };
     }
@@ -24,8 +27,8 @@ namespace Planeted
     {
         return [fbmParams, noiseParams, noiseFun](const int x, const int y)
         {
-            float nx = x/512.0f -0.5f;
-            float ny = y/512.0f -0.5f;
+            float nx = x/static_cast<float>(sample_size) - 0.5f;
+            float ny = y/static_cast<float>(sample_size) - 0.5f;
             return NoiseToGrayScale(Random::FBM2D({nx, ny}, fbmParams, noiseParams, noiseFun));
         };
     }
@@ -33,21 +36,21 @@ namespace Planeted
     {
         return [fbmParams, noiseParams, noiseFun](const int x, const int y)
         {
-            float nx = x/512.0f -0.5f;
-            float ny = y/512.0f -0.5f;
+            float nx = x/static_cast<float>(sample_size) - 0.5f;
+            float ny = y/static_cast<float>(sample_size) - 0.5f;
             return NoiseToGrayScale(Random::FBM3D({nx, ny, 1.0f}, fbmParams, noiseParams, noiseFun));
         };
     }
 
     static void noiseTest(const std::string &filename, ColorFunction fn)
     {
-        PixelMap pixMap = PixelMap(512, 512);
+        PixelMap pixMap = PixelMap(sample_size, sample_size);
 
-        pixMap.FillRect(0, 0, 512, 512, fn);
+        pixMap.FillRect(0, 0, sample_size, sample_size, fn);
 
-        std::ofstream ppmfile(filename + ".ppm");
+        std::ofstream pgmfile(filename + ".pgm");
 
-        ppmfile << PPM::PixelMapToPPM(pixMap);
+        pgmfile << PGM::PixelMapToPGM(pixMap);
     }
 
     void NoiseTest1D(const std::string &filename, Random::FBMParameters &fbmParams, Random::NoiseParameters &noiseParams, Random::NoiseFunction1D noiseFun)

@@ -9,5 +9,9 @@
 
 namespace Planeted
 {
+    namespace PGM
+    {
+        std::string PixelMapToPGM(const PixelMap &pmap);
+    }
 }
 #endif
