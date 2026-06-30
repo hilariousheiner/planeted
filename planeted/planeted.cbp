@@ -39,8 +39,6 @@
 		<Unit filename="Noise.h" />
 		<Unit filename="OBJ.cpp" />
 		<Unit filename="OBJ.h" />
-		<Unit filename="PBM.cpp" />
-		<Unit filename="PBM.h" />
 		<Unit filename="PDSL.cpp" />
 		<Unit filename="PDSL.h" />
 		<Unit filename="PDSL_Ast.cpp" />
@@ -54,6 +52,8 @@
 		<Unit filename="PDSL_Token.h" />
 		<Unit filename="PDSL_Value.cpp" />
 		<Unit filename="PDSL_Value.h" />
+		<Unit filename="PGM.cpp" />
+		<Unit filename="PGM.h" />
 		<Unit filename="POV.cpp" />
 		<Unit filename="POV.h" />
 		<Unit filename="PPM.cpp" />
