@@ -41,11 +41,21 @@ namespace Planeted
             float Exponent;
         };
 
+        //void SetNumberOfOctaves(std::uint32_t numberOfOctaves);
+        void SetStartFrequency(float frequency);
+        void SetLacunarity(float lacunarity);
+        void SetPersistence(float persistence);
+
+        void SetNormalizeFBM(bool normalizeFBM);
+        void SetExponent(float exponent);
+
+
         struct NoiseParameters
         {
             NoiseParameters();
 
             std::uint32_t seed;
+
             float WhiteNoiseScale;
         };
 
@@ -79,14 +89,6 @@ namespace Planeted
         NoiseFunction1D GetBaseNoiseFunction1D(NoiseTypeEnum noiseType);
         NoiseFunction2D GetBaseNoiseFunction2D(NoiseTypeEnum noiseType);
         NoiseFunction3D GetBaseNoiseFunction3D(NoiseTypeEnum noiseType);
-
-        void SetNumberOfOctaves(std::uint32_t numberOfOctaves);
-        void SetStartFrequency(float frequency);
-        void SetLacunarity(float lacunarity);
-        void SetPersistence(float persistence);
-
-        void SetNormalizeFBM(bool normalizeFBM);
-        void SetExponent(float exponent);
 
         float FBM1D(const float &p, const FBMParameters &fbmParams, const NoiseParameters &noiseParams, NoiseFunction1D noiseFun);
         float FBM2D(const Vector2 &p, const FBMParameters &fbmParams, const NoiseParameters &noiseParams, NoiseFunction2D noiseFun);

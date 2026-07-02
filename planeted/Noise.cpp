@@ -19,6 +19,11 @@ namespace Planeted
         this->seed64 = FMix64(static_cast<uint64_t>(seed));
     };
 
+    void Noise::SetNumberOfOctaves(std::uint32_t numberOfOctaves)
+    {
+        this->fbmParams.NumberOfOctaves = numberOfOctaves;
+    }
+
     float Noise::Noise1D(const float &p) const
     {
         return Random::FBM1D(p, this->fbmParams, this->noiseParams, Random::GetNoiseFunction1D(this->noiseType, this->noiseStyle));

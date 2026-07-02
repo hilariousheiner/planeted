@@ -155,7 +155,8 @@ namespace Planeted
 
             if(args[0].GetValueType() == ValueTypeEnum::Int)
             {
-                Random::SetNumberOfOctaves(args[0].GetIntValue());
+                //Random::SetNumberOfOctaves(args[0].GetIntValue());
+                noise.SetNumberOfOctaves(args[0].GetIntValue());
             }
             return Value::Null();
         }

@@ -12,6 +12,8 @@ namespace Planeted
         Noise(std::string seed);
         Noise(std::uint32_t seed);
 
+        void SetNumberOfOctaves(std::uint32_t numberOfOctaves);
+
         float Noise1D(const float &p) const;
         float Noise2D(const Vector2 &p) const;
         float Noise3D(const Vector3 &p) const;

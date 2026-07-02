@@ -27,7 +27,7 @@ namespace Planeted
         static std::uint32_t seed = StringToSeed32("Planeted");
         static std::uint64_t seed64 = StringToSeed64("Planeted");
 
-        static std::uint32_t numberOfOctaves = 1;
+        //static std::uint32_t numberOfOctaves = 1;
         static float lacunarity = 2.0f;
         static float persistence = 0.5f;
         static float startFrequency = 1.0f;
@@ -35,6 +35,33 @@ namespace Planeted
         static float exponent = 1.0f;
 
         static float whiteNoiseScale = 100.0f;
+
+        /*
+        void SetNumberOfOctaves(std::uint32_t numberOfOctaves)
+        {
+            Random::numberOfOctaves = numberOfOctaves;
+        }*/
+        void SetStartFrequency(float frequency)
+        {
+            Random::startFrequency = frequency;
+        }
+        void SetLacunarity(float lacunarity)
+        {
+            Random::lacunarity = lacunarity;
+        }
+        void SetPersistence(float persistence)
+        {
+            Random::persistence = persistence;
+        }
+
+        void SetNormalizeFBM(bool normalizeFBM)
+        {
+            Random::normalizeFBM = normalizeFBM;
+        }
+        void SetExponent(float exponent)
+        {
+            Random::exponent = exponent;
+        }
 
         static Permutation permutation =
         {
@@ -227,7 +254,7 @@ namespace Planeted
 
         void ResetNoise()
         {
-            Random::numberOfOctaves = 1;
+            //Random::numberOfOctaves = 1;
             Random::lacunarity = 2.0f;
             Random::persistence = 0.5f;
             Random::startFrequency = 1.0f;
@@ -491,32 +518,6 @@ namespace Planeted
             return result;
         }
 
-        void SetNumberOfOctaves(std::uint32_t numberOfOctaves)
-        {
-            Random::numberOfOctaves = numberOfOctaves;
-        }
-        void SetStartFrequency(float frequency)
-        {
-            Random::startFrequency = frequency;
-        }
-        void SetLacunarity(float lacunarity)
-        {
-            Random::lacunarity = lacunarity;
-        }
-        void SetPersistence(float persistence)
-        {
-            Random::persistence = persistence;
-        }
-
-        void SetNormalizeFBM(bool normalizeFBM)
-        {
-            Random::normalizeFBM = normalizeFBM;
-        }
-        void SetExponent(float exponent)
-        {
-            Random::exponent = exponent;
-        }
-
         float FBM1D(const float &p, const FBMParameters &fbmParams, const NoiseParameters &noiseParams, NoiseFunction1D noiseFun)
         {
             float result = 0.0f;
@@ -526,7 +527,7 @@ namespace Planeted
 
             float t = 0.0f;
 
-            for(std::uint32_t i = 0; i < Random::numberOfOctaves; ++i)
+            for(std::uint32_t i = 0; i < fbmParams.NumberOfOctaves; ++i)
             {
                 result += amplitude*noiseFun(p*frequency, noiseParams);
 
@@ -551,7 +552,7 @@ namespace Planeted
 
             float t = 0.0f;
 
-            for(std::uint32_t i = 0; i < Random::numberOfOctaves; ++i)
+            for(std::uint32_t i = 0; i < fbmParams.NumberOfOctaves; ++i)
             {
                 result += amplitude*noiseFun(p*frequency, params);
 
@@ -576,7 +577,7 @@ namespace Planeted
 
             float t = 0.0f;
 
-            for(std::uint32_t i = 0; i < Random::numberOfOctaves; ++i)
+            for(std::uint32_t i = 0; i < fbmParams.NumberOfOctaves; ++i)
             {
                 result += amplitude*noiseFun(p*frequency, noiseParams);
 
