@@ -27,24 +27,14 @@ namespace Planeted
         static std::uint32_t seed = StringToSeed32("Planeted");
         static std::uint64_t seed64 = StringToSeed64("Planeted");
 
-        //static std::uint32_t numberOfOctaves = 1;
         static float lacunarity = 2.0f;
         static float persistence = 0.5f;
-        static float startFrequency = 1.0f;
+        //static float startFrequency = 1.0f;
         static bool normalizeFBM = false;
         static float exponent = 1.0f;
 
         static float whiteNoiseScale = 100.0f;
 
-        /*
-        void SetNumberOfOctaves(std::uint32_t numberOfOctaves)
-        {
-            Random::numberOfOctaves = numberOfOctaves;
-        }*/
-        void SetStartFrequency(float frequency)
-        {
-            Random::startFrequency = frequency;
-        }
         void SetLacunarity(float lacunarity)
         {
             Random::lacunarity = lacunarity;
@@ -257,7 +247,7 @@ namespace Planeted
             //Random::numberOfOctaves = 1;
             Random::lacunarity = 2.0f;
             Random::persistence = 0.5f;
-            Random::startFrequency = 1.0f;
+            //Random::startFrequency = 1.0f;
             Random::normalizeFBM = false;
             Random::exponent = 1.0f;
 
@@ -522,7 +512,7 @@ namespace Planeted
         {
             float result = 0.0f;
 
-            float frequency = Random::startFrequency;
+            float frequency = fbmParams.StartFrequency;
             float amplitude = 1.0f;
 
             float t = 0.0f;
@@ -547,7 +537,7 @@ namespace Planeted
         {
             float result = 0.0f;
 
-            float frequency = Random::startFrequency;
+            float frequency = fbmParams.StartFrequency;
             float amplitude = 1.0f;
 
             float t = 0.0f;
@@ -572,7 +562,7 @@ namespace Planeted
         {
             float result = 0.0f;
 
-            float frequency = Random::startFrequency;
+            float frequency = fbmParams.StartFrequency;
             float amplitude = 1.0f;
 
             float t = 0.0f;

@@ -41,8 +41,6 @@ namespace Planeted
             float Exponent;
         };
 
-        //void SetNumberOfOctaves(std::uint32_t numberOfOctaves);
-        void SetStartFrequency(float frequency);
         void SetLacunarity(float lacunarity);
         void SetPersistence(float persistence);
 

@@ -24,6 +24,11 @@ namespace Planeted
         this->fbmParams.NumberOfOctaves = numberOfOctaves;
     }
 
+    void Noise::SetStartFrequency(float startFrequency)
+    {
+        this->fbmParams.StartFrequency = startFrequency;
+    }
+
     float Noise::Noise1D(const float &p) const
     {
         return Random::FBM1D(p, this->fbmParams, this->noiseParams, Random::GetNoiseFunction1D(this->noiseType, this->noiseStyle));
