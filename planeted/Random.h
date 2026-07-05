@@ -41,7 +41,7 @@ namespace Planeted
             float Exponent;
         };
 
-        void SetLacunarity(float lacunarity);
+        //void SetLacunarity(float lacunarity);
         void SetPersistence(float persistence);
 
         void SetNormalizeFBM(bool normalizeFBM);

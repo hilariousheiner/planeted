@@ -29,6 +29,11 @@ namespace Planeted
         this->fbmParams.StartFrequency = startFrequency;
     }
 
+    void Noise::SetLacunarity(float lacunarity)
+    {
+        this->fbmParams.Lacunarity = lacunarity;
+    }
+
     float Noise::Noise1D(const float &p) const
     {
         return Random::FBM1D(p, this->fbmParams, this->noiseParams, Random::GetNoiseFunction1D(this->noiseType, this->noiseStyle));

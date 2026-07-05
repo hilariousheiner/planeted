@@ -14,6 +14,7 @@ namespace Planeted
 
         void SetNumberOfOctaves(std::uint32_t numberOfOctaves);
         void SetStartFrequency(float startFrequency);
+        void SetLacunarity(float lacunarity);
 
         float Noise1D(const float &p) const;
         float Noise2D(const Vector2 &p) const;

@@ -182,7 +182,8 @@ namespace Planeted
 
             if(args[0].GetValueType() == ValueTypeEnum::Float)
             {
-                Random::SetLacunarity(args[0].GetFloatValue());
+                //Random::SetLacunarity(args[0].GetFloatValue());
+                noise.SetLacunarity(args[0].GetFloatValue());
             }
             else
             {
