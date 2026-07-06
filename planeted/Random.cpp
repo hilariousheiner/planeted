@@ -27,24 +27,18 @@ namespace Planeted
         static std::uint32_t seed = StringToSeed32("Planeted");
         static std::uint64_t seed64 = StringToSeed64("Planeted");
 
-        //static float lacunarity = 2.0f;
-        static float persistence = 0.5f;
-        //static float startFrequency = 1.0f;
+        //static float persistence = 0.5f;
         static bool normalizeFBM = false;
         static float exponent = 1.0f;
 
         static float whiteNoiseScale = 100.0f;
 
         /*
-        void SetLacunarity(float lacunarity)
-        {
-            Random::lacunarity = lacunarity;
-        }
-        */
         void SetPersistence(float persistence)
         {
             Random::persistence = persistence;
         }
+        */
 
         void SetNormalizeFBM(bool normalizeFBM)
         {
@@ -248,7 +242,8 @@ namespace Planeted
         {
             //Random::numberOfOctaves = 1;
             //Random::lacunarity = 2.0f;
-            Random::persistence = 0.5f;
+
+            //Random::persistence = 0.5f;
             //Random::startFrequency = 1.0f;
             Random::normalizeFBM = false;
             Random::exponent = 1.0f;
@@ -525,7 +520,7 @@ namespace Planeted
 
                 t += amplitude;
                 frequency *= fbmParams.Lacunarity;
-                amplitude *= Random::persistence;
+                amplitude *= fbmParams.Persistence;
             }
 
             if(Random::normalizeFBM)
@@ -550,7 +545,7 @@ namespace Planeted
 
                 t += amplitude;
                 frequency *= fbmParams.Lacunarity;
-                amplitude *= Random::persistence;
+                amplitude *= fbmParams.Persistence;
             }
 
             if(Random::normalizeFBM)
@@ -575,7 +570,7 @@ namespace Planeted
 
                 t += amplitude;
                 frequency *= fbmParams.Lacunarity;
-                amplitude *= Random::persistence;
+                amplitude *= fbmParams.Persistence;
             }
 
             if(Random::normalizeFBM)
