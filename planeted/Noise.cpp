@@ -39,6 +39,11 @@ namespace Planeted
         this->fbmParams.Persistence = persistence;
     }
 
+    void Noise::SetNormalizeFBM(bool normalize)
+    {
+        this->fbmParams.Normalize = normalize;
+    }
+
     float Noise::Noise1D(const float &p) const
     {
         return Random::FBM1D(p, this->fbmParams, this->noiseParams, Random::GetNoiseFunction1D(this->noiseType, this->noiseStyle));

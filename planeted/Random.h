@@ -41,9 +41,7 @@ namespace Planeted
             float Exponent;
         };
 
-        //void SetPersistence(float persistence);
-
-        void SetNormalizeFBM(bool normalizeFBM);
+        //void SetNormalizeFBM(bool normalizeFBM);
         void SetExponent(float exponent);
 
 

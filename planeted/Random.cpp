@@ -27,23 +27,17 @@ namespace Planeted
         static std::uint32_t seed = StringToSeed32("Planeted");
         static std::uint64_t seed64 = StringToSeed64("Planeted");
 
-        //static float persistence = 0.5f;
-        static bool normalizeFBM = false;
+        //static bool normalizeFBM = false;
         static float exponent = 1.0f;
 
         static float whiteNoiseScale = 100.0f;
 
         /*
-        void SetPersistence(float persistence)
-        {
-            Random::persistence = persistence;
-        }
-        */
-
         void SetNormalizeFBM(bool normalizeFBM)
         {
             Random::normalizeFBM = normalizeFBM;
         }
+        */
         void SetExponent(float exponent)
         {
             Random::exponent = exponent;
@@ -245,7 +239,7 @@ namespace Planeted
 
             //Random::persistence = 0.5f;
             //Random::startFrequency = 1.0f;
-            Random::normalizeFBM = false;
+            //Random::normalizeFBM = false;
             Random::exponent = 1.0f;
 
             Random::whiteNoiseScale = 100.0f;
@@ -523,7 +517,7 @@ namespace Planeted
                 amplitude *= fbmParams.Persistence;
             }
 
-            if(Random::normalizeFBM)
+            if(fbmParams.Normalize)
             {
                 result = result / t;
             }
@@ -548,7 +542,7 @@ namespace Planeted
                 amplitude *= fbmParams.Persistence;
             }
 
-            if(Random::normalizeFBM)
+            if(fbmParams.Normalize)
             {
                 result = result / t;
             }
@@ -573,7 +567,7 @@ namespace Planeted
                 amplitude *= fbmParams.Persistence;
             }
 
-            if(Random::normalizeFBM)
+            if(fbmParams.Normalize)
             {
                 result = result / t;
             }

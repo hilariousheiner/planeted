@@ -201,7 +201,6 @@ namespace Planeted
 
             if(args[0].GetValueType() == ValueTypeEnum::Float)
             {
-                //Random::SetPersistence(args[0].GetFloatValue());
                 noise.SetPersistence(args[0].GetFloatValue());
             }
             else
@@ -220,7 +219,8 @@ namespace Planeted
 
             if(args[0].GetValueType() == ValueTypeEnum::Bool)
             {
-                Random::SetNormalizeFBM(args[0].GetBoolValue());
+                //Random::SetNormalizeFBM(args[0].GetBoolValue());
+                noise.SetNormalizeFBM(args[0].GetBoolValue());
             }
             else
             {
