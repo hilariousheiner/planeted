@@ -28,7 +28,7 @@ namespace Planeted
         static std::uint64_t seed64 = StringToSeed64("Planeted");
 
         //static bool normalizeFBM = false;
-        static float exponent = 1.0f;
+        //static float exponent = 1.0f;
 
         static float whiteNoiseScale = 100.0f;
 
@@ -38,10 +38,10 @@ namespace Planeted
             Random::normalizeFBM = normalizeFBM;
         }
         */
-        void SetExponent(float exponent)
+        /*void SetExponent(float exponent)
         {
             Random::exponent = exponent;
-        }
+        }*/
 
         static Permutation permutation =
         {
@@ -240,7 +240,7 @@ namespace Planeted
             //Random::persistence = 0.5f;
             //Random::startFrequency = 1.0f;
             //Random::normalizeFBM = false;
-            Random::exponent = 1.0f;
+            //Random::exponent = 1.0f;
 
             Random::whiteNoiseScale = 100.0f;
         }
@@ -522,7 +522,7 @@ namespace Planeted
                 result = result / t;
             }
 
-            return std::pow(result, Random::exponent);
+            return std::pow(result, fbmParams.Exponent);
         }
         float FBM2D(const Vector2 &p, const FBMParameters &fbmParams, const NoiseParameters &params, NoiseFunction2D noiseFun)
         {
@@ -547,7 +547,7 @@ namespace Planeted
                 result = result / t;
             }
 
-            return std::pow(result, Random::exponent);
+            return std::pow(result, fbmParams.Exponent);
         }
         float FBM3D(const Vector3 &p, const FBMParameters &fbmParams, const NoiseParameters &noiseParams, NoiseFunction3D noiseFun)
         {
@@ -572,7 +572,7 @@ namespace Planeted
                 result = result / t;
             }
 
-            return std::powf(result, Random::exponent);
+            return std::powf(result, fbmParams.Exponent);
         }
 
         NoiseFunction1D Billow1D(NoiseFunction1D noiseFun)

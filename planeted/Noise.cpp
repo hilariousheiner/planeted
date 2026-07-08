@@ -44,6 +44,11 @@ namespace Planeted
         this->fbmParams.Normalize = normalize;
     }
 
+    void Noise::SetExponent(float exponent)
+    {
+        this->fbmParams.Exponent = exponent;
+    }
+
     float Noise::Noise1D(const float &p) const
     {
         return Random::FBM1D(p, this->fbmParams, this->noiseParams, Random::GetNoiseFunction1D(this->noiseType, this->noiseStyle));

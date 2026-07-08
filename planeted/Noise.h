@@ -17,6 +17,7 @@ namespace Planeted
         void SetLacunarity(float lacunarity);
         void SetPersistence(float persistence);
         void SetNormalizeFBM(bool normalize);
+        void SetExponent(float exponent);
 
         float Noise1D(const float &p) const;
         float Noise2D(const Vector2 &p) const;

@@ -41,9 +41,12 @@ namespace Planeted
             float Exponent;
         };
 
-        //void SetNormalizeFBM(bool normalizeFBM);
-        void SetExponent(float exponent);
+        //void SetExponent(float exponent);
+        void ResetNoise();
+        void SetWhiteNoiseScale(float scale);
 
+        void SeedNoise(std::uint32_t seed);
+        void SeedNoise(std::string seed);
 
         struct NoiseParameters
         {
@@ -61,13 +64,6 @@ namespace Planeted
         NoiseFunction1D GetNoiseFunction1D(NoiseTypeEnum noiseType, NoiseStyleEnum noiseStyle);
         NoiseFunction2D GetNoiseFunction2D(NoiseTypeEnum noiseType, NoiseStyleEnum noiseStyle);
         NoiseFunction3D GetNoiseFunction3D(NoiseTypeEnum noiseType, NoiseStyleEnum noiseStyle);
-
-        void SeedNoise(std::uint32_t seed);
-        void SeedNoise(std::string seed);
-
-        void ResetNoise();
-
-        void SetWhiteNoiseScale(float scale);
 
         float WhiteNoise1D(const float &p, const NoiseParameters &params);
         float WhiteNoise2D(const Vector2 &p, const NoiseParameters &params);
