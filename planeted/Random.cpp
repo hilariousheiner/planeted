@@ -57,31 +57,17 @@ namespace Planeted
             this->permutationTable = MakePermutationTable(Random::permutation, this->seed64);
         }
 
-        std::uint8_t NoiseParameters::Permute(const std::uint8_t &x)
+        std::uint8_t NoiseParameters::Permute(const std::uint8_t &x) const
         {
             return this->permutationTable[x];
         }
-        std::uint8_t NoiseParameters::Permute(const int &x, const int &y)
+        std::uint8_t NoiseParameters::Permute(const int &x, const int &y) const
         {
             return this->permutationTable[this->permutationTable[x] + y];
         }
-        std::uint8_t NoiseParameters::Permute(const int &x, const int &y, const int &z)
+        std::uint8_t NoiseParameters::Permute(const int &x, const int &y, const int &z) const
         {
             return this->permutationTable[this->permutationTable[this->permutationTable[x] + y] + z];
-        }
-
-        static std::uint32_t seed = StringToSeed32("Planeted");
-        static std::uint64_t seed64 = StringToSeed64("Planeted");
-
-        void SeedNoise(std::uint32_t seed)
-        {
-            Random::seed = seed;
-            Random::seed64 = FMix64(static_cast<uint64_t>(seed));
-        }
-        void SeedNoise(std::string seed)
-        {
-            Random::seed = StringToSeed32(seed);
-            Random::seed64 = StringToSeed64(seed);
         }
 
         static std::uint8_t toGrid(const int &x)
@@ -89,36 +75,16 @@ namespace Planeted
             return static_cast<std::uint8_t>(x & (PermutationSize - 1));
         }
 
-        static PermutationTable &permutationTable()
+        static const float randomDotGradPerlin(const NoiseParameters &params, const std::uint8_t &x, const float tx)
         {
-            static PermutationTable result = MakePermutationTable(Random::permutation, Random::seed64);
-
-            return result;
+            return params.Permute(x) & 1 ? tx : -tx;
         }
 
-        static std::uint8_t permute(const std::uint8_t &x)
-        {
-            return permutationTable()[x];
-        }
-        static std::uint8_t permute(const int &x, const int &y)
-        {
-            return permutationTable()[permutationTable()[x] + y];
-        }
-        static std::uint8_t permute(const int &x, const int &y, const int &z)
-        {
-            return permutationTable()[permutationTable()[permutationTable()[x] + y] + z];
-        }
-
-        static const float randomDotGradPerlin(const std::uint8_t &x, const float tx)
-        {
-            return permute(x) & 1 ? tx : -tx;
-        }
-
-        static float randomDotGradPerlin(const int &x, const int &y, const float tx, const float ty)
+        static float randomDotGradPerlin(const NoiseParameters &params, const int &x, const int &y, const float tx, const float ty)
         {
             float result;
 
-            switch(permute(x, y) & 7)
+            switch(params.Permute(x, y) & 7)
             {
             case 0:
                 result = tx; // (1, 0) * (tx, ty)
@@ -149,11 +115,11 @@ namespace Planeted
             return result;
         }
 
-        static float randomDotGradPerlin(const int &x, const int &y, const int &z, const float tx, const float ty, const float tz)
+        static float randomDotGradPerlin(const NoiseParameters &params, const int &x, const int &y, const int &z, const float tx, const float ty, const float tz)
         {
             float result;
 
-            switch(permute(x,y,z) & 15)
+            switch(params.Permute(x,y,z) & 15)
             {
             case 0:
                 result = tx + ty; //(1,1,0) * (tx, ty, tz)
@@ -245,7 +211,7 @@ namespace Planeted
         {
             int pi = std::floor(p * params.WhiteNoiseScale);
 
-            uint32_t h = Hash1D(pi, Random::seed);
+            uint32_t h = Hash1D(pi, params.seed);
 
             return HashToSigned(h);
         }
@@ -254,7 +220,7 @@ namespace Planeted
             int xi = std::floor(p.X * params.WhiteNoiseScale);
             int yi = std::floor(p.Y * params.WhiteNoiseScale);
 
-            uint32_t h = Hash2D(xi, yi, Random::seed);
+            uint32_t h = Hash2D(xi, yi, params.seed);
 
             return HashToSigned(h);
         }
@@ -264,7 +230,7 @@ namespace Planeted
             int yi = std::floor(p.Y * params.WhiteNoiseScale);
             int zi = std::floor(p.Z * params.WhiteNoiseScale);
 
-            uint32_t h = Hash3D(xi, yi, zi, Random::seed);
+            uint32_t h = Hash3D(xi, yi, zi, params.seed);
 
             return HashToSigned(h);
         }
@@ -276,8 +242,8 @@ namespace Planeted
             std::uint8_t p0 = toGrid(pi);
             std::uint8_t p1 = toGrid(p0 + 1);
 
-            const float &c0 = HashToSigned(Hash1D(p0, Random::seed));
-            const float &c1 = HashToSigned(Hash1D(p1, Random::seed));
+            const float &c0 = HashToSigned(Hash1D(p0, params.seed));
+            const float &c1 = HashToSigned(Hash1D(p1, params.seed));
 
             return SmoothStepUnclamped(c0, c1, p - pi);
         }
@@ -295,10 +261,10 @@ namespace Planeted
             float tx = p.X - xi;
             float ty = p.Y - yi;
 
-            const float &c00 = HashToSigned(Hash2D(xi0, yi0, Random::seed));
-            const float &c10 = HashToSigned(Hash2D(xi1, yi0, Random::seed));
-            const float &c01 = HashToSigned(Hash2D(xi0, yi1, Random::seed));
-            const float &c11 = HashToSigned(Hash2D(xi1, yi1, Random::seed));
+            const float &c00 = HashToSigned(Hash2D(xi0, yi0, params.seed));
+            const float &c10 = HashToSigned(Hash2D(xi1, yi0, params.seed));
+            const float &c01 = HashToSigned(Hash2D(xi0, yi1, params.seed));
+            const float &c11 = HashToSigned(Hash2D(xi1, yi1, params.seed));
 
             float u0 = SmoothStepUnclamped(c00, c10, tx);
             float u1 = SmoothStepUnclamped(c01, c11, tx);
@@ -325,15 +291,15 @@ namespace Planeted
             float tz = p.Z - zi;
 
             // get noise value at cell corners:
-            const float &c000 = HashToSigned(Hash3D(xi0, yi0, zi0, Random::seed));
-            const float &c100 = HashToSigned(Hash3D(xi1, yi0, zi0, Random::seed));
-            const float &c010 = HashToSigned(Hash3D(xi0, yi1, zi0, Random::seed));
-            const float &c110 = HashToSigned(Hash3D(xi1, yi1, zi0, Random::seed));
+            const float &c000 = HashToSigned(Hash3D(xi0, yi0, zi0, params.seed));
+            const float &c100 = HashToSigned(Hash3D(xi1, yi0, zi0, params.seed));
+            const float &c010 = HashToSigned(Hash3D(xi0, yi1, zi0, params.seed));
+            const float &c110 = HashToSigned(Hash3D(xi1, yi1, zi0, params.seed));
 
-            const float &c001 = HashToSigned(Hash3D(xi0, yi0, zi1, Random::seed));
-            const float &c101 = HashToSigned(Hash3D(xi1, yi0, zi1, Random::seed));
-            const float &c011 = HashToSigned(Hash3D(xi0, yi1, zi1, Random::seed));
-            const float &c111 = HashToSigned(Hash3D(xi1, yi1, zi1, Random::seed));
+            const float &c001 = HashToSigned(Hash3D(xi0, yi0, zi1, params.seed));
+            const float &c101 = HashToSigned(Hash3D(xi1, yi0, zi1, params.seed));
+            const float &c011 = HashToSigned(Hash3D(xi0, yi1, zi1, params.seed));
+            const float &c111 = HashToSigned(Hash3D(xi1, yi1, zi1, params.seed));
 
             // interpolate:
             float u00 = SmoothStepUnclamped(c000, c100, tx);
@@ -357,8 +323,8 @@ namespace Planeted
 
             float tp = p - pi;
 
-            const float g0 = randomDotGradPerlin(p0, tp);
-            const float g1 = randomDotGradPerlin(p1, tp - 1);
+            const float g0 = randomDotGradPerlin(params, p0, tp);
+            const float g1 = randomDotGradPerlin(params, p1, tp - 1);
 
             return SmoothStepUnclamped5(g0, g1, tp);
         }
@@ -376,10 +342,10 @@ namespace Planeted
             float tx = p.X - xi;
             float ty = p.Y - yi;
 
-            const float &c00 = randomDotGradPerlin(xi0, yi0, tx    , ty    );
-            const float &c10 = randomDotGradPerlin(xi1, yi0, tx - 1, ty    );
-            const float &c01 = randomDotGradPerlin(xi0, yi1, tx    , ty - 1);
-            const float &c11 = randomDotGradPerlin(xi1, yi1, tx - 1, ty - 1);
+            const float &c00 = randomDotGradPerlin(params, xi0, yi0, tx    , ty    );
+            const float &c10 = randomDotGradPerlin(params, xi1, yi0, tx - 1, ty    );
+            const float &c01 = randomDotGradPerlin(params, xi0, yi1, tx    , ty - 1);
+            const float &c11 = randomDotGradPerlin(params, xi1, yi1, tx - 1, ty - 1);
 
             float u0 = SmoothStepUnclamped5(c00, c10, tx);
             float u1 = SmoothStepUnclamped5(c01, c11, tx);
@@ -406,15 +372,15 @@ namespace Planeted
             float tz = p.Z - zi;
 
             // compute dot products with gradients at cell corners:
-            const float &c000 = randomDotGradPerlin(xi0, yi0, zi0, tx    , ty    , tz   );
-            const float &c100 = randomDotGradPerlin(xi1, yi0, zi0, tx - 1, ty    , tz   );
-            const float &c010 = randomDotGradPerlin(xi0, yi1, zi0, tx    , ty - 1, tz   );
-            const float &c110 = randomDotGradPerlin(xi1, yi1, zi0, tx - 1, ty - 1, tz   );
+            const float &c000 = randomDotGradPerlin(params, xi0, yi0, zi0, tx    , ty    , tz   );
+            const float &c100 = randomDotGradPerlin(params, xi1, yi0, zi0, tx - 1, ty    , tz   );
+            const float &c010 = randomDotGradPerlin(params, xi0, yi1, zi0, tx    , ty - 1, tz   );
+            const float &c110 = randomDotGradPerlin(params, xi1, yi1, zi0, tx - 1, ty - 1, tz   );
 
-            const float &c001 = randomDotGradPerlin(xi0, yi0, zi1, tx    , ty    , tz - 1);
-            const float &c101 = randomDotGradPerlin(xi1, yi0, zi1, tx - 1, ty    , tz - 1);
-            const float &c011 = randomDotGradPerlin(xi0, yi1, zi1, tx    , ty - 1, tz - 1);
-            const float &c111 = randomDotGradPerlin(xi1, yi1, zi1, tx - 1, ty - 1, tz - 1);
+            const float &c001 = randomDotGradPerlin(params, xi0, yi0, zi1, tx    , ty    , tz - 1);
+            const float &c101 = randomDotGradPerlin(params, xi1, yi0, zi1, tx - 1, ty    , tz - 1);
+            const float &c011 = randomDotGradPerlin(params, xi0, yi1, zi1, tx    , ty - 1, tz - 1);
+            const float &c111 = randomDotGradPerlin(params, xi1, yi1, zi1, tx - 1, ty - 1, tz - 1);
 
             // interpolate:
             float u00 = SmoothStepUnclamped5(c000, c100, tx);

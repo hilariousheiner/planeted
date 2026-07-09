@@ -97,12 +97,12 @@ namespace Planeted
             if(args[0].GetValueType() == ValueTypeEnum::Int)
             {
                 int seed = args[0].GetIntValue();
-                Random::SeedNoise(seed);
+                noise.noiseParams.SeedNoise(seed);
             }
             else if(args[0].GetValueType() == ValueTypeEnum::String)
             {
                 std::string seed = args[0].GetStringValue();
-                Random::SeedNoise(seed);
+                noise.noiseParams.SeedNoise(seed);
             }
             else
             {

@@ -42,9 +42,6 @@ namespace Planeted
             float Exponent;
         };
 
-        void SeedNoise(std::uint32_t seed);
-        void SeedNoise(std::string seed);
-
         class NoiseParameters
         {
         public:
@@ -56,14 +53,14 @@ namespace Planeted
             void SeedNoise(std::uint32_t seed);
             void SeedNoise(std::string seed);
 
-            std::uint8_t Permute(const std::uint8_t &x);
-            std::uint8_t Permute(const int &x, const int &y);
-            std::uint8_t Permute(const int &x, const int &y, const int &z);
+            std::uint8_t Permute(const std::uint8_t &x) const;
+            std::uint8_t Permute(const int &x, const int &y) const;
+            std::uint8_t Permute(const int &x, const int &y, const int &z) const;
 
-        private:
+        //private:
             std::uint32_t seed;
             std::uint64_t seed64;
-
+        private:
             PermutationTable permutationTable;
         };
 
