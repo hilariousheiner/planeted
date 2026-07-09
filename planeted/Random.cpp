@@ -1,7 +1,6 @@
 #include "Random.h"
 
 #include <cmath> //for std::abs and std::pow
-#include "PRNG.h"
 
 namespace Planeted
 {

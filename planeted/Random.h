@@ -7,6 +7,7 @@
 #include <string>
 
 #include "Math.h"
+#include "PRNG.h"
 #include "Vector2.h"
 #include "Vector3.h"
 
@@ -44,13 +45,18 @@ namespace Planeted
         void SeedNoise(std::uint32_t seed);
         void SeedNoise(std::string seed);
 
-        struct NoiseParameters
+        class NoiseParameters
         {
+        public:
+
             NoiseParameters();
 
             std::uint32_t seed;
 
             float WhiteNoiseScale;
+
+        private:
+            PermutationTable permutationTable;
         };
 
         using NoiseFunction1D = std::function<float(const float&, const NoiseParameters&)>;
