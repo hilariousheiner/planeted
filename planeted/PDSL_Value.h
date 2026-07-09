@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "Mesh.h"
+#include "Noise.h"
 
 namespace Planeted
 {
@@ -18,7 +19,9 @@ namespace Planeted
 
         Tuple,
         List,
-        Mesh
+
+        Mesh,
+        Noise
     };
 
     class Value;
@@ -48,7 +51,9 @@ namespace Planeted
 
         Value(Tuple *tupleValue);
         Value(List *listValue);
+
         Value(Mesh *meshValue);
+        Value(Noise *noiseValue);
 
         bool IsNull() const;
         static const Value &Null();
@@ -60,7 +65,9 @@ namespace Planeted
 
         Tuple &GetTupleValue() const;
         List &GetListValue() const;
+
         Mesh *GetMeshValue() const;
+        Noise &GetNoiseValue() const;
 
         ValueTypeEnum GetValueType() const;
 
@@ -74,7 +81,7 @@ namespace Planeted
         std::string ToString() const;
 
     private:
-        std::variant<std::monostate, int, float, bool, std::string, Tuple*, List*, Mesh*> data;
+        std::variant<std::monostate, int, float, bool, std::string, Tuple*, List*, Mesh*, Noise*> data;
     };
 }
 #endif // PLANETED_PDSL_VALUE_H

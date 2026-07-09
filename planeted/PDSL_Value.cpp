@@ -45,6 +45,11 @@ namespace Planeted
         : data(meshValue)
     {}
 
+    Value::Value(Noise *noiseValue)
+        : data(noiseValue)
+    { }
+
+
     bool Value::IsNull() const
     {
         return std::holds_alternative<std::monostate>(this->data);
@@ -81,9 +86,14 @@ namespace Planeted
     {
         return *std::get<List*>(this->data);
     }
+
     Mesh *Value::GetMeshValue() const
     {
         return std::get<Mesh*>(this->data);
+    }
+    Noise &Value::GetNoiseValue() const
+    {
+        return *std::get<Noise*>(this->data);
     }
 
     ValueTypeEnum Value::GetValueType() const
@@ -118,9 +128,14 @@ namespace Planeted
         {
             return ValueTypeEnum::List;
         }
+
         if(std::holds_alternative<Mesh*>(this->data))
         {
             return ValueTypeEnum::Mesh;
+        }
+        if(std::holds_alternative<Noise*>(this->data))
+        {
+            return ValueTypeEnum::Noise;
         }
         return ValueTypeEnum::Null; // Todo: maybe throw an exception here?
     }
@@ -232,7 +247,6 @@ namespace Planeted
         return result;
     }
 
-
     std::string Value::ToString() const
     {
         std::string result = "";
@@ -251,6 +265,7 @@ namespace Planeted
         case ValueTypeEnum::String:
             result = std::get<std::string>(this->data);
             break;
+
         case ValueTypeEnum::Null:
             result = "null";
             break;
@@ -260,8 +275,12 @@ namespace Planeted
         case ValueTypeEnum::List:
             result = "list: " + std::get<List*>(this->data)->ToString();
             break;
+
         case ValueTypeEnum::Mesh:
             result = "mesh: " + std::get<Mesh*>(this->data)->GetName();
+            break;
+        case ValueTypeEnum::Noise:
+            result = "noise";
             break;
         default:
             break;
