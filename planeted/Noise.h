@@ -19,6 +19,8 @@ namespace Planeted
         void SetNormalizeFBM(bool normalize);
         void SetExponent(float exponent);
 
+        void SetWhiteNoiseScale(float scale);
+
         float Noise1D(const float &p) const;
         float Noise2D(const Vector2 &p) const;
         float Noise3D(const Vector3 &p) const;

@@ -238,7 +238,6 @@ namespace Planeted
 
             if(args[0].GetValueType() == ValueTypeEnum::Float)
             {
-                //Random::SetExponent(args[0].GetFloatValue());
                 noise.SetExponent(args[0].GetFloatValue());
             }
             else
@@ -257,7 +256,8 @@ namespace Planeted
 
             if(args[0].GetValueType() == ValueTypeEnum::Float)
             {
-                Random::SetWhiteNoiseScale(args[0].GetFloatValue());
+                //Random::SetWhiteNoiseScale(args[0].GetFloatValue());
+                noise.SetWhiteNoiseScale(args[0].GetFloatValue());
             }
             else
             {

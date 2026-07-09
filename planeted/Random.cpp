@@ -1,7 +1,6 @@
 #include "Random.h"
 
 #include <cmath> //for std::abs and std::pow
-
 #include "PRNG.h"
 
 namespace Planeted
@@ -27,7 +26,16 @@ namespace Planeted
         static std::uint32_t seed = StringToSeed32("Planeted");
         static std::uint64_t seed64 = StringToSeed64("Planeted");
 
-        static float whiteNoiseScale = 100.0f;
+        void SeedNoise(std::uint32_t seed)
+        {
+            Random::seed = seed;
+            Random::seed64 = FMix64(static_cast<uint64_t>(seed));
+        }
+        void SeedNoise(std::string seed)
+        {
+            Random::seed = StringToSeed32(seed);
+            Random::seed64 = StringToSeed64(seed);
+        }
 
         static Permutation permutation =
         {
@@ -49,9 +57,11 @@ namespace Planeted
             212, 182, 136, 185, 110, 40 , 235, 21 , 222, 178, 174, 205, 68 , 90 , 171, 199
         };
 
+
         static PermutationTable &permutationTable()
         {
             static PermutationTable result = MakePermutationTable(Random::permutation, Random::seed64);
+
             return result;
         }
 
@@ -207,25 +217,9 @@ namespace Planeted
             return result;
         }
 
-        void SeedNoise(std::uint32_t seed)
-        {
-            Random::seed = seed;
-            Random::seed64 = FMix64(static_cast<uint64_t>(seed));
-        }
-        void SeedNoise(std::string seed)
-        {
-            Random::seed = StringToSeed32(seed);
-            Random::seed64 = StringToSeed64(seed);
-        }
-
-        void SetWhiteNoiseScale(float scale)
-        {
-            Random::whiteNoiseScale = scale;
-        }
-
         float WhiteNoise1D(const float &p, const NoiseParameters &params)
         {
-            int pi = std::floor(p * Random::whiteNoiseScale);
+            int pi = std::floor(p * params.WhiteNoiseScale);
 
             uint32_t h = Hash1D(pi, Random::seed);
 
@@ -233,8 +227,8 @@ namespace Planeted
         }
         float WhiteNoise2D(const Vector2 &p, const NoiseParameters &params)
         {
-            int xi = std::floor(p.X * Random::whiteNoiseScale);
-            int yi = std::floor(p.Y * Random::whiteNoiseScale);
+            int xi = std::floor(p.X * params.WhiteNoiseScale);
+            int yi = std::floor(p.Y * params.WhiteNoiseScale);
 
             uint32_t h = Hash2D(xi, yi, Random::seed);
 
@@ -242,9 +236,9 @@ namespace Planeted
         }
         float WhiteNoise3D(const Vector3 &p, const NoiseParameters &params)
         {
-            int xi = std::floor(p.X * Random::whiteNoiseScale);
-            int yi = std::floor(p.Y * Random::whiteNoiseScale);
-            int zi = std::floor(p.Z * Random::whiteNoiseScale);
+            int xi = std::floor(p.X * params.WhiteNoiseScale);
+            int yi = std::floor(p.Y * params.WhiteNoiseScale);
+            int zi = std::floor(p.Z * params.WhiteNoiseScale);
 
             uint32_t h = Hash3D(xi, yi, zi, Random::seed);
 
