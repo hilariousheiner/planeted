@@ -7,10 +7,8 @@ namespace Planeted
 {
     class Noise
     {
-        public:
+    public:
         Noise();
-        Noise(std::string seed);
-        Noise(std::uint32_t seed);
 
         void SetNumberOfOctaves(std::uint32_t numberOfOctaves);
         void SetStartFrequency(float startFrequency);
@@ -30,10 +28,6 @@ namespace Planeted
 
         Random::NoiseParameters noiseParams;
         Random::FBMParameters fbmParams;
-
-    private:
-        std::uint32_t seed;
-        std::uint64_t seed64;
     };
 }
 #endif

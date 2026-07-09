@@ -3,21 +3,7 @@
 
 namespace Planeted
 {
-    Noise::Noise()
-    {
-        this->seed = StringToSeed32("Planeted");
-        this->seed64 = StringToSeed64("Planeted");
-    }
-    Noise::Noise(std::string seed)
-    {
-        this->seed = StringToSeed32(seed);
-        this->seed64 = StringToSeed64(seed);
-    }
-    Noise::Noise(std::uint32_t seed)
-    {
-        this->seed = seed;
-        this->seed64 = FMix64(static_cast<uint64_t>(seed));
-    };
+    Noise::Noise() { }
 
     void Noise::SetNumberOfOctaves(std::uint32_t numberOfOctaves)
     {
