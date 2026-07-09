@@ -51,11 +51,19 @@ namespace Planeted
 
             NoiseParameters();
 
-            std::uint32_t seed;
-
             float WhiteNoiseScale;
 
+            void SeedNoise(std::uint32_t seed);
+            void SeedNoise(std::string seed);
+
+            std::uint8_t Permute(const std::uint8_t &x);
+            std::uint8_t Permute(const int &x, const int &y);
+            std::uint8_t Permute(const int &x, const int &y, const int &z);
+
         private:
+            std::uint32_t seed;
+            std::uint64_t seed64;
+
             PermutationTable permutationTable;
         };
 

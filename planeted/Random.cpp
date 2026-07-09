@@ -6,36 +6,6 @@ namespace Planeted
 {
     namespace Random
     {
-        FBMParameters::FBMParameters()
-        {
-            this->NumberOfOctaves = 1;
-            this->Lacunarity = 2.0f;
-            this->Persistence = 0.5f;
-            this->StartFrequency = 1.0f;
-            this->Normalize = false;
-            this->Exponent = 1.0f;
-        }
-
-        NoiseParameters::NoiseParameters()
-        {
-            this->seed = StringToSeed32("Planeted");
-            this->WhiteNoiseScale = 100.0f;
-        }
-
-        static std::uint32_t seed = StringToSeed32("Planeted");
-        static std::uint64_t seed64 = StringToSeed64("Planeted");
-
-        void SeedNoise(std::uint32_t seed)
-        {
-            Random::seed = seed;
-            Random::seed64 = FMix64(static_cast<uint64_t>(seed));
-        }
-        void SeedNoise(std::string seed)
-        {
-            Random::seed = StringToSeed32(seed);
-            Random::seed64 = StringToSeed64(seed);
-        }
-
         static Permutation permutation =
         {
             8  , 170, 242, 67 , 248, 216, 115, 247, 164, 133, 195, 73 , 45 , 209, 13 , 53 ,
@@ -56,6 +26,68 @@ namespace Planeted
             212, 182, 136, 185, 110, 40 , 235, 21 , 222, 178, 174, 205, 68 , 90 , 171, 199
         };
 
+        FBMParameters::FBMParameters()
+        {
+            this->NumberOfOctaves = 1;
+            this->Lacunarity = 2.0f;
+            this->Persistence = 0.5f;
+            this->StartFrequency = 1.0f;
+            this->Normalize = false;
+            this->Exponent = 1.0f;
+        }
+
+        NoiseParameters::NoiseParameters()
+        {
+            this->WhiteNoiseScale = 100.0f;
+            this->SeedNoise("Planeted");
+        }
+
+        void NoiseParameters::SeedNoise(std::uint32_t seed)
+        {
+            this->seed = seed;
+            this->seed64 = FMix64(static_cast<uint64_t>(seed));
+
+            this->permutationTable = MakePermutationTable(Random::permutation, this->seed64);
+        }
+        void NoiseParameters::SeedNoise(std::string seed)
+        {
+            this->seed = StringToSeed32(seed);
+            this->seed64 = StringToSeed64(seed);
+
+            this->permutationTable = MakePermutationTable(Random::permutation, this->seed64);
+        }
+
+        std::uint8_t NoiseParameters::Permute(const std::uint8_t &x)
+        {
+            return this->permutationTable[x];
+        }
+        std::uint8_t NoiseParameters::Permute(const int &x, const int &y)
+        {
+            return this->permutationTable[this->permutationTable[x] + y];
+        }
+        std::uint8_t NoiseParameters::Permute(const int &x, const int &y, const int &z)
+        {
+            return this->permutationTable[this->permutationTable[this->permutationTable[x] + y] + z];
+        }
+
+        static std::uint32_t seed = StringToSeed32("Planeted");
+        static std::uint64_t seed64 = StringToSeed64("Planeted");
+
+        void SeedNoise(std::uint32_t seed)
+        {
+            Random::seed = seed;
+            Random::seed64 = FMix64(static_cast<uint64_t>(seed));
+        }
+        void SeedNoise(std::string seed)
+        {
+            Random::seed = StringToSeed32(seed);
+            Random::seed64 = StringToSeed64(seed);
+        }
+
+        static std::uint8_t toGrid(const int &x)
+        {
+            return static_cast<std::uint8_t>(x & (PermutationSize - 1));
+        }
 
         static PermutationTable &permutationTable()
         {
@@ -64,21 +96,14 @@ namespace Planeted
             return result;
         }
 
-        static std::uint8_t toGrid(const int &x)
-        {
-            return static_cast<std::uint8_t>(x & (PermutationSize - 1));
-        }
-
         static std::uint8_t permute(const std::uint8_t &x)
         {
             return permutationTable()[x];
         }
-
         static std::uint8_t permute(const int &x, const int &y)
         {
             return permutationTable()[permutationTable()[x] + y];
         }
-
         static std::uint8_t permute(const int &x, const int &y, const int &z)
         {
             return permutationTable()[permutationTable()[permutationTable()[x] + y] + z];
