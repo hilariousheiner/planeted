@@ -28,7 +28,7 @@ setExponent(5.0);
 m = displace(m, 0.5);
 m = calculateNormals(m);
 
-resetNoise();
+//resetNoise();
 setNoiseType(NOISE_TYPE_WHITE);
 setWhiteNoiseScale(1.0);
 setNumberOfOctaves(1);

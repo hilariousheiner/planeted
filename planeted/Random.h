@@ -41,8 +41,6 @@ namespace Planeted
             float Exponent;
         };
 
-        //void SetExponent(float exponent);
-        void ResetNoise();
         void SetWhiteNoiseScale(float scale);
 
         void SeedNoise(std::uint32_t seed);

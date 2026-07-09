@@ -27,21 +27,7 @@ namespace Planeted
         static std::uint32_t seed = StringToSeed32("Planeted");
         static std::uint64_t seed64 = StringToSeed64("Planeted");
 
-        //static bool normalizeFBM = false;
-        //static float exponent = 1.0f;
-
         static float whiteNoiseScale = 100.0f;
-
-        /*
-        void SetNormalizeFBM(bool normalizeFBM)
-        {
-            Random::normalizeFBM = normalizeFBM;
-        }
-        */
-        /*void SetExponent(float exponent)
-        {
-            Random::exponent = exponent;
-        }*/
 
         static Permutation permutation =
         {
@@ -230,19 +216,6 @@ namespace Planeted
         {
             Random::seed = StringToSeed32(seed);
             Random::seed64 = StringToSeed64(seed);
-        }
-
-        void ResetNoise()
-        {
-            //Random::numberOfOctaves = 1;
-            //Random::lacunarity = 2.0f;
-
-            //Random::persistence = 0.5f;
-            //Random::startFrequency = 1.0f;
-            //Random::normalizeFBM = false;
-            //Random::exponent = 1.0f;
-
-            Random::whiteNoiseScale = 100.0f;
         }
 
         void SetWhiteNoiseScale(float scale)
