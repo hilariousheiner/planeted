@@ -87,8 +87,17 @@ namespace Planeted
             return Random::GetNoiseFunction1D(noise.noiseType, noise.noiseStyle);
         }
 
+        static void expectArgsCount(const std::vector<Value> &args, size_t expected, const std::string functionName)
+        {
+            if(args.size() != expected)
+            {
+                throw std::runtime_error(functionName + " expects " + std::to_string(expected) + " arguments (" + std::to_string(args.size()) + " given).");
+            }
+        }
+
         static Value builtin_noise(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
+            expectArgsCount(args, 0, "noise");
             Noise *noise = new Noise();
             return Value(noise);
         }
