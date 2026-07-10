@@ -98,16 +98,14 @@ namespace Planeted
         static Value builtin_noise(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             expectArgsCount(args, 0, "noise");
+
             Noise *noise = new Noise();
             return Value(noise);
         }
 
         static Value builtin_seedNoise(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            if(args.size() != 1)
-            {
-                throw std::runtime_error("seedNoise expects one argument.");
-            }
+            expectArgsCount(args, 1, "seedNoise");
 
             if(args[0].GetValueType() == ValueTypeEnum::Int)
             {
@@ -128,10 +126,7 @@ namespace Planeted
 
         static Value builtin_setNoiseType(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            if(args.size() != 1)
-            {
-                throw std::runtime_error("setNoiseType expects one argument.");
-            }
+            expectArgsCount(args, 1, "setNoiseType");
 
             if(args[0].GetValueType() == ValueTypeEnum::Int)
             {
@@ -145,10 +140,7 @@ namespace Planeted
         }
         static Value builtin_setNoiseStyle(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            if(args.size() != 1)
-            {
-                throw std::runtime_error("setNoiseStyle expects one argument.");
-            }
+            expectArgsCount(args, 1, "setNoiseStyle");
 
             if(args[0].GetValueType() == ValueTypeEnum::Int)
             {
@@ -163,10 +155,7 @@ namespace Planeted
 
         static Value builtin_setNumberOfOctaves(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            if(args.size() != 1)
-            {
-                throw std::runtime_error("setNumberOfOctaves expects one argument.");
-            }
+            expectArgsCount(args, 1, "setNumberOfOctaves");
 
             if(args[0].GetValueType() == ValueTypeEnum::Int)
             {
@@ -176,10 +165,7 @@ namespace Planeted
         }
         static Value builtin_setStartFrequency(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            if(args.size() != 1)
-            {
-                throw std::runtime_error("setStartFrequency expects one argument.");
-            }
+            expectArgsCount(args, 1, "setStartFrequency");
 
             if(args[0].GetValueType() == ValueTypeEnum::Float)
             {
@@ -190,10 +176,7 @@ namespace Planeted
 
         static Value builtin_setLacunarity(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            if(args.size() != 1)
-            {
-                throw std::runtime_error("setLacunarity expects one argument.");
-            }
+            expectArgsCount(args, 1, "setLacunarity");
 
             if(args[0].GetValueType() == ValueTypeEnum::Float)
             {
@@ -208,10 +191,7 @@ namespace Planeted
 
         static Value builtin_setPersistence(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            if(args.size() != 1)
-            {
-                throw std::runtime_error("setPersistence expects one argument.");
-            }
+            expectArgsCount(args, 1, "setPersistence");
 
             if(args[0].GetValueType() == ValueTypeEnum::Float)
             {
@@ -226,10 +206,7 @@ namespace Planeted
 
         static Value builtin_setNormalizeFBM(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            if(args.size() != 1)
-            {
-                throw std::runtime_error("setNormalizeFBM expects one argument.");
-            }
+            expectArgsCount(args, 1, "setNormalizeFBM");
 
             if(args[0].GetValueType() == ValueTypeEnum::Bool)
             {
@@ -244,10 +221,7 @@ namespace Planeted
 
         static Value builtin_setExponent(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            if(args.size() != 1)
-            {
-                throw std::runtime_error("setExponent expects one argument.");
-            }
+            expectArgsCount(args, 1, "setExponent");
 
             if(args[0].GetValueType() == ValueTypeEnum::Float)
             {
@@ -262,10 +236,7 @@ namespace Planeted
 
         static Value builtin_setWhiteNoiseScale(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            if(args.size() != 1)
-            {
-                throw std::runtime_error("setWhiteNoiseScale expects one argument.");
-            }
+            expectArgsCount(args, 1, "setWhiteNoiseScale");
 
             if(args[0].GetValueType() == ValueTypeEnum::Float)
             {
@@ -280,10 +251,7 @@ namespace Planeted
 
         static Value builtin_noiseTest(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            if(args.size() != 1)
-            {
-                throw std::runtime_error("noiseTest expects one argument.");
-            }
+            expectArgsCount(args, 1, "noiseTest");
 
             if(args[0].GetValueType() == ValueTypeEnum::String)
             {
@@ -298,10 +266,7 @@ namespace Planeted
         }
         static Value builtin_noiseTest2D(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            if(args.size() != 1)
-            {
-                throw std::runtime_error("noiseTest2D expects one argument.");
-            }
+            expectArgsCount(args, 1, "noiseTest2D");
 
             if(args[0].GetValueType() == ValueTypeEnum::String)
             {
@@ -316,10 +281,7 @@ namespace Planeted
         }
         static Value builtin_noiseTest1D(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            if(args.size() != 1)
-            {
-                throw std::runtime_error("noiseTest1D expects one argument.");
-            }
+            expectArgsCount(args, 1, "noiseTest1D");
 
             if(args[0].GetValueType() == ValueTypeEnum::String)
             {
@@ -335,10 +297,7 @@ namespace Planeted
 
         static Value builtin_subdivide(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            if(args.size() != 2)
-            {
-                throw std::runtime_error("subdivide expects two arguments.");
-            }
+            expectArgsCount(args, 2, "subdivide");
 
             Mesh *m = args[0].ToMesh();
             int d = args[1].GetIntValue();
@@ -349,10 +308,7 @@ namespace Planeted
         }
         static Value builtin_tessellate(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            if(args.size() != 2)
-            {
-                throw std::runtime_error("tessellate expects two arguments.");
-            }
+            expectArgsCount(args, 2, "tessellate");
 
             Mesh *m = args[0].ToMesh();
             int n = args[1].GetIntValue();
@@ -363,10 +319,7 @@ namespace Planeted
         }
         static Value builtin_projectToUnitSphere(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            if(args.size() != 1)
-            {
-                throw std::runtime_error("projectToUnitSphere expects an argument.");
-            }
+            expectArgsCount(args, 1, "projectToUnitSphere");
 
             Mesh *m = args[0].ToMesh();
             m->ProjectToUnitSphere();
@@ -375,10 +328,7 @@ namespace Planeted
         }
         static Value builtin_calculateNormals(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            if(args.size() != 1)
-            {
-                throw std::runtime_error("calculateNormals expects an argument.");
-            }
+            expectArgsCount(args, 1, "calculateNormals");
 
             Mesh *m = args[0].ToMesh();
             m->CalculateNormals();
@@ -392,6 +342,7 @@ namespace Planeted
         }
         static Value builtin_displace(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
+
             if(args.size() < 2)
             {
                 throw std::runtime_error("displace expects at least two arguments.");
