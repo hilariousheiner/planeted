@@ -94,6 +94,13 @@ namespace Planeted
                 throw std::runtime_error(functionName + " expects " + std::to_string(expected) + " arguments (" + std::to_string(args.size()) + " given).");
             }
         }
+        static void expectArgsCountAtLeast(const std::vector<Value> &args, size_t expected, const std::string functionName)
+        {
+            if(args.size() < expected)
+            {
+                throw std::runtime_error(functionName + " expects at least " + std::to_string(expected) + " arguments (" + std::to_string(args.size()) + " given).");
+            }
+        }
 
         static Value builtin_noise(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
