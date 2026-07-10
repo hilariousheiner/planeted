@@ -87,6 +87,12 @@ namespace Planeted
             return Random::GetNoiseFunction1D(noise.noiseType, noise.noiseStyle);
         }
 
+        static Value builtin_noise(PDSL_Runtime &runtime, const std::vector<Value> &args)
+        {
+            Noise *noise = new Noise();
+            return Value(noise);
+        }
+
         static Value builtin_seedNoise(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             if(args.size() != 1)
@@ -182,7 +188,6 @@ namespace Planeted
 
             if(args[0].GetValueType() == ValueTypeEnum::Float)
             {
-                //Random::SetLacunarity(args[0].GetFloatValue());
                 noise.SetLacunarity(args[0].GetFloatValue());
             }
             else
@@ -219,7 +224,6 @@ namespace Planeted
 
             if(args[0].GetValueType() == ValueTypeEnum::Bool)
             {
-                //Random::SetNormalizeFBM(args[0].GetBoolValue());
                 noise.SetNormalizeFBM(args[0].GetBoolValue());
             }
             else
@@ -256,7 +260,6 @@ namespace Planeted
 
             if(args[0].GetValueType() == ValueTypeEnum::Float)
             {
-                //Random::SetWhiteNoiseScale(args[0].GetFloatValue());
                 noise.SetWhiteNoiseScale(args[0].GetFloatValue());
             }
             else
@@ -400,6 +403,7 @@ namespace Planeted
 
         void Load(PDSL_Runtime &runtime)
         {
+            runtime.InstallBuiltinFunction("noise", builtin_noise);
             runtime.InstallBuiltinFunction("seedNoise", builtin_seedNoise);
 
             runtime.InstallBuiltinFunction("setNoiseType", builtin_setNoiseType);
