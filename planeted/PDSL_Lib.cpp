@@ -101,6 +101,13 @@ namespace Planeted
                 throw std::runtime_error(functionName + " expects at least " + std::to_string(expected) + " arguments (" + std::to_string(args.size()) + " given).");
             }
         }
+        static void expectArgsCountAtMost(const std::vector<Value> &args, size_t expected, const std::string functionName)
+        {
+            if(args.size() > expected)
+            {
+                throw std::runtime_error(functionName + " expects at most " + std::to_string(expected) + " arguments (" + std::to_string(args.size()) + " given).");
+            }
+        }
 
         static Value builtin_noise(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
@@ -349,11 +356,8 @@ namespace Planeted
         }
         static Value builtin_displace(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-
-            if(args.size() < 2)
-            {
-                throw std::runtime_error("displace expects at least two arguments.");
-            }
+            expectArgsCountAtLeast(args, 2, "displace");
+            expectArgsCountAtMost(args, 3, "displace");
 
             Mesh *m = args[0].ToMesh();
             float a = args[1].GetFloatValue();
