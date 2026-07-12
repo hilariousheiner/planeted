@@ -140,8 +140,6 @@ namespace Planeted
         return ValueTypeEnum::Null; // Todo: maybe throw an exception here?
     }
 
-    // Conversions:
-
     std::string Value::ToString() const
     {
         std::string result = "";

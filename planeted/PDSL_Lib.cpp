@@ -109,6 +109,43 @@ namespace Planeted
             }
         }
 
+        static bool TryAsInt(const Value &value, int &out)
+        {
+            bool result = false;
+
+            switch(value.GetValueType())
+            {
+            case ValueTypeEnum::Int:
+                out = value.GetIntValue();
+                result = true;
+                break;
+            case ValueTypeEnum::Float:
+                out = static_cast<int>(value.GetFloatValue());
+                result = true;
+                break;
+            default:
+                break;
+            }
+            return result;
+        }
+        static int GetIntArg(const std::vector<Value> &args, size_t index, const std::string &functionName)
+        {
+            int result;
+            if(!TryAsInt(args[index], result))
+            {
+                throw std::runtime_error(functionName + ": argument " + std::to_string(index + 1) + " must be an integer.");
+            }
+            return result;
+        }
+        static int GetIntArg(const std::vector<Value> &args, size_t index, const std::string &functionName, int defaultValue)
+        {
+            if(index >= args.size())
+            {
+                return defaultValue;
+            }
+            return GetIntArg(args, index, functionName);
+        }
+
         static Value builtin_noise(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             expectArgsCount(args, 0, "noise");
@@ -142,28 +179,16 @@ namespace Planeted
         {
             expectArgsCount(args, 1, "setNoiseType");
 
-            if(args[0].GetValueType() == ValueTypeEnum::Int)
-            {
-                noise.noiseType = toNoiseType(args[0].GetIntValue());
-            }
-            else
-            {
-                throw std::runtime_error("argument passed to setNoiseType must be an integer.");
-            }
+            noise.noiseType = toNoiseType(GetIntArg(args, 0, "setNoiseType"));
+
             return Value::Null();
         }
         static Value builtin_setNoiseStyle(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             expectArgsCount(args, 1, "setNoiseStyle");
 
-            if(args[0].GetValueType() == ValueTypeEnum::Int)
-            {
-                noise.noiseStyle = toNoiseStyle(args[0].GetIntValue());
-            }
-            else
-            {
-                throw std::runtime_error("argument passed to setNoiseStyle must be an integer.");
-            }
+            noise.noiseStyle = toNoiseStyle(GetIntArg(args, 0, "setNoiseStyle"));
+
             return Value::Null();
         }
 
@@ -171,10 +196,8 @@ namespace Planeted
         {
             expectArgsCount(args, 1, "setNumberOfOctaves");
 
-            if(args[0].GetValueType() == ValueTypeEnum::Int)
-            {
-                noise.SetNumberOfOctaves(args[0].GetIntValue());
-            }
+            noise.SetNumberOfOctaves(GetIntArg(args, 0, "setNumberOfOctaves"));
+
             return Value::Null();
         }
         static Value builtin_setStartFrequency(PDSL_Runtime &runtime, const std::vector<Value> &args)
@@ -314,7 +337,9 @@ namespace Planeted
             expectArgsCount(args, 2, "subdivide");
 
             Mesh *m = ToMesh(args[0]);
-            int d = args[1].GetIntValue();
+
+            int d = GetIntArg(args, 1, "subdivide");
+            //int d = args[1].GetIntValue();
 
             m->Subdivide(d);
 
