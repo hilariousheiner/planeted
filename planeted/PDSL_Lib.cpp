@@ -313,7 +313,7 @@ namespace Planeted
         {
             expectArgsCount(args, 2, "subdivide");
 
-            Mesh *m = args[0].ToMesh();
+            Mesh *m = ToMesh(args[0]);
             int d = args[1].GetIntValue();
 
             m->Subdivide(d);
@@ -324,7 +324,7 @@ namespace Planeted
         {
             expectArgsCount(args, 2, "tessellate");
 
-            Mesh *m = args[0].ToMesh();
+            Mesh *m = ToMesh(args[0]);
             int n = args[1].GetIntValue();
 
             m->Tessellate(n);
@@ -335,7 +335,7 @@ namespace Planeted
         {
             expectArgsCount(args, 1, "projectToUnitSphere");
 
-            Mesh *m = args[0].ToMesh();
+            Mesh *m = ToMesh(args[0]);
             m->ProjectToUnitSphere();
 
             return Value(m);
@@ -344,7 +344,7 @@ namespace Planeted
         {
             expectArgsCount(args, 1, "calculateNormals");
 
-            Mesh *m = args[0].ToMesh();
+            Mesh *m = ToMesh(args[0]);
             m->CalculateNormals();
 
             return Value(m);
@@ -359,7 +359,7 @@ namespace Planeted
             expectArgsCountAtLeast(args, 2, "displace");
             expectArgsCountAtMost(args, 3, "displace");
 
-            Mesh *m = args[0].ToMesh();
+            Mesh *m = ToMesh(args[0]);
             float a = args[1].GetFloatValue();
 
             DisplacementTypeEnum displacementType = DisplacementTypeEnum::Normal;

@@ -79,7 +79,7 @@ namespace Planeted
         switch(this->op)
         {
         case TokenTypeEnum::Minus:
-            result = val.Negate();
+            result = Negate(val);
             break;
         default:
             throw std::runtime_error("unknown unary operator");

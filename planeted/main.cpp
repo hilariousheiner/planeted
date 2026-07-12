@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 
     if(result.GetValueType() == ValueTypeEnum::Mesh || result.GetValueType() == ValueTypeEnum::Tuple)
     {
-        Mesh &mesh = *result.ToMesh();
+        Mesh &mesh = *ToMesh(result);
         std::cout << "created mesh: " << mesh.GetName() << " (" << mesh.VertexCount() << " vertices and " << mesh.TriangleCount() << " triangles)\n";
         std::cout << "writing to \"" << outfile << "\n";
 

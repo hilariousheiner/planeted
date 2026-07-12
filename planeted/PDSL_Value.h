@@ -71,17 +71,19 @@ namespace Planeted
 
         ValueTypeEnum GetValueType() const;
 
-        // Conversions:
-        float ToFloat() const;
-        Mesh *ToMesh() const;
-        TriangleIndices ToTriangle() const;
-        Vector3 ToVector3() const;
-
-        Value Negate() const;
         std::string ToString() const;
 
     private:
         std::variant<std::monostate, int, float, bool, std::string, Tuple*, List*, Mesh*, Noise*> data;
     };
+
+    // Conversion:
+    float ToFloat(const Value &value);
+    Mesh *ToMesh(const Value &value);
+    TriangleIndices ToTriangle(const Value &value);
+    Vector3 ToVector3(const Value &value);
+
+    // Arithmetic:
+    Value Negate(const Value &value);
 }
 #endif // PLANETED_PDSL_VALUE_H
