@@ -51,6 +51,8 @@
 		<Unit filename="PDSL_Parser.cpp" />
 		<Unit filename="PDSL_Parser.h" />
 		<Unit filename="PDSL_Token.h" />
+		<Unit filename="PDSL_Utils.cpp" />
+		<Unit filename="PDSL_Utils.h" />
 		<Unit filename="PDSL_Value.cpp" />
 		<Unit filename="PDSL_Value.h" />
 		<Unit filename="PGM.cpp" />
