@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "Noise.h"
+#include "PDSL_Utils.h"
 #include "Random.h"
 #include "Tests.h"
 
@@ -85,28 +86,6 @@ namespace Planeted
         static Random::NoiseFunction1D getCurrentNoise1D()
         {
             return Random::GetNoiseFunction1D(noise.noiseType, noise.noiseStyle);
-        }
-
-        static void expectArgsCount(const std::vector<Value> &args, size_t expected, const std::string functionName)
-        {
-            if(args.size() != expected)
-            {
-                throw std::runtime_error(functionName + " expects " + std::to_string(expected) + " arguments (" + std::to_string(args.size()) + " given).");
-            }
-        }
-        static void expectArgsCountAtLeast(const std::vector<Value> &args, size_t expected, const std::string functionName)
-        {
-            if(args.size() < expected)
-            {
-                throw std::runtime_error(functionName + " expects at least " + std::to_string(expected) + " arguments (" + std::to_string(args.size()) + " given).");
-            }
-        }
-        static void expectArgsCountAtMost(const std::vector<Value> &args, size_t expected, const std::string functionName)
-        {
-            if(args.size() > expected)
-            {
-                throw std::runtime_error(functionName + " expects at most " + std::to_string(expected) + " arguments (" + std::to_string(args.size()) + " given).");
-            }
         }
 
         static bool TryAsInt(const Value &value, int &out)
