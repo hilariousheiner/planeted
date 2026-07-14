@@ -127,7 +127,7 @@ namespace Planeted
 
         static Value builtin_noise(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            expectArgsCount(args, 0, "noise");
+            ExpectArgsCount(args, 0, "noise");
 
             Noise *noise = new Noise();
             return Value(noise);
@@ -135,7 +135,7 @@ namespace Planeted
 
         static Value builtin_seedNoise(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            expectArgsCount(args, 1, "seedNoise");
+            ExpectArgsCount(args, 1, "seedNoise");
 
             if(args[0].GetValueType() == ValueTypeEnum::Int)
             {
@@ -156,7 +156,7 @@ namespace Planeted
 
         static Value builtin_setNoiseType(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            expectArgsCount(args, 1, "setNoiseType");
+            ExpectArgsCount(args, 1, "setNoiseType");
 
             noise.noiseType = toNoiseType(GetIntArg(args, 0, "setNoiseType"));
 
@@ -164,7 +164,7 @@ namespace Planeted
         }
         static Value builtin_setNoiseStyle(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            expectArgsCount(args, 1, "setNoiseStyle");
+            ExpectArgsCount(args, 1, "setNoiseStyle");
 
             noise.noiseStyle = toNoiseStyle(GetIntArg(args, 0, "setNoiseStyle"));
 
@@ -173,7 +173,7 @@ namespace Planeted
 
         static Value builtin_setNumberOfOctaves(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            expectArgsCount(args, 1, "setNumberOfOctaves");
+            ExpectArgsCount(args, 1, "setNumberOfOctaves");
 
             noise.SetNumberOfOctaves(GetIntArg(args, 0, "setNumberOfOctaves"));
 
@@ -181,7 +181,7 @@ namespace Planeted
         }
         static Value builtin_setStartFrequency(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            expectArgsCount(args, 1, "setStartFrequency");
+            ExpectArgsCount(args, 1, "setStartFrequency");
 
             if(args[0].GetValueType() == ValueTypeEnum::Float)
             {
@@ -192,7 +192,7 @@ namespace Planeted
 
         static Value builtin_setLacunarity(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            expectArgsCount(args, 1, "setLacunarity");
+            ExpectArgsCount(args, 1, "setLacunarity");
 
             if(args[0].GetValueType() == ValueTypeEnum::Float)
             {
@@ -207,7 +207,7 @@ namespace Planeted
 
         static Value builtin_setPersistence(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            expectArgsCount(args, 1, "setPersistence");
+            ExpectArgsCount(args, 1, "setPersistence");
 
             if(args[0].GetValueType() == ValueTypeEnum::Float)
             {
@@ -222,7 +222,7 @@ namespace Planeted
 
         static Value builtin_setNormalizeFBM(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            expectArgsCount(args, 1, "setNormalizeFBM");
+            ExpectArgsCount(args, 1, "setNormalizeFBM");
 
             if(args[0].GetValueType() == ValueTypeEnum::Bool)
             {
@@ -237,7 +237,7 @@ namespace Planeted
 
         static Value builtin_setExponent(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            expectArgsCount(args, 1, "setExponent");
+            ExpectArgsCount(args, 1, "setExponent");
 
             if(args[0].GetValueType() == ValueTypeEnum::Float)
             {
@@ -252,7 +252,7 @@ namespace Planeted
 
         static Value builtin_setWhiteNoiseScale(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            expectArgsCount(args, 1, "setWhiteNoiseScale");
+            ExpectArgsCount(args, 1, "setWhiteNoiseScale");
 
             if(args[0].GetValueType() == ValueTypeEnum::Float)
             {
@@ -267,7 +267,7 @@ namespace Planeted
 
         static Value builtin_noiseTest(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            expectArgsCount(args, 1, "noiseTest");
+            ExpectArgsCount(args, 1, "noiseTest");
 
             if(args[0].GetValueType() == ValueTypeEnum::String)
             {
@@ -282,7 +282,7 @@ namespace Planeted
         }
         static Value builtin_noiseTest2D(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            expectArgsCount(args, 1, "noiseTest2D");
+            ExpectArgsCount(args, 1, "noiseTest2D");
 
             if(args[0].GetValueType() == ValueTypeEnum::String)
             {
@@ -297,7 +297,7 @@ namespace Planeted
         }
         static Value builtin_noiseTest1D(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            expectArgsCount(args, 1, "noiseTest1D");
+            ExpectArgsCount(args, 1, "noiseTest1D");
 
             if(args[0].GetValueType() == ValueTypeEnum::String)
             {
@@ -313,7 +313,7 @@ namespace Planeted
 
         static Value builtin_subdivide(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            expectArgsCount(args, 2, "subdivide");
+            ExpectArgsCount(args, 2, "subdivide");
 
             Mesh *m = ToMesh(args[0]);
 
@@ -326,7 +326,7 @@ namespace Planeted
         }
         static Value builtin_tessellate(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            expectArgsCount(args, 2, "tessellate");
+            ExpectArgsCount(args, 2, "tessellate");
 
             Mesh *m = ToMesh(args[0]);
             int n = args[1].GetIntValue();
@@ -337,7 +337,7 @@ namespace Planeted
         }
         static Value builtin_projectToUnitSphere(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            expectArgsCount(args, 1, "projectToUnitSphere");
+            ExpectArgsCount(args, 1, "projectToUnitSphere");
 
             Mesh *m = ToMesh(args[0]);
             m->ProjectToUnitSphere();
@@ -346,7 +346,7 @@ namespace Planeted
         }
         static Value builtin_calculateNormals(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            expectArgsCount(args, 1, "calculateNormals");
+            ExpectArgsCount(args, 1, "calculateNormals");
 
             Mesh *m = ToMesh(args[0]);
             m->CalculateNormals();
@@ -360,8 +360,8 @@ namespace Planeted
         }
         static Value builtin_displace(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
-            expectArgsCountAtLeast(args, 2, "displace");
-            expectArgsCountAtMost(args, 3, "displace");
+            ExpectArgsCountAtLeast(args, 2, "displace");
+            ExpectArgsCountAtMost(args, 3, "displace");
 
             Mesh *m = ToMesh(args[0]);
             float a = args[1].GetFloatValue();
