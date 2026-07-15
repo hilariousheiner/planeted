@@ -77,12 +77,6 @@ namespace Planeted
         std::variant<std::monostate, int, float, bool, std::string, Tuple*, List*, Mesh*, Noise*> data;
     };
 
-    // Conversion:
-    float ToFloat(const Value &value);
-    Mesh *ToMesh(const Value &value);
-    TriangleIndices ToTriangle(const Value &value);
-    Vector3 ToVector3(const Value &value);
-
     // Arithmetic:
     Value Negate(const Value &value);
 }

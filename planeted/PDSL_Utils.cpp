@@ -46,6 +46,7 @@ namespace Planeted
         return GetIntArg(args, index, functionName);
     }
 
+    // Value conversions:
     bool TryAsInt(const Value &value, int &out)
     {
         bool result = false;
@@ -64,5 +65,94 @@ namespace Planeted
             break;
         }
         return result;
+    }
+
+    float ToFloat(const Value &value)
+    {
+        float result;
+        switch(value.GetValueType())
+        {
+        case ValueTypeEnum::Int:
+            result = static_cast<float>(value.GetIntValue());
+            break;
+        case ValueTypeEnum::Float:
+            result = value.GetFloatValue();
+            break;
+        default:
+            throw std::runtime_error("cannot convert value to float.");
+            break;
+        }
+        return result;
+    }
+
+    Mesh *ToMesh(const Value &value)
+    {
+        if(value.GetValueType() == ValueTypeEnum::Mesh)
+        {
+            return value.GetMeshValue();
+        }
+        if(value.GetValueType() == ValueTypeEnum::Tuple)
+        {
+            const Tuple &t = value.GetTupleValue();
+            if(t.elements.size() == 2)
+            {
+                if(t.elements[0].GetValueType() == ValueTypeEnum::List && t.elements[1].GetValueType() == ValueTypeEnum::List)
+                {
+                    const List &vertexList = t.elements[0].GetListValue();
+                    const List &triangleList = t.elements[1].GetListValue();
+
+                    Mesh *mesh = new Mesh();
+
+                    for(const Value &v : vertexList.elements)
+                    {
+                        Vector3 vertex = ToVector3(v);
+                        mesh->AddVertex(vertex.X, vertex.Y, vertex.Z);
+                    }
+                    for(const Value &t : triangleList.elements)
+                    {
+                        TriangleIndices tri = ToTriangle(t);
+                        mesh->AddTriangle(tri.V0, tri.V1, tri.V2);
+                    }
+                    return mesh;
+                }
+            }
+        }
+        throw std::runtime_error("mesh must be a pair (vertexList, triangleList).");
+    }
+
+    TriangleIndices ToTriangle(const Value &value)
+    {
+        if(value.GetValueType() == ValueTypeEnum::Tuple)
+        {
+            const Tuple &t = value.GetTupleValue();
+
+            if(t.elements.size() != 3)
+            {
+                throw std::runtime_error("triangle tuple must have 3 elements.");
+            }
+
+            return TriangleIndices
+            {
+                static_cast<size_t>(t.elements[0].GetIntValue()),
+                static_cast<size_t>(t.elements[1].GetIntValue()),
+                static_cast<size_t>(t.elements[2].GetIntValue())
+            };
+        }
+        throw std::runtime_error("triangle must be an integer tuple.");
+    }
+
+    Vector3 ToVector3(const Value &value)
+    {
+        if(value.GetValueType() == ValueTypeEnum::Tuple)
+        {
+            const Tuple &t = value.GetTupleValue();
+
+            if(t.elements.size() != 3)
+            {
+                throw std::runtime_error("vector must have 3 elements.");
+            }
+            return Vector3(ToFloat(t.elements[0]), ToFloat(t.elements[1]), ToFloat(t.elements[2]));
+        }
+        throw std::runtime_error("vector must be a float tuple.");
     }
 }
