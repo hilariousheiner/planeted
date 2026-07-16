@@ -155,4 +155,25 @@ namespace Planeted
         }
         throw std::runtime_error("vector must be a float tuple.");
     }
+
+
+    // Arithmetic:
+    Value Negate(const Value &value)
+    {
+        Value result;
+
+        switch(value.GetValueType())
+        {
+        case ValueTypeEnum::Float:
+            result = -(value.GetFloatValue());
+            break;
+        case ValueTypeEnum::Int:
+            result = -(value.GetIntValue());
+            break;
+        default:
+            throw std::runtime_error("cannot negate value.");
+            break;
+        }
+        return result;
+    }
 }

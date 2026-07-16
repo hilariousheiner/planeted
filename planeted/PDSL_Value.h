@@ -76,8 +76,5 @@ namespace Planeted
     private:
         std::variant<std::monostate, int, float, bool, std::string, Tuple*, List*, Mesh*, Noise*> data;
     };
-
-    // Arithmetic:
-    Value Negate(const Value &value);
 }
 #endif // PLANETED_PDSL_VALUE_H
