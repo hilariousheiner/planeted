@@ -46,6 +46,17 @@ namespace Planeted
         return GetIntArg(args, index, functionName);
     }
 
+    float GetFloatArg(const std::vector<Value> &args, size_t index, const std::string &functionName)
+    {
+        float result;
+        if(!TryAsFloat(args[index], result))
+        {
+            throw std::runtime_error(functionName + ": argument " + std::to_string(index + 1) + " must be a float.");
+        }
+        return result;
+    }
+
+
     // Value conversions:
     bool TryAsInt(const Value &value, int &out)
     {
@@ -59,6 +70,25 @@ namespace Planeted
             break;
         case ValueTypeEnum::Float:
             out = static_cast<int>(value.GetFloatValue());
+            result = true;
+            break;
+        default:
+            break;
+        }
+        return result;
+    }
+    bool TryAsFloat(const Value &value, float &out)
+    {
+        bool result = false;
+
+        switch(value.GetValueType())
+        {
+        case ValueTypeEnum::Float:
+            out = value.GetFloatValue();
+            result = true;
+            break;
+        case ValueTypeEnum::Int:
+            out = static_cast<float>(value.GetIntValue());
             result = true;
             break;
         default:
