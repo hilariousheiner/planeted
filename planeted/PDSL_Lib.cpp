@@ -146,10 +146,13 @@ namespace Planeted
         {
             ExpectArgsCount(args, 1, "setStartFrequency");
 
+            noise.SetStartFrequency(GetFloatArg(args, 0, "setStartFrequency"));
+            /*
             if(args[0].GetValueType() == ValueTypeEnum::Float)
             {
                 noise.SetStartFrequency(args[0].GetFloatValue());
             }
+            */
             return Value::Null();
         }
 
@@ -157,6 +160,8 @@ namespace Planeted
         {
             ExpectArgsCount(args, 1, "setLacunarity");
 
+            noise.SetLacunarity(GetFloatArg(args, 0, "setLacunarity"));
+            /*
             if(args[0].GetValueType() == ValueTypeEnum::Float)
             {
                 noise.SetLacunarity(args[0].GetFloatValue());
@@ -164,7 +169,7 @@ namespace Planeted
             else
             {
                 throw std::runtime_error("argument passed to setLacunarity must be a float.");
-            }
+            }*/
             return Value::Null();
         }
 
@@ -172,6 +177,8 @@ namespace Planeted
         {
             ExpectArgsCount(args, 1, "setPersistence");
 
+            noise.SetPersistence(GetFloatArg(args, 0, "setPersistence"));
+            /*
             if(args[0].GetValueType() == ValueTypeEnum::Float)
             {
                 noise.SetPersistence(args[0].GetFloatValue());
@@ -179,7 +186,7 @@ namespace Planeted
             else
             {
                 throw std::runtime_error("argument passed to setPersistence must be a float.");
-            }
+            }*/
             return Value::Null();
         }
 
@@ -202,6 +209,8 @@ namespace Planeted
         {
             ExpectArgsCount(args, 1, "setExponent");
 
+            noise.SetExponent(GetFloatArg(args, 0, "setExponent"));
+            /*
             if(args[0].GetValueType() == ValueTypeEnum::Float)
             {
                 noise.SetExponent(args[0].GetFloatValue());
@@ -210,6 +219,7 @@ namespace Planeted
             {
                 throw std::runtime_error("argument passed to setExponent must be a float.");
             }
+            */
             return Value::Null();
         }
 
@@ -217,6 +227,8 @@ namespace Planeted
         {
             ExpectArgsCount(args, 1, "setWhiteNoiseScale");
 
+            noise.SetWhiteNoiseScale(GetFloatArg(args, 0, "setWhiteNoiseScale"));
+            /*
             if(args[0].GetValueType() == ValueTypeEnum::Float)
             {
                 noise.SetWhiteNoiseScale(args[0].GetFloatValue());
@@ -224,7 +236,7 @@ namespace Planeted
             else
             {
                 throw std::runtime_error("argument passed to setWhiteNoiseScale must be a float.");
-            }
+            }*/
             return Value::Null();
         }
 
@@ -327,7 +339,7 @@ namespace Planeted
             ExpectArgsCountAtMost(args, 3, "displace");
 
             Mesh *m = ToMesh(args[0]);
-            float a = args[1].GetFloatValue();
+            float a = GetFloatArg(args, 1, "displace");//args[1].GetFloatValue();
 
             DisplacementTypeEnum displacementType = DisplacementTypeEnum::Normal;
             if(args.size() == 3)
