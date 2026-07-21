@@ -15,9 +15,12 @@ namespace Planeted
 
     float GetFloatArg(const std::vector<Value> &args, size_t index, const std::string &functionName);
 
+    std::string GetStringArg(const std::vector<Value> &args, size_t index, const std::string &functionName);
+
     // Value conversions:
     bool TryAsInt(const Value &value, int &out);
     bool TryAsFloat(const Value &value, float &out);
+    bool TryAsString(const Value &value, std::string &out);
 
     float ToFloat(const Value &value);
     Mesh *ToMesh(const Value &value);

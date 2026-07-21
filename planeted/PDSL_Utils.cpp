@@ -56,6 +56,15 @@ namespace Planeted
         return result;
     }
 
+    std::string GetStringArg(const std::vector<Value> &args, size_t index, const std::string &functionName)
+    {
+        std::string result;
+        if(!TryAsString(args[index], result))
+        {
+            throw std::runtime_error(functionName + ": argument " + std::to_string(index + 1) + " must be a string.");
+        }
+        return result;
+    }
 
     // Value conversions:
     bool TryAsInt(const Value &value, int &out)
@@ -93,6 +102,18 @@ namespace Planeted
             break;
         default:
             break;
+        }
+        return result;
+    }
+
+    bool TryAsString(const Value &value, std::string &out)
+    {
+        bool result = false;
+
+        if(value.GetValueType() == ValueTypeEnum::String)
+        {
+            out = value.GetStringValue();
+            result = true;
         }
         return result;
     }
