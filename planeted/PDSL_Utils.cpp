@@ -66,6 +66,16 @@ namespace Planeted
         return result;
     }
 
+    bool GetBoolArg(const std::vector<Value> &args, size_t index, const std::string &functionName)
+    {
+        bool result;
+        if(!TryAsBool(args[index], result))
+        {
+            throw std::runtime_error(functionName + ": argument " + std::to_string(index + 1) + " must be a bool.");
+        }
+        return result;
+    }
+
     // Value conversions:
     bool TryAsInt(const Value &value, int &out)
     {
@@ -113,6 +123,18 @@ namespace Planeted
         if(value.GetValueType() == ValueTypeEnum::String)
         {
             out = value.GetStringValue();
+            result = true;
+        }
+        return result;
+    }
+
+    bool TryAsBool(const Value &value, bool &out)
+    {
+        bool result = false;
+
+        if(value.GetValueType() == ValueTypeEnum::Bool)
+        {
+            out = value.GetBoolValue();
             result = true;
         }
         return result;
