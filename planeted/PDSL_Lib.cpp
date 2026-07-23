@@ -244,6 +244,11 @@ namespace Planeted
         {
             ExpectArgsCount(args, 1, "noiseTest");
 
+            std::string filename = GetStringArg(args, 0, "noiseTest");
+            filename = NormalizePath(runtime.OutPath + filename);
+            NoiseTest3D(filename, noise.fbmParams, noise.noiseParams, PDSL_Lib::getCurrentNoise());
+
+            /*
             if(args[0].GetValueType() == ValueTypeEnum::String)
             {
                 std::string filename = NormalizePath(runtime.OutPath + args[0].GetStringValue());
@@ -252,13 +257,18 @@ namespace Planeted
             else
             {
                 throw std::runtime_error("argument passed to noiseTest must be a string.");
-            }
+            }*/
             return Value::Null();
         }
         static Value builtin_noiseTest2D(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             ExpectArgsCount(args, 1, "noiseTest2D");
 
+            std::string filename = GetStringArg(args, 0, "noiseTest2D");
+            filename = NormalizePath(runtime.OutPath + filename);
+            NoiseTest2D(filename, noise.fbmParams, noise.noiseParams, PDSL_Lib::getCurrentNoise2D());
+
+            /*
             if(args[0].GetValueType() == ValueTypeEnum::String)
             {
                 std::string filename = NormalizePath(runtime.OutPath + args[0].GetStringValue());
@@ -267,13 +277,18 @@ namespace Planeted
             else
             {
                 throw std::runtime_error("argument passed to noiseTest2D must be a string.");
-            }
+            }*/
             return Value::Null();
         }
         static Value builtin_noiseTest1D(PDSL_Runtime &runtime, const std::vector<Value> &args)
         {
             ExpectArgsCount(args, 1, "noiseTest1D");
 
+            std::string filename = GetStringArg(args, 0, "noiseTest1D");
+            filename = NormalizePath(runtime.OutPath + filename);
+            NoiseTest1D(filename, noise.fbmParams, noise.noiseParams, PDSL_Lib::getCurrentNoise1D());
+
+            /*
             if(args[0].GetValueType() == ValueTypeEnum::String)
             {
                 std::string filename = NormalizePath(runtime.OutPath + args[0].GetStringValue());
@@ -282,7 +297,7 @@ namespace Planeted
             else
             {
                 throw std::runtime_error("argument passed to noiseTest1D must be a string.");
-            }
+            }*/
             return Value::Null();
         }
 
