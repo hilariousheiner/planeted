@@ -194,14 +194,17 @@ namespace Planeted
         {
             ExpectArgsCount(args, 1, "setNormalizeFBM");
 
+            noise.SetNormalizeFBM(GetBoolArg(args, 0, "setNormalizeFBM"));
+
+            /*
             if(args[0].GetValueType() == ValueTypeEnum::Bool)
             {
-                noise.SetNormalizeFBM(args[0].GetBoolValue());
+               noise.SetNormalizeFBM(args[0].GetBoolValue());
             }
             else
             {
                 throw std::runtime_error("argument passed to setNormalizeFBM must be a bool.");
-            }
+            }*/
             return Value::Null();
         }
 
