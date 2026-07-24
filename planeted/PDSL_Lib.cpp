@@ -147,12 +147,7 @@ namespace Planeted
             ExpectArgsCount(args, 1, "setStartFrequency");
 
             noise.SetStartFrequency(GetFloatArg(args, 0, "setStartFrequency"));
-            /*
-            if(args[0].GetValueType() == ValueTypeEnum::Float)
-            {
-                noise.SetStartFrequency(args[0].GetFloatValue());
-            }
-            */
+
             return Value::Null();
         }
 
@@ -161,15 +156,7 @@ namespace Planeted
             ExpectArgsCount(args, 1, "setLacunarity");
 
             noise.SetLacunarity(GetFloatArg(args, 0, "setLacunarity"));
-            /*
-            if(args[0].GetValueType() == ValueTypeEnum::Float)
-            {
-                noise.SetLacunarity(args[0].GetFloatValue());
-            }
-            else
-            {
-                throw std::runtime_error("argument passed to setLacunarity must be a float.");
-            }*/
+
             return Value::Null();
         }
 
@@ -178,15 +165,7 @@ namespace Planeted
             ExpectArgsCount(args, 1, "setPersistence");
 
             noise.SetPersistence(GetFloatArg(args, 0, "setPersistence"));
-            /*
-            if(args[0].GetValueType() == ValueTypeEnum::Float)
-            {
-                noise.SetPersistence(args[0].GetFloatValue());
-            }
-            else
-            {
-                throw std::runtime_error("argument passed to setPersistence must be a float.");
-            }*/
+
             return Value::Null();
         }
 
@@ -196,15 +175,6 @@ namespace Planeted
 
             noise.SetNormalizeFBM(GetBoolArg(args, 0, "setNormalizeFBM"));
 
-            /*
-            if(args[0].GetValueType() == ValueTypeEnum::Bool)
-            {
-               noise.SetNormalizeFBM(args[0].GetBoolValue());
-            }
-            else
-            {
-                throw std::runtime_error("argument passed to setNormalizeFBM must be a bool.");
-            }*/
             return Value::Null();
         }
 
@@ -213,16 +183,7 @@ namespace Planeted
             ExpectArgsCount(args, 1, "setExponent");
 
             noise.SetExponent(GetFloatArg(args, 0, "setExponent"));
-            /*
-            if(args[0].GetValueType() == ValueTypeEnum::Float)
-            {
-                noise.SetExponent(args[0].GetFloatValue());
-            }
-            else
-            {
-                throw std::runtime_error("argument passed to setExponent must be a float.");
-            }
-            */
+
             return Value::Null();
         }
 
@@ -231,15 +192,7 @@ namespace Planeted
             ExpectArgsCount(args, 1, "setWhiteNoiseScale");
 
             noise.SetWhiteNoiseScale(GetFloatArg(args, 0, "setWhiteNoiseScale"));
-            /*
-            if(args[0].GetValueType() == ValueTypeEnum::Float)
-            {
-                noise.SetWhiteNoiseScale(args[0].GetFloatValue());
-            }
-            else
-            {
-                throw std::runtime_error("argument passed to setWhiteNoiseScale must be a float.");
-            }*/
+
             return Value::Null();
         }
 
@@ -251,16 +204,6 @@ namespace Planeted
             filename = NormalizePath(runtime.OutPath + filename);
             NoiseTest3D(filename, noise.fbmParams, noise.noiseParams, PDSL_Lib::getCurrentNoise());
 
-            /*
-            if(args[0].GetValueType() == ValueTypeEnum::String)
-            {
-                std::string filename = NormalizePath(runtime.OutPath + args[0].GetStringValue());
-                NoiseTest3D(filename, noise.fbmParams, noise.noiseParams, PDSL_Lib::getCurrentNoise());
-            }
-            else
-            {
-                throw std::runtime_error("argument passed to noiseTest must be a string.");
-            }*/
             return Value::Null();
         }
         static Value builtin_noiseTest2D(PDSL_Runtime &runtime, const std::vector<Value> &args)
@@ -271,16 +214,6 @@ namespace Planeted
             filename = NormalizePath(runtime.OutPath + filename);
             NoiseTest2D(filename, noise.fbmParams, noise.noiseParams, PDSL_Lib::getCurrentNoise2D());
 
-            /*
-            if(args[0].GetValueType() == ValueTypeEnum::String)
-            {
-                std::string filename = NormalizePath(runtime.OutPath + args[0].GetStringValue());
-                NoiseTest2D(filename, noise.fbmParams, noise.noiseParams, PDSL_Lib::getCurrentNoise2D());
-            }
-            else
-            {
-                throw std::runtime_error("argument passed to noiseTest2D must be a string.");
-            }*/
             return Value::Null();
         }
         static Value builtin_noiseTest1D(PDSL_Runtime &runtime, const std::vector<Value> &args)
@@ -291,16 +224,6 @@ namespace Planeted
             filename = NormalizePath(runtime.OutPath + filename);
             NoiseTest1D(filename, noise.fbmParams, noise.noiseParams, PDSL_Lib::getCurrentNoise1D());
 
-            /*
-            if(args[0].GetValueType() == ValueTypeEnum::String)
-            {
-                std::string filename = NormalizePath(runtime.OutPath + args[0].GetStringValue());
-                NoiseTest1D(filename, noise.fbmParams, noise.noiseParams, PDSL_Lib::getCurrentNoise1D());
-            }
-            else
-            {
-                throw std::runtime_error("argument passed to noiseTest1D must be a string.");
-            }*/
             return Value::Null();
         }
 
@@ -311,7 +234,6 @@ namespace Planeted
             Mesh *m = ToMesh(args[0]);
 
             int d = GetIntArg(args, 1, "subdivide");
-            //int d = args[1].GetIntValue();
 
             m->Subdivide(d);
 
