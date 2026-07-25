@@ -68,6 +68,7 @@ namespace Planeted
 
         Mesh *GetMeshValue() const;
         Noise &GetNoiseValue() const;
+        Noise *TryGetNoiseValue() const;
 
         ValueTypeEnum GetValueType() const;
 

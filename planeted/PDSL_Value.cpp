@@ -95,6 +95,14 @@ namespace Planeted
     {
         return *std::get<Noise*>(this->data);
     }
+    Noise *Value::TryGetNoiseValue() const
+    {
+        if(this->GetValueType() != ValueTypeEnum::Noise)
+        {
+            return nullptr;
+        }
+        return std::get<Noise*>(this->data);
+    }
 
     ValueTypeEnum Value::GetValueType() const
     {
