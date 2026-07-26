@@ -19,6 +19,8 @@ namespace Planeted
 
     bool GetBoolArg(const std::vector<Value> &args, size_t index, const std::string &functionName);
 
+    Noise &GetNoiseArg(const std::vector<Value> &args, size_t index, const std::string &functionName);
+
     // Value conversions:
     bool TryAsInt(const Value &value, int &out);
     bool TryAsFloat(const Value &value, float &out);
