@@ -1,20 +1,22 @@
 import "../lib/stdlib.pdsl" 
 
-seedNoise("Amphitrite-29");
+n = noise();
 
-setNormalizeFBM(false);
-setStartFrequency(1.0);
-setLacunarity(1.0);
-setNumberOfOctaves(6);
-setExponent(1.5);
+seedNoise(n, "Amphitrite-29");
 
-setNoiseType(NOISE_TYPE_PERLIN);
-setNoiseStyle(NOISE_STYLE_BILLOW);
+setNormalizeFBM(n, false);
+setStartFrequency(n, 1.0);
+setLacunarity(n, 1.0);
+setNumberOfOctaves(n, 6);
+setExponent(n, 1.5);
 
-noiseTest("test_PerlinBillow3D");
-noiseTest2D("test_PerlinBillow2D");
-noiseTest1D("test_PerlinBillow1D");
+setNoiseType(n, NOISE_TYPE_PERLIN);
+setNoiseStyle(n, NOISE_STYLE_BILLOW);
+
+noiseTest(n, "test_PerlinBillow3D");
+noiseTest2D(n, "test_PerlinBillow2D");
+noiseTest1D(n, "test_PerlinBillow1D");
 
 m = load("../lib/icosphere2.pdsl");
 m = calculateNormals(m);
-return displace(m, 0.25);
+return displace(m, n, 0.25);

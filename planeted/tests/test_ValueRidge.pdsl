@@ -1,19 +1,21 @@
 import "../lib/stdlib.pdsl" 
 
-seedNoise("BETTY");
+n = noise();
 
-setNormalizeFBM(false);
-setStartFrequency(4.0);
-setNumberOfOctaves(6);
-setExponent(10.0);
+seedNoise(n, "BETTY");
 
-setNoiseType(NOISE_TYPE_VALUE);
-setNoiseStyle(NOISE_STYLE_RIDGE);
+setNormalizeFBM(n, false);
+setStartFrequency(n, 4.0);
+setNumberOfOctaves(n, 6);
+setExponent(n, 10.0);
 
-noiseTest("test_ValueRidge3D");
-noiseTest2D("test_ValueRidge2D");
-noiseTest1D("test_ValueRidge1D");
+setNoiseType(n, NOISE_TYPE_VALUE);
+setNoiseStyle(n, NOISE_STYLE_RIDGE);
+
+noiseTest(n, "test_ValueRidge3D");
+noiseTest2D(n, "test_ValueRidge2D");
+noiseTest1D(n, "test_ValueRidge1D");
 
 m = load("../lib/icosphere2.pdsl");
 m = calculateNormals(m);
-return displace(m, 0.05);
+return displace(m, n, 0.05);

@@ -1,22 +1,24 @@
 import "../lib/stdlib.pdsl" 
 
-seedNoise("Diomedes-1437");
+n = noise();
 
-setNormalizeFBM(false);
-setStartFrequency(1.0);
-setLacunarity(1.0);
-setNumberOfOctaves(1);
-setExponent(1.0);
+seedNoise(n, "Diomedes-1437");
 
-setWhiteNoiseScale(1.0);
+setNormalizeFBM(n, false);
+setStartFrequency(n, 1.0);
+setLacunarity(n, 1.0);
+setNumberOfOctaves(n, 1);
+setExponent(n, 1.0);
 
-setNoiseType(NOISE_TYPE_WHITE);
-setNoiseStyle(NOISE_STYLE_PLAIN);
+setWhiteNoiseScale(n, 1.0);
 
-noiseTest("test_WhiteNoise1_3D");
-noiseTest2D("test_WhiteNoise1_2D");
-noiseTest1D("test_WhiteNoise1_1D");
+setNoiseType(n, NOISE_TYPE_WHITE);
+setNoiseStyle(n, NOISE_STYLE_PLAIN);
+
+noiseTest(n, "test_WhiteNoise1_3D");
+noiseTest2D(n, "test_WhiteNoise1_2D");
+noiseTest1D(n, "test_WhiteNoise1_1D");
 
 m = load("../lib/icosphere2.pdsl");
 m = calculateNormals(m);
-return displace(m, 0.25);
+return displace(m, n, 0.25);

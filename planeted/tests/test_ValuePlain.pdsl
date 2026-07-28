@@ -1,20 +1,22 @@
 import "../lib/stdlib.pdsl" 
 
-seedNoise("11836-Eileen");
+n = noise(); 
 
-setNormalizeFBM(false);
-setStartFrequency(1.0);
-setLacunarity(1.5);
-setNumberOfOctaves(6);
-setExponent(2.0);
+seedNoise(n, "11836-Eileen");
 
-setNoiseType(NOISE_TYPE_VALUE);
-setNoiseStyle(NOISE_STYLE_PLAIN);
+setNormalizeFBM(n, false);
+setStartFrequency(n, 1.0);
+setLacunarity(n, 1.5);
+setNumberOfOctaves(n, 6);
+setExponent(n, 2.0);
 
-noiseTest("test_ValuePlain3D");
-noiseTest2D("test_ValuePlain2D");
-noiseTest1D("test_ValuePlain1D");
+setNoiseType(n, NOISE_TYPE_VALUE);
+setNoiseStyle(n, NOISE_STYLE_PLAIN);
+
+noiseTest(n, "test_ValuePlain3D");
+noiseTest2D(n, "test_ValuePlain2D");
+noiseTest1D(n, "test_ValuePlain1D");
 
 m = load("../lib/icosphere2.pdsl");
 m = calculateNormals(m);
-return displace(m, 1.0);
+return displace(m, n, 1.0);
