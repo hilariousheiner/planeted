@@ -1,38 +1,42 @@
 import "../lib/stdlib.pdsl" 
 
-seedNoise("CLOUD");
+n1 = noise();
+
+seedNoise(n1, "CLOUD");
 
 m = load("../lib/icosphere2.pdsl");
 m = calculateNormals(m);
 
-setNoiseType(NOISE_TYPE_VALUE);
+setNoiseType(n1, NOISE_TYPE_VALUE);
+setNoiseStyle(n1, NOISE_STYLE_PLAIN);
+setNormalizeFBM(n1, true);
+setNumberOfOctaves(n1, 8);
+setLacunarity(n1, 1.0);
+setExponent(n1, 1.0);
 
-setNoiseStyle(NOISE_STYLE_PLAIN);
-setNormalizeFBM(true);
-setNumberOfOctaves(8);
-setLacunarity(1.0);
-setExponent(1.0);
-
-m = displace(m, 0.5);
+m = displace(m, n1, 0.5);
 m = calculateNormals(m);
 
-seedNoise("BETTY");
+n2 = noise();
 
-setNoiseType(NOISE_TYPE_PERLIN);
-setNoiseStyle(NOISE_STYLE_RIDGE);
-setNumberOfOctaves(2);
-setStartFrequency(4);
-setNormalizeFBM(true);
-setExponent(5.0);
+seedNoise(n2, "BETTY");
 
-m = displace(m, 0.5);
+setNoiseType(n2, NOISE_TYPE_PERLIN);
+setNoiseStyle(n2, NOISE_STYLE_RIDGE);
+setNumberOfOctaves(n2, 2);
+setStartFrequency(n2, 4);
+setNormalizeFBM(n2, true);
+setExponent(n2, 5.0);
+
+m = displace(m, n2, 0.5);
 m = calculateNormals(m);
 
-//resetNoise();
-setNoiseType(NOISE_TYPE_WHITE);
-setWhiteNoiseScale(1.0);
-setNumberOfOctaves(1);
+n3 = noise();
 
-m = displace(m, 0.25);
+setNoiseType(n3, NOISE_TYPE_WHITE);
+setWhiteNoiseScale(n3, 1.0);
+setNumberOfOctaves(n3, 1);
+
+m = displace(m, n3, 0.25);
 
 return m;
