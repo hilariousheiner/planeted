@@ -26,6 +26,9 @@ namespace Planeted
     bool TryAsFloat(const Value &value, float &out);
     bool TryAsString(const Value &value, std::string &out);
     bool TryAsBool(const Value &value, bool &out);
+    bool TryAsVector3(const Value &value, Vector3 &out);
+
+    bool TupleToVector3(const Tuple &t, Vector3 &out);
 
     float ToFloat(const Value &value);
     Mesh *ToMesh(const Value &value);
