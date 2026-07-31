@@ -126,6 +126,24 @@ namespace Planeted
         return result;
     }
 
+    float ToFloat(const Value &value)
+    {
+        float result;
+        switch(value.GetValueType())
+        {
+        case ValueTypeEnum::Int:
+            result = static_cast<float>(value.GetIntValue());
+            break;
+        case ValueTypeEnum::Float:
+            result = value.GetFloatValue();
+            break;
+        default:
+            throw std::runtime_error("cannot convert value to float.");
+            break;
+        }
+        return result;
+    }
+
     bool TryAsString(const Value &value, std::string &out)
     {
         bool result = false;
@@ -146,24 +164,6 @@ namespace Planeted
         {
             out = value.GetBoolValue();
             result = true;
-        }
-        return result;
-    }
-
-    float ToFloat(const Value &value)
-    {
-        float result;
-        switch(value.GetValueType())
-        {
-        case ValueTypeEnum::Int:
-            result = static_cast<float>(value.GetIntValue());
-            break;
-        case ValueTypeEnum::Float:
-            result = value.GetFloatValue();
-            break;
-        default:
-            throw std::runtime_error("cannot convert value to float.");
-            break;
         }
         return result;
     }
@@ -224,6 +224,35 @@ namespace Planeted
         throw std::runtime_error("triangle must be an integer tuple.");
     }
 
+    bool TryAsVector3(const Value &value, Vector3 &out)
+    {
+        bool result = false;
+
+        if(value.GetValueType() == ValueTypeEnum::Tuple)
+        {
+            if(TupleToVector3(value.GetTupleValue(), out))
+            {
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    bool TupleToVector3(const Tuple &t, Vector3 &out)
+    {
+        bool result = false;
+        if(t.elements.size() == 3)
+        {
+            float x, y, z;
+            if(TryAsFloat(t.elements[0], x) && TryAsFloat(t.elements[1], y) && TryAsFloat(t.elements[2], z))
+            {
+                out = Vector3{x,y,z};
+                result = true;
+            }
+        }
+        return result;
+    }
+
     Vector3 ToVector3(const Value &value)
     {
         if(value.GetValueType() == ValueTypeEnum::Tuple)
@@ -238,7 +267,6 @@ namespace Planeted
         }
         throw std::runtime_error("vector must be a float tuple.");
     }
-
 
     // Arithmetic:
     Value Negate(const Value &value)
