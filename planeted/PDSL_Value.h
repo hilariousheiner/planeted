@@ -67,6 +67,8 @@ namespace Planeted
         List &GetListValue() const;
 
         Mesh *GetMeshValue() const;
+        Mesh *TryGetMeshValue() const;
+
         Noise &GetNoiseValue() const;
         Noise *TryGetNoiseValue() const;
 

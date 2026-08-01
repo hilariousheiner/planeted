@@ -91,6 +91,15 @@ namespace Planeted
     {
         return std::get<Mesh*>(this->data);
     }
+    Mesh *Value::TryGetMeshValue() const
+    {
+        if(this->GetValueType() != ValueTypeEnum::Mesh)
+        {
+            return nullptr;
+        }
+        return std::get<Mesh*>(this->data);
+    }
+
     Noise &Value::GetNoiseValue() const
     {
         return *std::get<Noise*>(this->data);
