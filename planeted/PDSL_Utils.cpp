@@ -164,6 +164,19 @@ namespace Planeted
         return result;
     }
 
+    bool TryAsTriangle(const Value &value, TriangleIndices &out)
+    {
+        bool result = false;
+        if(value.GetValueType() == ValueTypeEnum::Tuple)
+        {
+            if(TupleToTriangle(value.GetTupleValue(), out))
+            {
+                result = true;
+            }
+        }
+        return result;
+    }
+
     bool TupleToVector3(const Tuple &t, Vector3 &out)
     {
         bool result = false;
@@ -173,6 +186,26 @@ namespace Planeted
             if(TryAsFloat(t.elements[0], x) && TryAsFloat(t.elements[1], y) && TryAsFloat(t.elements[2], z))
             {
                 out = Vector3{x,y,z};
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    bool TupleToTriangle(const Tuple &t, TriangleIndices &out)
+    {
+        bool result = false;
+        if(t.elements.size() == 3)
+        {
+            int v0, v1, v2;
+            if(TryAsInt(t.elements[0], v0) && TryAsInt(t.elements[1], v1) && TryAsInt(t.elements[2], v2))
+            {
+                out = TriangleIndices
+                {
+                    static_cast<size_t>(v0),
+                    static_cast<size_t>(v1),
+                    static_cast<size_t>(v2)
+                };
                 result = true;
             }
         }

@@ -27,8 +27,10 @@ namespace Planeted
     bool TryAsString(const Value &value, std::string &out);
     bool TryAsBool(const Value &value, bool &out);
     bool TryAsVector3(const Value &value, Vector3 &out);
+    bool TryAsTriangle(const Value &value, TriangleIndices &out);
 
     bool TupleToVector3(const Tuple &t, Vector3 &out);
+    bool TupleToTriangle(const Tuple &t, TriangleIndices &out);
 
     // Arithmetic:
     Value Negate(const Value &value);
