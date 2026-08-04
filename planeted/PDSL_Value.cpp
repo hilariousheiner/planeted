@@ -87,10 +87,11 @@ namespace Planeted
         return *std::get<List*>(this->data);
     }
 
-    Mesh *Value::GetMeshValue() const
+    Mesh &Value::GetMeshValue() const
     {
-        return std::get<Mesh*>(this->data);
+        return *std::get<Mesh*>(this->data);
     }
+
     Mesh *Value::TryGetMeshValue() const
     {
         if(this->GetValueType() != ValueTypeEnum::Mesh)

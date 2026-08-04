@@ -66,7 +66,7 @@ namespace Planeted
         Tuple &GetTupleValue() const;
         List &GetListValue() const;
 
-        Mesh *GetMeshValue() const;
+        Mesh &GetMeshValue() const;
         Mesh *TryGetMeshValue() const;
 
         Noise &GetNoiseValue() const;
