@@ -280,10 +280,18 @@ namespace Planeted
     // Get rid of these:
     Mesh *ToMesh(const Value &value)
     {
+        Mesh *mesh = value.TryGetMeshValue();
+        if(mesh != nullptr)
+        {
+            return mesh;
+        }
+
+        /*
         if(value.GetValueType() == ValueTypeEnum::Mesh)
         {
             return value.GetMeshValue();
         }
+        */
 
         if(value.GetValueType() == ValueTypeEnum::Tuple)
         {
@@ -295,7 +303,7 @@ namespace Planeted
                     const List &vertexList = t.elements[0].GetListValue();
                     const List &triangleList = t.elements[1].GetListValue();
 
-                    Mesh *mesh = new Mesh();
+                    mesh = new Mesh();
 
                     for(const Value &v : vertexList.elements)
                     {
