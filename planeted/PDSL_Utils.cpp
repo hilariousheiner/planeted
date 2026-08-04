@@ -177,6 +177,27 @@ namespace Planeted
         return result;
     }
 
+    bool TryAsMesh(const Value &value, Mesh &out)
+    {
+        bool result = false;
+        if(value.GetValueType() == ValueTypeEnum::Mesh)
+        {
+            out = value.GetMeshValue();
+            result = true;
+        }
+        else
+        {
+            if(value.GetValueType() == ValueTypeEnum::Tuple)
+            {
+                if(TupleToMesh(value.GetTupleValue(), out) == true)
+                {
+                    result = true;
+                }
+            }
+        }
+        return result;
+    }
+
     bool TupleToMesh(const Tuple &t, Mesh &out)
     {
         if(t.elements.size() == 2)
