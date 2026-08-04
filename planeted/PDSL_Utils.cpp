@@ -177,6 +177,51 @@ namespace Planeted
         return result;
     }
 
+    bool TupleToMesh(const Tuple &t, Mesh &out)
+    {
+        if(t.elements.size() == 2)
+        {
+            if(t.elements[0].GetValueType() == ValueTypeEnum::List && t.elements[1].GetValueType() == ValueTypeEnum::List)
+            {
+                const List &vertexList = t.elements[0].GetListValue();
+                const List &triangleList = t.elements[1].GetListValue();
+
+                Mesh *mesh = new Mesh();
+
+                for(const Value &v : vertexList.elements)
+                {
+                    Vector3 vertex;
+                    if(TryAsVector3(v, vertex))
+                    {
+                        mesh->AddVertex(vertex.X, vertex.Y, vertex.Z);
+                    }
+                    else
+                    {
+                        // ToDo: error message
+                        return false;
+                    }
+                }
+                for(const Value &val : triangleList.elements)
+                {
+                    TriangleIndices triangle;
+                    if(TryAsTriangle(val, triangle))
+                    {
+                        mesh->AddTriangle(triangle.V0, triangle.V1, triangle.V2);
+                    }
+                    else
+                    {
+                        // ToDo: error message
+                        return false;
+                    }
+                }
+                out = *mesh;
+                return true;
+            }
+        }
+        // ToDo: error message: Mesh literal must be pair of lists
+        return false;
+    }
+
     bool TupleToVector3(const Tuple &t, Vector3 &out)
     {
         bool result = false;
@@ -191,7 +236,6 @@ namespace Planeted
         }
         return result;
     }
-
     bool TupleToTriangle(const Tuple &t, TriangleIndices &out)
     {
         bool result = false;
@@ -234,13 +278,13 @@ namespace Planeted
 
 
     // Get rid of these:
-
-     Mesh *ToMesh(const Value &value)
+    Mesh *ToMesh(const Value &value)
     {
         if(value.GetValueType() == ValueTypeEnum::Mesh)
         {
             return value.GetMeshValue();
         }
+
         if(value.GetValueType() == ValueTypeEnum::Tuple)
         {
             const Tuple &t = value.GetTupleValue();

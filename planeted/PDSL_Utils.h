@@ -28,7 +28,9 @@ namespace Planeted
     bool TryAsBool(const Value &value, bool &out);
     bool TryAsVector3(const Value &value, Vector3 &out);
     bool TryAsTriangle(const Value &value, TriangleIndices &out);
+    bool TryAsMesh(const Value &value, Mesh &out);
 
+    bool TupleToMesh(const Tuple &t, Mesh &out);
     bool TupleToVector3(const Tuple &t, Vector3 &out);
     bool TupleToTriangle(const Tuple &t, TriangleIndices &out);
 
