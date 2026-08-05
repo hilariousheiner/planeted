@@ -86,6 +86,16 @@ namespace Planeted
         return *result;
     }
 
+    Mesh &GetMeshArg(const std::vector<Value> &args, size_t index, const std::string &functionName)
+    {
+        Mesh *result = nullptr;
+        if(!TryAsMesh(args[index], *result))
+        {
+            throw std::runtime_error(functionName + ": argument " + std::to_string(index + 1) + " must be a mesh.");
+        }
+        return *result;
+    }
+
     // Value conversions:
     bool TryAsInt(const Value &value, int &out)
     {
@@ -307,12 +317,12 @@ namespace Planeted
             return mesh;
         }
 
-        /*
-        if(value.GetValueType() == ValueTypeEnum::Mesh)
-        {
-            return value.GetMeshValue();
-        }
-        */
+
+        //if(value.GetValueType() == ValueTypeEnum::Mesh)
+        //{
+        //    return value.GetMeshValue();
+        //}
+
 
         if(value.GetValueType() == ValueTypeEnum::Tuple)
         {

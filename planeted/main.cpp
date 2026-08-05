@@ -49,41 +49,45 @@ int main(int argc, char **argv)
 
     if(result.GetValueType() == ValueTypeEnum::Mesh || result.GetValueType() == ValueTypeEnum::Tuple)
     {
-        Mesh &mesh = *ToMesh(result);
-        std::cout << "created mesh: " << mesh.GetName() << " (" << mesh.VertexCount() << " vertices and " << mesh.TriangleCount() << " triangles)\n";
-        std::cout << "writing to \"" << outfile << "\n";
-
-        std::ofstream meshfile(NormalizePath(outPath + outfile.ToString()));
-
-        if(objOutput == true)
+        //Mesh &mesh = *ToMesh(result);
+        Mesh mesh;
+        if(TryAsMesh(result, mesh))
         {
-            meshfile << OBJ::MeshToOBJ(mesh);
-        }
-        else
-        {
-            if(stlOutput == true)
+            std::cout << "created mesh: " << mesh.GetName() << " (" << mesh.VertexCount() << " vertices and " << mesh.TriangleCount() << " triangles)\n";
+            std::cout << "writing to \"" << outfile << "\n";
+
+            std::ofstream meshfile(NormalizePath(outPath + outfile.ToString()));
+
+            if(objOutput == true)
             {
-                meshfile << STL::MeshToSTL(mesh);
+                meshfile << OBJ::MeshToOBJ(mesh);
             }
             else
             {
-                if(scadOutput == true)
+                if(stlOutput == true)
                 {
-                    meshfile << SCAD::MeshToSCAD(mesh);
+                    meshfile << STL::MeshToSTL(mesh);
                 }
                 else
                 {
-                    meshfile << POV::MeshToPOVMesh2(mesh);
+                    if(scadOutput == true)
+                    {
+                        meshfile << SCAD::MeshToSCAD(mesh);
+                    }
+                    else
+                    {
+                        meshfile << POV::MeshToPOVMesh2(mesh);
 
-                    std::cout << "writing scene file\n";
-                    std::ofstream scenefile("scene.pov");
+                        std::cout << "writing scene file\n";
+                        std::ofstream scenefile("scene.pov");
 
-                    scenefile << POV::POVSceneFile(outfile.ToString().c_str());
-                    scenefile.close();
+                        scenefile << POV::POVSceneFile(outfile.ToString().c_str());
+                        scenefile.close();
+                    }
                 }
             }
+            meshfile.close();
         }
-        meshfile.close();
     }
     else
     {

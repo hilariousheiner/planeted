@@ -21,6 +21,8 @@ namespace Planeted
 
     Noise &GetNoiseArg(const std::vector<Value> &args, size_t index, const std::string &functionName);
 
+    Mesh &GetMeshArg(const std::vector<Value> &args, size_t index, const std::string &functionName);
+
     // Value conversions:
     bool TryAsInt(const Value &value, int &out);
     bool TryAsFloat(const Value &value, float &out);
@@ -30,6 +32,7 @@ namespace Planeted
     bool TryAsTriangle(const Value &value, TriangleIndices &out);
     bool TryAsMesh(const Value &value, Mesh &out);
 
+    // Tuple conversions:
     bool TupleToMesh(const Tuple &t, Mesh &out);
     bool TupleToVector3(const Tuple &t, Vector3 &out);
     bool TupleToTriangle(const Tuple &t, TriangleIndices &out);
@@ -38,6 +41,7 @@ namespace Planeted
     Value Negate(const Value &value);
 
     // Get rid of these:
+
     float ToFloat(const Value &value);
     Mesh *ToMesh(const Value &value);
     TriangleIndices ToTriangle(const Value &value);
