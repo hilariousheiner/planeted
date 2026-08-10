@@ -30,7 +30,7 @@ namespace Planeted
     {}
 
     Value::Value(std::string stringValue)
-        : data(stringValue)
+        : data(std::move(stringValue))
     {}
 
     Value::Value(Tuple *tupleValue)
