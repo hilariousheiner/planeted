@@ -77,6 +77,7 @@ namespace Planeted
         ValueTypeEnum GetValueType() const;
 
         std::string ToString() const;
+        std::string TypeToString() const;
 
     private:
         std::variant<std::monostate, int, float, bool, std::string, Tuple, List*, Mesh*, Noise*> data;

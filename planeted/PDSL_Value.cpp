@@ -203,4 +203,45 @@ namespace Planeted
         }
         return result;
     }
+
+    std::string Value::TypeToString() const
+    {
+        std::string result = "";
+
+        switch(this->GetValueType())
+        {
+        case ValueTypeEnum::Int:
+            result = "Int";
+            break;
+        case ValueTypeEnum::Float:
+            result = "Float";
+            break;
+        case ValueTypeEnum::Bool:
+            result = "Bool";
+            break;
+        case ValueTypeEnum::String:
+            result = "String";
+            break;
+
+        case ValueTypeEnum::Null:
+            result = "Null";
+            break;
+        case ValueTypeEnum::Tuple:
+            result = "Tuple";
+            break;
+        case ValueTypeEnum::List:
+            result = "List";
+            break;
+
+        case ValueTypeEnum::Mesh:
+            result = "Mesh";
+            break;
+        case ValueTypeEnum::Noise:
+            result = "Noise";
+            break;
+        default:
+            break;
+        }
+        return result;
+    }
 }
