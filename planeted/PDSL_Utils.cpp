@@ -295,10 +295,10 @@ namespace Planeted
         switch(value.GetValueType())
         {
         case ValueTypeEnum::Float:
-            result = -(value.GetFloatValue());
+            result = Value(-(value.GetFloatValue()));
             break;
         case ValueTypeEnum::Int:
-            result = -(value.GetIntValue());
+            result = Value(-(value.GetIntValue()));
             break;
         default:
             throw std::runtime_error("cannot negate value.");
@@ -316,12 +316,12 @@ namespace Planeted
         {
             return mesh;
         }
-
-
-        //if(value.GetValueType() == ValueTypeEnum::Mesh)
-        //{
-        //    return value.GetMeshValue();
-        //}
+        /*
+        if(value.GetValueType() == ValueTypeEnum::Mesh)
+        {
+            return value.GetMeshValue();
+        }
+        */
 
 
         if(value.GetValueType() == ValueTypeEnum::Tuple)

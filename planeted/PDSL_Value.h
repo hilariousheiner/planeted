@@ -44,16 +44,16 @@ namespace Planeted
     {
     public:
         Value();
-        Value(int intValue);
-        Value(float floatValue);
-        Value(bool boolValue);
-        Value(std::string stringValue);
+        explicit Value(int intValue);
+        explicit Value(float floatValue);
+        explicit Value(bool boolValue);
+        explicit Value(std::string stringValue);
 
-        Value(Tuple tupleValue);
-        Value(List *listValue);
+        explicit Value(Tuple tupleValue);
+        explicit Value(List *listValue);
 
-        Value(Mesh *meshValue);
-        Value(Noise *noiseValue);
+        explicit Value(Mesh *meshValue);
+        explicit Value(Noise *noiseValue);
 
         bool IsNull() const;
         static const Value &Null();
