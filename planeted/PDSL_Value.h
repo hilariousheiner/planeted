@@ -49,7 +49,7 @@ namespace Planeted
         Value(bool boolValue);
         Value(std::string stringValue);
 
-        Value(Tuple *tupleValue);
+        Value(Tuple tupleValue);
         Value(List *listValue);
 
         Value(Mesh *meshValue);
@@ -63,7 +63,9 @@ namespace Planeted
         bool GetBoolValue() const;
         std::string GetStringValue() const;
 
-        Tuple &GetTupleValue() const;
+        const Tuple &GetTupleValue() const;
+        Tuple &GetTupleValue();
+
         List &GetListValue() const;
 
         Mesh &GetMeshValue() const;
@@ -77,7 +79,7 @@ namespace Planeted
         std::string ToString() const;
 
     private:
-        std::variant<std::monostate, int, float, bool, std::string, Tuple*, List*, Mesh*, Noise*> data;
+        std::variant<std::monostate, int, float, bool, std::string, Tuple, List*, Mesh*, Noise*> data;
     };
 }
 #endif // PLANETED_PDSL_VALUE_H

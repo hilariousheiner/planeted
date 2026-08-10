@@ -33,8 +33,8 @@ namespace Planeted
         : data(std::move(stringValue))
     {}
 
-    Value::Value(Tuple *tupleValue)
-        : data(tupleValue)
+    Value::Value(Tuple tupleValue)
+        : data(std::move(tupleValue))
     {}
 
     Value::Value(List *listValue)
@@ -78,10 +78,15 @@ namespace Planeted
         return std::get<std::string>(this->data);
     }
 
-    Tuple &Value::GetTupleValue() const
+    const Tuple &Value::GetTupleValue() const
     {
-        return *std::get<Tuple*>(this->data);
+        return std::get<Tuple>(this->data);
     }
+    Tuple &Value::GetTupleValue()
+    {
+        return std::get<Tuple>(this->data);
+    }
+
     List &Value::GetListValue() const
     {
         return *std::get<List*>(this->data);
@@ -138,7 +143,7 @@ namespace Planeted
             return ValueTypeEnum::Null;
         }
 
-        if(std::holds_alternative<Tuple*>(this->data))
+        if(std::holds_alternative<Tuple>(this->data))
         {
             return ValueTypeEnum::Tuple;
         }
@@ -181,7 +186,7 @@ namespace Planeted
             result = "null";
             break;
         case ValueTypeEnum::Tuple:
-            result = "tuple: " + std::get<Tuple*>(this->data)->ToString();
+            result = "tuple: " + std::get<Tuple>(this->data).ToString();
             break;
         case ValueTypeEnum::List:
             result = "list: " + std::get<List*>(this->data)->ToString();

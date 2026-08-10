@@ -44,13 +44,13 @@ namespace Planeted
 
     Value TupleExpression::eval(PDSL_Runtime &runtime)
     {
-        Tuple *tupleValue = new Tuple();
+        Tuple tupleValue;
 
         for(const auto &expr : this->elements)
         {
-            tupleValue->elements.push_back(expr->eval(runtime));
+            tupleValue.elements.push_back(expr->eval(runtime));
         }
-        return Value(tupleValue);
+        return Value(std::move(tupleValue));
     }
 
     ListExpression::ListExpression(std::vector<std::unique_ptr<Expression>> elements)
