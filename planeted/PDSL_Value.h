@@ -51,8 +51,6 @@ namespace Planeted
 
         explicit Value(Tuple tupleValue);
         explicit Value(List listValue);
-        explicit Value(List *listValue) = delete;
-
         explicit Value(Mesh *meshValue);
         explicit Value(Noise *noiseValue);
 
