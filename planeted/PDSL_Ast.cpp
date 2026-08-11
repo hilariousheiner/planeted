@@ -59,13 +59,13 @@ namespace Planeted
 
     Value ListExpression::eval(PDSL_Runtime &runtime)
     {
-        List *listValue = new List();
+        List listValue;
 
         for(const auto &expr : this->elements)
         {
-            listValue->elements.push_back(expr->eval(runtime));
+            listValue.elements.push_back(expr->eval(runtime));
         }
-        return Value(listValue);
+        return Value(std::move(listValue));
     }
 
     UnaryExpression::UnaryExpression(TokenTypeEnum op, std::unique_ptr<Expression> operand)

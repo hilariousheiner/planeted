@@ -50,7 +50,8 @@ namespace Planeted
         explicit Value(std::string stringValue);
 
         explicit Value(Tuple tupleValue);
-        explicit Value(List *listValue);
+        explicit Value(List listValue);
+        explicit Value(List *listValue) = delete;
 
         explicit Value(Mesh *meshValue);
         explicit Value(Noise *noiseValue);
@@ -66,7 +67,7 @@ namespace Planeted
         const Tuple &GetTupleValue() const;
         Tuple &GetTupleValue();
 
-        List &GetListValue() const;
+        const List &GetListValue() const;
 
         Mesh &GetMeshValue() const;
         Mesh *TryGetMeshValue() const;
@@ -80,7 +81,7 @@ namespace Planeted
         std::string TypeToString() const;
 
     private:
-        std::variant<std::monostate, int, float, bool, std::string, Tuple, List*, Mesh*, Noise*> data;
+        std::variant<std::monostate, int, float, bool, std::string, Tuple, List, Mesh*, Noise*> data;
     };
 }
 #endif // PLANETED_PDSL_VALUE_H

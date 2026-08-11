@@ -37,8 +37,8 @@ namespace Planeted
         : data(std::move(tupleValue))
     {}
 
-    Value::Value(List *listValue)
-        : data(listValue)
+    Value::Value(List listValue)
+        : data(std::move(listValue))
     {}
 
     Value::Value(Mesh *meshValue)
@@ -87,9 +87,9 @@ namespace Planeted
         return std::get<Tuple>(this->data);
     }
 
-    List &Value::GetListValue() const
+    const List &Value::GetListValue() const
     {
-        return *std::get<List*>(this->data);
+        return std::get<List>(this->data);
     }
 
     Mesh &Value::GetMeshValue() const
@@ -147,7 +147,7 @@ namespace Planeted
         {
             return ValueTypeEnum::Tuple;
         }
-        if(std::holds_alternative<List*>(this->data))
+        if(std::holds_alternative<List>(this->data))
         {
             return ValueTypeEnum::List;
         }
@@ -189,7 +189,7 @@ namespace Planeted
             result = "tuple: " + std::get<Tuple>(this->data).ToString();
             break;
         case ValueTypeEnum::List:
-            result = "list: " + std::get<List*>(this->data)->ToString();
+            result = "list: " + std::get<List>(this->data).ToString();
             break;
 
         case ValueTypeEnum::Mesh:
