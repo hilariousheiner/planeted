@@ -86,14 +86,14 @@ namespace Planeted
         return *result;
     }
 
-    Mesh &GetMeshArg(const std::vector<Value> &args, size_t index, const std::string &functionName)
+    Mesh GetMeshArg(const std::vector<Value> &args, size_t index, const std::string &functionName)
     {
-        Mesh *result = nullptr;
-        if(!TryAsMesh(args[index], *result))
+        Mesh result;
+        if(!TryAsMesh(args[index], result))
         {
             throw std::runtime_error(functionName + ": argument " + std::to_string(index + 1) + " must be a mesh.");
         }
-        return *result;
+        return result;
     }
 
     // Value conversions:
@@ -192,7 +192,7 @@ namespace Planeted
         bool result = false;
         if(value.GetValueType() == ValueTypeEnum::Mesh)
         {
-            out = value.GetMeshValue();
+            out = value.GetMeshValue(); // intentional copy
             result = true;
         }
         else
@@ -217,14 +217,14 @@ namespace Planeted
                 const List &vertexList = t.elements[0].GetListValue();
                 const List &triangleList = t.elements[1].GetListValue();
 
-                Mesh *mesh = new Mesh();
+                Mesh mesh;
 
                 for(const Value &v : vertexList.elements)
                 {
                     Vector3 vertex;
                     if(TryAsVector3(v, vertex))
                     {
-                        mesh->AddVertex(vertex.X, vertex.Y, vertex.Z);
+                        mesh.AddVertex(vertex.X, vertex.Y, vertex.Z);
                     }
                     else
                     {
@@ -237,7 +237,7 @@ namespace Planeted
                     TriangleIndices triangle;
                     if(TryAsTriangle(val, triangle))
                     {
-                        mesh->AddTriangle(triangle.V0, triangle.V1, triangle.V2);
+                        mesh.AddTriangle(triangle.V0, triangle.V1, triangle.V2);
                     }
                     else
                     {
@@ -245,7 +245,7 @@ namespace Planeted
                         return false;
                     }
                 }
-                out = *mesh;
+                out = mesh;
                 return true;
             }
         }
@@ -309,6 +309,7 @@ namespace Planeted
 
 
     // Get rid of these:
+    /*
     Mesh *ToMesh(const Value &value)
     {
         Mesh *mesh = value.TryGetMeshValue();
@@ -316,12 +317,12 @@ namespace Planeted
         {
             return mesh;
         }
-        /*
-        if(value.GetValueType() == ValueTypeEnum::Mesh)
-        {
-            return value.GetMeshValue();
-        }
-        */
+
+        //if(value.GetValueType() == ValueTypeEnum::Mesh)
+        //{
+        //    return value.GetMeshValue();
+        //}
+
 
 
         if(value.GetValueType() == ValueTypeEnum::Tuple)
@@ -351,7 +352,7 @@ namespace Planeted
             }
         }
         throw std::runtime_error("mesh must be a pair (vertexList, triangleList).");
-    }
+    }*/
 
     float ToFloat(const Value &value)
     {

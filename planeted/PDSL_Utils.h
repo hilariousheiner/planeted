@@ -21,7 +21,7 @@ namespace Planeted
 
     Noise &GetNoiseArg(const std::vector<Value> &args, size_t index, const std::string &functionName);
 
-    Mesh &GetMeshArg(const std::vector<Value> &args, size_t index, const std::string &functionName);
+    Mesh GetMeshArg(const std::vector<Value> &args, size_t index, const std::string &functionName);
 
     // Value conversions:
     bool TryAsInt(const Value &value, int &out);
