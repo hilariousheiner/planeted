@@ -41,8 +41,8 @@ namespace Planeted
         : data(std::move(listValue))
     {}
 
-    Value::Value(Mesh *meshValue)
-        : data(meshValue)
+    Value::Value(Mesh meshValue)
+        : data(std::move(meshValue))
     {}
 
     Value::Value(Noise *noiseValue)
@@ -92,18 +92,18 @@ namespace Planeted
         return std::get<List>(this->data);
     }
 
-    Mesh &Value::GetMeshValue() const
+    const Mesh &Value::GetMeshValue() const
     {
-        return *std::get<Mesh*>(this->data);
+        return std::get<Mesh>(this->data);
     }
 
-    Mesh *Value::TryGetMeshValue() const
+    const Mesh *Value::TryGetMeshValue() const
     {
         if(this->GetValueType() != ValueTypeEnum::Mesh)
         {
             return nullptr;
         }
-        return std::get<Mesh*>(this->data);
+        return &std::get<Mesh>(this->data);
     }
 
     Noise &Value::GetNoiseValue() const
@@ -152,7 +152,7 @@ namespace Planeted
             return ValueTypeEnum::List;
         }
 
-        if(std::holds_alternative<Mesh*>(this->data))
+        if(std::holds_alternative<Mesh>(this->data))
         {
             return ValueTypeEnum::Mesh;
         }
@@ -193,7 +193,7 @@ namespace Planeted
             break;
 
         case ValueTypeEnum::Mesh:
-            result = "mesh: " + std::get<Mesh*>(this->data)->GetName();
+            result = "mesh: " + std::get<Mesh>(this->data).GetName();
             break;
         case ValueTypeEnum::Noise:
             result = "noise";
