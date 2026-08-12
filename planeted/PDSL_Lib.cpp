@@ -11,8 +11,6 @@ namespace Planeted
 {
     namespace PDSL_Lib
     {
-        //static Noise noise;
-
         static DisplacementTypeEnum toDisplacementType(int type)
         {
             DisplacementTypeEnum result = DisplacementTypeEnum::Vertex;
@@ -248,7 +246,6 @@ namespace Planeted
         {
             ExpectArgsCount(args, 2, "subdivide");
 
-            //Mesh *m = ToMesh(args[0]);
             Mesh m = GetMeshArg(args, 0, "subdivide");
             int d = GetIntArg(args, 1, "subdivide");
 
@@ -260,7 +257,6 @@ namespace Planeted
         {
             ExpectArgsCount(args, 2, "tessellate");
 
-            //Mesh *m = ToMesh(args[0]);
             Mesh m = GetMeshArg(args, 0, "tessellate");
             int n = args[1].GetIntValue();
 
@@ -272,7 +268,6 @@ namespace Planeted
         {
             ExpectArgsCount(args, 1, "projectToUnitSphere");
 
-            //Mesh *m = ToMesh(args[0]);
             Mesh m = GetMeshArg(args, 0, "projectToUnitSphere");
             m.ProjectToUnitSphere();
 
@@ -282,7 +277,6 @@ namespace Planeted
         {
             ExpectArgsCount(args, 1, "calculateNormals");
 
-            //Mesh *m = ToMesh(args[0]);
             Mesh m = GetMeshArg(args, 0, "calculateNormals");
             m.CalculateNormals();
 
@@ -301,7 +295,6 @@ namespace Planeted
             ExpectArgsCountAtLeast(args, 3, "displace");
             ExpectArgsCountAtMost(args, 4, "displace");
 
-            //Mesh *m = ToMesh(args[0]);
             Mesh m = GetMeshArg(args, 0, "displace");
             Noise &noise = GetNoiseArg(args, 1, "displace");
             float a = GetFloatArg(args, 2, "displace");

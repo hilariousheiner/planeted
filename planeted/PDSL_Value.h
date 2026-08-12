@@ -65,14 +65,10 @@ namespace Planeted
         std::string GetStringValue() const;
 
         const Tuple &GetTupleValue() const;
-        Tuple &GetTupleValue();
-
         const List &GetListValue() const;
 
         const Mesh &GetMeshValue() const;
-        const Mesh *TryGetMeshValue() const;
 
-        Noise &GetNoiseValue() const;
         Noise *TryGetNoiseValue() const;
 
         ValueTypeEnum GetValueType() const;

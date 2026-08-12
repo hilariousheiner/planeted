@@ -82,10 +82,6 @@ namespace Planeted
     {
         return std::get<Tuple>(this->data);
     }
-    Tuple &Value::GetTupleValue()
-    {
-        return std::get<Tuple>(this->data);
-    }
 
     const List &Value::GetListValue() const
     {
@@ -97,19 +93,6 @@ namespace Planeted
         return std::get<Mesh>(this->data);
     }
 
-    const Mesh *Value::TryGetMeshValue() const
-    {
-        if(this->GetValueType() != ValueTypeEnum::Mesh)
-        {
-            return nullptr;
-        }
-        return &std::get<Mesh>(this->data);
-    }
-
-    Noise &Value::GetNoiseValue() const
-    {
-        return *std::get<Noise*>(this->data);
-    }
     Noise *Value::TryGetNoiseValue() const
     {
         if(this->GetValueType() != ValueTypeEnum::Noise)
