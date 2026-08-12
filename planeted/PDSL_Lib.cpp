@@ -248,11 +248,11 @@ namespace Planeted
         {
             ExpectArgsCount(args, 2, "subdivide");
 
-            Mesh *m = ToMesh(args[0]);
-
+            //Mesh *m = ToMesh(args[0]);
+            Mesh m = GetMeshArg(args, 0, "subdivide");
             int d = GetIntArg(args, 1, "subdivide");
 
-            m->Subdivide(d);
+            m.Subdivide(d);
 
             return Value(m);
         }
@@ -260,10 +260,11 @@ namespace Planeted
         {
             ExpectArgsCount(args, 2, "tessellate");
 
-            Mesh *m = ToMesh(args[0]);
+            //Mesh *m = ToMesh(args[0]);
+            Mesh m = GetMeshArg(args, 0, "tessellate");
             int n = args[1].GetIntValue();
 
-            m->Tessellate(n);
+            m.Tessellate(n);
 
             return Value(m);
         }
@@ -271,8 +272,9 @@ namespace Planeted
         {
             ExpectArgsCount(args, 1, "projectToUnitSphere");
 
-            Mesh *m = ToMesh(args[0]);
-            m->ProjectToUnitSphere();
+            //Mesh *m = ToMesh(args[0]);
+            Mesh m = GetMeshArg(args, 0, "projectToUnitSphere");
+            m.ProjectToUnitSphere();
 
             return Value(m);
         }
@@ -280,8 +282,9 @@ namespace Planeted
         {
             ExpectArgsCount(args, 1, "calculateNormals");
 
-            Mesh *m = ToMesh(args[0]);
-            m->CalculateNormals();
+            //Mesh *m = ToMesh(args[0]);
+            Mesh m = GetMeshArg(args, 0, "calculateNormals");
+            m.CalculateNormals();
 
             return Value(m);
         }
@@ -298,7 +301,8 @@ namespace Planeted
             ExpectArgsCountAtLeast(args, 3, "displace");
             ExpectArgsCountAtMost(args, 4, "displace");
 
-            Mesh *m = ToMesh(args[0]);
+            //Mesh *m = ToMesh(args[0]);
+            Mesh m = GetMeshArg(args, 0, "displace");
             Noise &noise = GetNoiseArg(args, 1, "displace");
             float a = GetFloatArg(args, 2, "displace");
 
@@ -308,7 +312,7 @@ namespace Planeted
                 displacementType = toDisplacementType(args[3].GetIntValue());
             }
 
-            m->Displace(noiseDisplaceFun(noise), a, displacementType);
+            m.Displace(noiseDisplaceFun(noise), a, displacementType);
             return Value(m);
         }
 
