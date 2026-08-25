@@ -4,6 +4,15 @@
 
 namespace Planeted
 {
+    static const std::unordered_map<std::string, TokenTypeEnum> keywordDict =
+    {
+        {"true", TokenTypeEnum::BoolLiteral},
+        {"false", TokenTypeEnum::BoolLiteral},
+        {"null", TokenTypeEnum::NullLiteral},
+        {"import", TokenTypeEnum::Import},
+        {"return", TokenTypeEnum::Return},
+    };
+
     Lexer::Lexer(const std::string &source) :
         source(source), pos(0)
     { }
