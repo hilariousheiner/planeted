@@ -117,25 +117,25 @@ namespace Planeted
 
     Token Lexer::readIdentifier()
     {
-        std::string text;
+        std::string lexeme;
 
         while (std::isalnum(this->peek()) || this->peek() == '_')
         {
-            text += this->advance();
+            lexeme += this->advance();
         }
 
         std::unordered_map<std::string, TokenTypeEnum>::const_iterator it;
-        it = keywordDict.find(text);
+        it = keywordDict.find(lexeme);
         if(it != keywordDict.end())
         {
-            return {it->second, text};
+            return {it->second, lexeme};
         }
-        return {TokenTypeEnum::Identifier, text};
+        return {TokenTypeEnum::Identifier, lexeme};
     }
 
     Token Lexer::readNumber()
     {
-        std::string text;
+        std::string lexeme;
         bool isFloat = false;
 
         while(std::isdigit(this->peek()) || this->peek() == '.')
@@ -148,14 +148,14 @@ namespace Planeted
                 }
                 isFloat = true;
             }
-            text += this->advance();
+            lexeme += this->advance();
         }
 
         if(isFloat)
         {
-            return {TokenTypeEnum::FloatLiteral, text};
+            return {TokenTypeEnum::FloatLiteral, lexeme};
         }
-        return {TokenTypeEnum::IntLiteral, text};
+        return {TokenTypeEnum::IntLiteral, lexeme};
     }
 
     Token Lexer::readString()
