@@ -1,4 +1,4 @@
-# planeted
+# Planeted
 A cli tool and scripting language for procedurally creating 3D models of asteroids, moons and minor planets.
 
 ## License
