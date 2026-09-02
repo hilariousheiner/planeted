@@ -13,7 +13,7 @@ namespace Planeted
     {
         Program result;
 
-        while(this->current.type != TokenTypeEnum::End)
+        while(this->currentToken.type != TokenTypeEnum::End)
         {
             result.statements.push_back(this->parseStatement());
         }
@@ -24,14 +24,14 @@ namespace Planeted
     {
         std::unique_ptr<Statement> result;
 
-        if(this->current.type == TokenTypeEnum::Return)
+        if(this->currentToken.type == TokenTypeEnum::Return)
         {
             result = this->parseReturnStatement();
             //ToDo: stop parsing. If not eof => unreachable code detected.
         }
         else
         {
-            if(this->current.type == TokenTypeEnum::Import)
+            if(this->currentToken.type == TokenTypeEnum::Import)
             {
                 result = this->parseImportStatement();
             }
@@ -107,7 +107,7 @@ namespace Planeted
 
     std::unique_ptr<Expression> Parser::parseUnaryExpression()
     {
-        if(this->current.type == TokenTypeEnum::Minus)
+        if(this->currentToken.type == TokenTypeEnum::Minus)
         {
             this->advance();
 
@@ -119,21 +119,21 @@ namespace Planeted
 
     std::unique_ptr<Expression> Parser::parsePrimaryExpression()
     {
-        if(this->current.type == TokenTypeEnum::Identifier)
+        if(this->currentToken.type == TokenTypeEnum::Identifier)
         {
             if(this->next.type == TokenTypeEnum::LParen)
             {
                 return this->parseCallExpression();
             }
-            std::string identifier = this->current.lexeme;
+            std::string identifier = this->currentToken.lexeme;
             this->advance();
             return std::make_unique<VariableExpression>(identifier);
         }
-        if(this->current.type == TokenTypeEnum::LParen)
+        if(this->currentToken.type == TokenTypeEnum::LParen)
         {
             return this->parseTupleExpression();
         }
-        if(this->current.type == TokenTypeEnum::LBrack)
+        if(this->currentToken.type == TokenTypeEnum::LBrack)
         {
             return this->parseListExpression();
         }
@@ -144,25 +144,25 @@ namespace Planeted
     {
         Value result;
 
-        switch(this->current.type)
+        switch(this->currentToken.type)
         {
         case TokenTypeEnum::IntLiteral:
-            result = Value(std::stoi(current.lexeme));
+            result = Value(std::stoi(this->currentToken.lexeme));
             break;
         case TokenTypeEnum::FloatLiteral:
-            result = Value(std::stof(current.lexeme));
+            result = Value(std::stof(this->currentToken.lexeme));
             break;
         case TokenTypeEnum::BoolLiteral:
-            result = Value(current.lexeme == "true");
+            result = Value(this->currentToken.lexeme == "true");
             break;
         case TokenTypeEnum::StringLiteral:
-            result = Value(current.lexeme);
+            result = Value(this->currentToken.lexeme);
             break;
         case TokenTypeEnum::NullLiteral:
             result = Value::Null();
             break;
         default:
-            throw std::runtime_error("Invalid value type: " + TokenTypeToString(this->current.type));
+            throw std::runtime_error("Invalid value type: " + TokenTypeToString(this->currentToken.type));
             break;
         }
 
@@ -181,12 +181,12 @@ namespace Planeted
 
         std::vector<std::unique_ptr<Expression>> args;
 
-        if(this->current.type != TokenTypeEnum::RParen)
+        if(this->currentToken.type != TokenTypeEnum::RParen)
         {
             while(true)
             {
                 args.push_back(this->parseExpression());
-                if(this->current.type == TokenTypeEnum::Comma)
+                if(this->currentToken.type == TokenTypeEnum::Comma)
                 {
                     this->advance();
                     continue;
@@ -207,12 +207,12 @@ namespace Planeted
 
         std::vector<std::unique_ptr<Expression>> args;
 
-        if(this->current.type != TokenTypeEnum::RParen)
+        if(this->currentToken.type != TokenTypeEnum::RParen)
         {
             while(true)
             {
                 args.push_back(this->parseExpression());
-                if(this->current.type == TokenTypeEnum::Comma)
+                if(this->currentToken.type == TokenTypeEnum::Comma)
                 {
                     this->advance();
                     continue;
@@ -232,12 +232,12 @@ namespace Planeted
 
         std::vector<std::unique_ptr<Expression>> args;
 
-        if(this->current.type != TokenTypeEnum::RBrack)
+        if(this->currentToken.type != TokenTypeEnum::RBrack)
         {
             while(true)
             {
                 args.push_back(this->parseExpression());
-                if(this->current.type == TokenTypeEnum::Comma)
+                if(this->currentToken.type == TokenTypeEnum::Comma)
                 {
                     this->advance();
                     continue;
@@ -253,18 +253,18 @@ namespace Planeted
 
     void Parser::advance()
     {
-        this->current = this->next;
+        this->currentToken = this->next;
         this->next = this->lexer.Next();
     }
 
     Token Parser::expect(TokenTypeEnum tokenType)
     {
-        if(this->current.type != tokenType)
+        if(this->currentToken.type != tokenType)
         {
-            throw std::runtime_error("Unexpected token: " + TokenTypeToString(this->current.type) + " (expected " + TokenTypeToString(tokenType) + ")");
+            throw std::runtime_error("Unexpected token: " + TokenTypeToString(this->currentToken.type) + " (expected " + TokenTypeToString(tokenType) + ")");
         }
 
-        Token result = current;
+        Token result = this->currentToken;
         this->advance();
 
         return result;
